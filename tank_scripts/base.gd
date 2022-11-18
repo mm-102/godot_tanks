@@ -12,7 +12,7 @@ const left = "p_left"
 const right = "p_right"
 
 var Bullet = preload("res://objects//bullet.tscn")
-var Rocket = preload("res://objects/rocket.tscn")
+var Rocket = preload("res://objects/rocket.tscn") # work in progress
 
 onready var start_pos = get_parent().position
 onready var animation_player = $AnimationPlayer
@@ -20,7 +20,10 @@ onready var animation_player = $AnimationPlayer
 var ammo_left = 5
 var dead = false
 
-export var ammo_type = "bullet"
+#export var ammo_type = "bullet"
+
+func _ready():
+	add_to_group("players")
 
 func _integrate_forces(_state):
 	var v = Vector2(0,0)

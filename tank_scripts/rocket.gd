@@ -28,14 +28,14 @@ func die():
 
 func _set_target():
 	var t = get_tree().get_nodes_in_group("players")[0]
-	var d = global_transform.origin.distance_to(t.get_child(0).global_transform.origin)
+	var d = global_transform.origin.distance_to(t.global_transform.origin)
 	for player_node in get_tree().get_nodes_in_group("players"):
 		var cd = global_transform.origin.distance_to(player_node.get_child(0).global_transform.origin)
 		if cd < d:
 			d = cd
 			t = player_node
 	
-	_target = t.get_child(0)
+	_target = t
 		
 func _integrate_forces(_state):
 	if !_target:
