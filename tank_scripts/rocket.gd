@@ -31,6 +31,8 @@ func _set_target():
 	var t = get_tree().get_nodes_in_group("players")[0]
 	var d = global_transform.origin.distance_to(t.global_transform.origin)
 	for player_node in get_tree().get_nodes_in_group("players"):
+		if player_node.dead:
+			continue
 		var cd = global_transform.origin.distance_to(player_node.get_child(0).global_transform.origin)
 		if cd < d:
 			d = cd
@@ -40,6 +42,9 @@ func _set_target():
 		
 func _integrate_forces(_state):
 	if !_target:
+		return
+	if _target.dead:
+		_set_target()
 		return
 	rotation = global_transform.origin.angle_to_point(_target.global_transform.origin) + PI
 	

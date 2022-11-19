@@ -30,8 +30,13 @@ scale = Vector2( 5, 1 )
 
 [node name="tank" parent="players" instance=ExtResource( 1 )]
 position = Vector2( 296, 309 )
+ammo_type = "rocket"
 
 [node name="obstacle6" parent="." instance=ExtResource( 2 )]
 position = Vector2( 701, 214 )
 rotation = -3.90954
 scale = Vector2( 5, 1 )
+
+[node name="tank" parent="." instance=ExtResource( 1 )]
+position = Vector2( 732, 338 )
+ammo_type = "rocket"

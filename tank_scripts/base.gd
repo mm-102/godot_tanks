@@ -20,7 +20,7 @@ onready var animation_player = $AnimationPlayer
 var ammo_left = 5
 var dead = false
 
-#export var ammo_type = "bullet"
+onready var ammo_type = get_parent().ammo_type
 
 func _ready():
 	add_to_group("players")
@@ -45,7 +45,13 @@ func _integrate_forces(_state):
 			call_deferred("_shoot")
 		
 func _shoot():
-	var b = Bullet.instance()
+	var b
+	if ammo_type == "bullet":
+		b = Bullet.instance()
+	elif ammo_type == "rocket":
+		b = Rocket.instance()
+	else:
+		return
 	var rot = (start_pos + position).angle_to_point(get_global_mouse_position()) + PI
 	
 	var v = Vector2.RIGHT.rotated(rot)
