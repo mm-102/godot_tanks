@@ -31,9 +31,6 @@ scale = Vector2( 5, 1 )
 [node name="tank" parent="players" instance=ExtResource( 1 )]
 position = Vector2( 296, 309 )
 
-[node name="tank2" parent="players" instance=ExtResource( 1 )]
-position = Vector2( 757, 315 )
-
 [node name="obstacle6" parent="." instance=ExtResource( 2 )]
 position = Vector2( 701, 214 )
 rotation = -3.90954

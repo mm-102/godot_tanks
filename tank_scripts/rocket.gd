@@ -18,6 +18,7 @@ func _ready():
 	target_timer.one_shot = true
 	add_child(target_timer)
 	target_timer.start(_target_time)
+	add_to_group("projectile")
 
 func _on_timer_timeout():
 	die()
@@ -40,6 +41,6 @@ func _set_target():
 func _integrate_forces(_state):
 	if !_target:
 		return
-	rotation = get_angle_to(_target.global_transform.origin)
+	rotation = global_transform.origin.angle_to_point(_target.global_transform.origin) + PI
 	
 	linear_velocity = linear_velocity.linear_interpolate((_target.global_transform.origin.direction_to(global_transform.origin) * -_speed), _state.get_step()*_follow_speed)

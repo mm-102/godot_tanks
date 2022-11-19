@@ -7,6 +7,7 @@ func _ready():
 	timer.connect("timeout", self, "_on_timer_timeout")
 	add_child(timer)
 	timer.start(_time)
+	add_to_group("projectile")
 
 func _on_timer_timeout():
 	die()

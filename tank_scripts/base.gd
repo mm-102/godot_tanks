@@ -50,13 +50,13 @@ func _shoot():
 	
 	var v = Vector2.RIGHT.rotated(rot)
 	b.position = position + 50 * v
-	b.rotation = rot
+	b.get_child(0).rotation = rot
 	b.get_child(0).set_linear_velocity(v * bullet_speed)
 	get_parent().add_child(b)
 
 
 func _on_base_body_entered(body):
-	if body.name != "bullet" or dead:
+	if not body.is_in_group("projectile"):
 		return
 	animation_player.play("explode")
 	dead = true
