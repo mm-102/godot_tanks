@@ -55,7 +55,7 @@ func _shoot():
 	var rot = (start_pos + position).angle_to_point(get_global_mouse_position()) + PI
 	
 	var v = Vector2.RIGHT.rotated(rot)
-	b.position = position + 50 * v
+	b.position = position + 60 * v
 	b.get_child(0).rotation = rot
 	b.get_child(0).set_linear_velocity(v * bullet_speed)
 	get_parent().add_child(b)

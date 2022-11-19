@@ -1,8 +1,9 @@
 extends RigidBody2D
 
 var _time = 20
-var _target_time = 1
+var _target_time = 2
 var _target : RigidBody2D = null
+var targeted = false
 
 const _speed = 200
 const _follow_speed = 5
@@ -28,8 +29,9 @@ func die():
 	get_parent().queue_free()
 
 func _set_target():
-	var t = get_tree().get_nodes_in_group("players")[0]
-	var d = global_transform.origin.distance_to(t.global_transform.origin)
+	targeted = true
+	var t = null
+	var d = INF
 	for player_node in get_tree().get_nodes_in_group("players"):
 		if player_node.dead:
 			continue
@@ -41,11 +43,14 @@ func _set_target():
 	_target = t
 		
 func _integrate_forces(_state):
+	
 	if !_target:
+		rotation = linear_velocity.angle()
 		return
 	if _target.dead:
 		_set_target()
 		return
+		
 	rotation = global_transform.origin.angle_to_point(_target.global_transform.origin) + PI
 	
 	linear_velocity = linear_velocity.linear_interpolate((_target.global_transform.origin.direction_to(global_transform.origin) * -_speed), _state.get_step()*_follow_speed)
