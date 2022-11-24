@@ -1,41 +1,44 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://objects/tank.tscn" type="PackedScene" id=1]
-[ext_resource path="res://objects/obstacle.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Player/Tank/Tank.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Objects/Obstacle.tscn" type="PackedScene" id=2]
 
-[node name="main" type="Node2D"]
+[node name="Map" type="Node2D"]
 
-[node name="obstacle" parent="." instance=ExtResource( 2 )]
+[node name="Objects" type="Node" parent="."]
+
+[node name="obstacle" parent="Objects" instance=ExtResource( 2 )]
 position = Vector2( 512, -32 )
 scale = Vector2( 16, 1 )
 
-[node name="obstacle2" parent="." instance=ExtResource( 2 )]
+[node name="obstacle2" parent="Objects" instance=ExtResource( 2 )]
 position = Vector2( 513, 633 )
 scale = Vector2( 16, 1 )
 
-[node name="obstacle3" parent="." instance=ExtResource( 2 )]
+[node name="obstacle3" parent="Objects" instance=ExtResource( 2 )]
 position = Vector2( 1057, 300 )
 scale = Vector2( 1, 9.5 )
 
-[node name="obstacle4" parent="." instance=ExtResource( 2 )]
+[node name="obstacle4" parent="Objects" instance=ExtResource( 2 )]
 position = Vector2( -31, 299 )
 scale = Vector2( 1, 9.5 )
 
-[node name="obstacle5" parent="." instance=ExtResource( 2 )]
+[node name="obstacle5" parent="Objects" instance=ExtResource( 2 )]
 position = Vector2( 316, 207 )
 rotation = 0.733038
 scale = Vector2( 5, 1 )
 
-[node name="players" type="Node2D" parent="."]
-
-[node name="tank" parent="players" instance=ExtResource( 1 )]
-position = Vector2( 296, 309 )
-ammo_type = "rocket"
-
-[node name="obstacle6" parent="." instance=ExtResource( 2 )]
+[node name="obstacle6" parent="Objects" instance=ExtResource( 2 )]
 position = Vector2( 701, 214 )
-rotation = -3.90954
+rotation = 2.37365
 scale = Vector2( 5, 1 )
 
-[node name="tank" parent="." instance=ExtResource( 1 )]
-position = Vector2( 732, 338 )
+[node name="Projectiles" type="Node" parent="."]
+
+[node name="Players" type="Node" parent="."]
+
+[node name="Tank" parent="Players" instance=ExtResource( 1 )]
+position = Vector2( 234, 362 )
+
+[node name="Tank2" parent="Players" instance=ExtResource( 1 )]
+position = Vector2( 811, 386 )
