@@ -1,6 +1,7 @@
 extends RigidBody2D
 
-export(String, "Bullet", "Rocket") var ammo_type = "Bullet"
+enum AMMO_TYPES {BULLET, ROCKET}
+export(AMMO_TYPES) var ammo_type = AMMO_TYPES.BULLET
 
 const SPEED = 100
 const ROTATION_SPEED = 2
@@ -12,8 +13,8 @@ var ammo_left = MAX_AMMO
 var dead = false
 
 var projectiles_tscn = {
-	"Bullet": preload("res://Player/Projectiles/Bullet.tscn"),
-	"Rocket": preload("res://Player/Projectiles/Rocket.tscn"),
+	AMMO_TYPES.BULLET: preload("res://Player/Projectiles/Bullet.tscn"),
+	AMMO_TYPES.ROCKET: preload("res://Player/Projectiles/Rocket.tscn"),
 }
 onready var animation_player = $"%AnimationPlayer"
 onready var turret_node =  $"%Turret" # <----- 

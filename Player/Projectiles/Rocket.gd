@@ -1,5 +1,7 @@
 extends RigidBody2D
 
+var player_path = null
+
 var _time = 20
 var _target_time = 2
 var _target : RigidBody2D = null
@@ -19,14 +21,13 @@ func _ready():
 	target_timer.one_shot = true
 	add_child(target_timer)
 	target_timer.start(_target_time)
-	add_to_group("projectile")
 
 func _on_timer_timeout():
 	die()
 
 func die():
-	get_parent().get_parent().get_child(0).ammo_left += 1
-	get_parent().queue_free()
+	get_node(player_path).ammo_left += 1
+	queue_free()
 
 func _set_target():
 	targeted = true

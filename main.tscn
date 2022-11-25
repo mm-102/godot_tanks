@@ -39,6 +39,7 @@ scale = Vector2( 5, 1 )
 
 [node name="Tank" parent="Players" instance=ExtResource( 1 )]
 position = Vector2( 234, 362 )
+ammo_type = 1
 
 [node name="Tank2" parent="Players" instance=ExtResource( 1 )]
 position = Vector2( 811, 386 )
