@@ -9,6 +9,6 @@ func _on_LifeTime_timeout():
 
 
 func die():
-	if player_path:
+	if !(player_path == null) and is_instance_valid(player_path):
 		get_node(player_path).ammo_left += 1
 	queue_free()
