@@ -2,18 +2,37 @@ extends "res://Player/Projectiles/Projectile.gd"
 
 onready var frag_tscn = load("res://Player/Projectiles/Bullet.tscn")
 
-const FRAG_COUNT = 15
-const FRAG_SPEED = 200
+const FRAG_COUNT = 30
+const FRAG_SPEED = 150
+const FRAG_SCALE = 0.5
+const FRAG_LIFETIME_MULTIPLIER = 0.2
 
-func _on_LifeTime_timeout():
-	for n in range(FRAG_COUNT):
-		var frag_inst = frag_tscn.instance()
-		frag_inst.scale = Vector2(0.1,0.1) # not working
-		var rot = 2 * PI * n / FRAG_COUNT
-		var velocity = Vector2.UP.rotated(rot)
-		frag_inst.position = position + 1 * velocity # separate frags from each other
-		frag_inst.player_path = get_path()
-		frag_inst.set_linear_velocity(velocity * FRAG_SPEED)
-		get_node("/root/Map/Projectiles").add_child(frag_inst)
+
+
+func spawn_frag(rotation):
+	var frag_inst = frag_tscn.instance()
+		
+	var frag_timer : Timer = frag_inst.get_node("LifeTime")
+	frag_timer.wait_time *= FRAG_LIFETIME_MULTIPLIER
 	
-	die() # call super class die() function
+	var frag_sprite : Sprite = frag_inst.get_node("Sprite")
+	frag_sprite.set_scale(frag_sprite.scale * FRAG_SCALE)
+	
+	var frag_col_shape : CollisionShape2D = frag_inst.get_node("CollisionShape2D")
+	frag_col_shape.set_scale(frag_col_shape.scale * FRAG_SCALE)
+	
+	var velocity = Vector2.UP.rotated(rotation)
+	frag_inst.position = position + 1 * velocity # separate frags from each other
+	frag_inst.player_path = get_path()
+	frag_inst.set_linear_velocity(velocity * FRAG_SPEED)
+	get_node("/root/Map/Projectiles").add_child(frag_inst)
+	
+func explode():
+	for n in range(FRAG_COUNT):
+		var rotation = 2 * PI * n / FRAG_COUNT
+		call_deferred("spawn_frag", rotation)
+
+	.die()	#call super die() function
+
+func die():
+	explode()
