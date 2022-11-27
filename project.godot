@@ -14,11 +14,6 @@ config/name="t"
 run/main_scene="res://main.tscn"
 config/icon="res://icon.png"
 
-[editor]
-
-version_control_autoload_on_startup=true
-version_control_plugin_name="GitAPI"
-
 [gdnative]
 
 singletons=[  ]
