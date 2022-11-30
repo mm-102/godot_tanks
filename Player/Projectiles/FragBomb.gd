@@ -1,6 +1,6 @@
 extends "res://Player/Projectiles/Projectile.gd"
 
-onready var frag_tscn = load("res://Player/Projectiles/Bullet.tscn")
+onready var frag_tscn = Ammunition.get_tscn(Ammunition.TYPES.BULLET)
 
 const FRAG_COUNT = 30
 const FRAG_SPEED = 150
