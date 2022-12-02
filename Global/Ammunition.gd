@@ -1,6 +1,6 @@
 extends Node
 
-enum TYPES{BULLET = 0, ROCKET = 1, FRAG_BOMB = 2}
+enum TYPES{BULLET, ROCKET, FRAG_BOMB}
 
 var _ammo_tscn = {
 	TYPES.BULLET: preload("res://Player/Projectiles/Bullet.tscn"),
