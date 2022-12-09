@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "T_Clock",
+"language": "GDScript",
+"path": "res://Singletons/T_Clock.gd"
+} ]
+_global_script_class_icons={
+"T_Clock": ""
+}
+
 [application]
 
 config/name="t"

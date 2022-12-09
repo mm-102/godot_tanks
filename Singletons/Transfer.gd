@@ -7,6 +7,7 @@ var ip = null
 const MAP_PATH_OUT = "/root/Main/Map"
 onready var time_diff_timer_node = $"%TimeDiffTimer"
 onready var clock_node = $"%Clock"
+onready var map_node
 
 
 
@@ -35,15 +36,37 @@ func _on_connection_succeeded():
 	clock_node.determine_begining_time_diff()
 	time_diff_timer_node.start()
 
-#---------- XXX ----------
+#---- INIT DATA ----
 func fetch_init_data():
 	rpc_id(1, "recive_init_data")
-remote func recive_init_data():
-	get_node(MAP_PATH_OUT).init_player()
 
+func recive_init_data():
+	map_node.self_initiation()
+
+#---------- CORE GAME MECHANIC ----------
 func fetch_stance(player_stance: Dictionary):
 	rpc_unreliable_id(1, "recive_stance", player_stance)
 func fetch_shoot(player_stance, shoot_type):
 	rpc_unreliable_id(1, "recive_shoot", player_stance, shoot_type)
 
+remote func recive_world_stance(playerS_stance):
+	map_node = $"/root/Main/Map"
+	if !get_tree().get_rpc_sender_id() == 1:
+		return
+	map_node.add_world_stance(playerS_stance)
 
+remote func recive_shoot(player_id, player_stance, ammo_type):
+	if !get_tree().get_rpc_sender_id() == 1:
+		return
+	#To-Do
+
+remote func recive_new_player(player_id: int):
+	map_node = $"/root/Main/Map"
+	if !get_tree().get_rpc_sender_id() == 1:
+		return
+	if !player_id == get_tree().get_network_unique_id():
+		map_node.create_player(player_id)
+
+remote func recive_despawn_player(player_id: int):
+	if !get_tree().get_rpc_sender_id() == 1:
+		return

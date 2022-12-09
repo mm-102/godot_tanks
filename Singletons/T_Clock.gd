@@ -1,10 +1,12 @@
 extends Node
+class_name T_Clock
 
 const INTERPOLATION_OFFSET = 100
 var client_clock: int
 var latency: int
 var latency_arr: Array
 var time_difference: int
+
 
 
 func _physics_process(_delta: float) -> void:
