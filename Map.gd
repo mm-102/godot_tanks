@@ -37,12 +37,12 @@ func _physics_process(_delta: float) -> void:
 		for player in world_stance_buffer[2].keys():
 			if playerS_node.has_node(str(player)) and world_stance_buffer[1].has(player):
 				playerS_node.get_node(str(player)).template_stance(world_stance_buffer[1][player], world_stance_buffer[2][player], interpolation_factor)
-	elif render_time > world_stance_buffer[1]["T"]:
-		var extrapolation_factor = float(render_time - world_stance_buffer[0]["T"]) / float(world_stance_buffer[1]["T"] - world_stance_buffer[0]["T"]) - 1.0
-		for player in world_stance_buffer[1].keys():
-			if !world_stance_buffer[0].has(player):
-				continue
-			if playerS_node.has_node(str(player)):
-				var position_delta = world_stance_buffer[1][player]["Location"]["P"] - world_stance_buffer[0][player]["Location"]["P"]
-				var new_position = world_stance_buffer[1][player]["Location"]["P"] + position_delta * extrapolation_factor
-				playerS_node.get_node(str(player)).set_position(new_position)
+#	elif render_time > world_stance_buffer[1]["T"]:
+#		var extrapolation_factor = float(render_time - world_stance_buffer[0]["T"]) / float(world_stance_buffer[1]["T"] - world_stance_buffer[0]["T"]) - 1.0
+#		for player in world_stance_buffer[1].keys():
+#			if !world_stance_buffer[0].has(player):
+#				continue
+#			if playerS_node.has_node(str(player)):
+#				var position_delta = world_stance_buffer[1][player]["Location"]["P"] - world_stance_buffer[0][player]["Location"]["P"]
+#				var new_position = world_stance_buffer[1][player]["Location"]["P"] + position_delta * extrapolation_factor
+#				playerS_node.get_node(str(player)).set_position(new_position)

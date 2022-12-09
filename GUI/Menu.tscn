@@ -102,5 +102,14 @@ icon_align = 1
 items = [ "local", null, false, 0, null, "external", null, false, 1, null ]
 selected = 0
 
+[node name="PublicIPButton" type="Button" parent="Background"]
+unique_name_in_owner = true
+margin_left = 171.0
+margin_top = 191.0
+margin_right = 275.0
+margin_bottom = 211.0
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
 [connection signal="pressed" from="Background/SingleplayerButton" to="." method="_on_SingleplayerButton_pressed"]
 [connection signal="pressed" from="Background/MultiplayerButton" to="." method="_on_MultiplayerButton_pressed"]
