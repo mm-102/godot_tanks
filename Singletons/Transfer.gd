@@ -40,8 +40,13 @@ func _on_connection_succeeded():
 func fetch_init_data():
 	rpc_id(1, "recive_init_data")
 
-func recive_init_data():
+remote func recive_init_data(init_data):
+	map_node = $"/root/Main/Map"
+	if !get_tree().get_rpc_sender_id() == 1:
+		return
 	map_node.self_initiation()
+	for player_id in init_data:
+		map_node.create_player(player_id)
 
 #---------- CORE GAME MECHANIC ----------
 func fetch_stance(player_stance: Dictionary):

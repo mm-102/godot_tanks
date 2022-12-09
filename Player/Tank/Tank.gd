@@ -1,30 +1,32 @@
 extends RigidBody2D
 
-enum AMMO_TYPES {BULLET, ROCKET, FRAG_BOMB}
-export(AMMO_TYPES) var ammo_type = AMMO_TYPES.BULLET
+const TYPES = Ammunition.TYPES
+export(TYPES) var ammo_type = Ammunition.TYPES.BULLET
 
 const SPEED = 100
 const ROTATION_SPEED = 2
 const BULLET_SPEED = 200
 const MAX_AMMO = 5
 const DEATH_TIME = 20
+const BASE_AMMO_TYPE = Ammunition.TYPES.BULLET
 
 var ammo_left = MAX_AMMO
+var special_ammo_left = 0
 var dead = false
 # Defined in code
 var player_stance: Dictionary 
 
 onready var is_multiplayer = $"/root/Main".is_multiplayer
-var projectiles_tscn = {
-	AMMO_TYPES.BULLET: preload("res://Player/Projectiles/Bullet.tscn"),
-	AMMO_TYPES.ROCKET: preload("res://Player/Projectiles/Rocket.tscn"),
-	AMMO_TYPES.FRAG_BOMB: preload("res://Player/Projectiles/FragBomb.tscn")
-}
+#var projectiles_tscn = {
+#	AMMO_TYPES.BULLET: preload("res://Player/Projectiles/Bullet.tscn"),
+#	AMMO_TYPES.ROCKET: preload("res://Player/Projectiles/Rocket.tscn"),
+#	AMMO_TYPES.FRAG_BOMB: preload("res://Player/Projectiles/FragBomb.tscn")
+#}
 onready var animation_player = $"%AnimationPlayer"
 onready var turret_node =  $"%Turret"
 onready var bullet_point_node = $"%BulletPoint"
 
-# [to delete] Its good to make 3 spaces betwen funcs and vars
+
 
 
 func _integrate_forces(_state):
@@ -51,10 +53,14 @@ func _integrate_forces(_state):
 func _shoot():
 	if ammo_left <= 0:
 		return
+	if special_ammo_left <= 0:
+		ammo_type = BASE_AMMO_TYPE
+	else:
+		special_ammo_left -= 1
 	ammo_left -= 1
 	if is_multiplayer:
 		$"/root/Transfer".fetch_shoot(player_stance, ammo_type)
-	var bullet_inst = projectiles_tscn[ammo_type].instance()
+	var bullet_inst = Ammunition.get_tscn(ammo_type).instance()
 	var rot = turret_node.global_rotation
 	var velocity = Vector2.UP.rotated(rot)
 	bullet_inst.position = bullet_point_node.global_position

@@ -24,6 +24,10 @@ config/name="t"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Ammunition="*res://Global/Ammunition.gd"
+
 [gdnative]
 
 singletons=[  ]
