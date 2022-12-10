@@ -83,4 +83,7 @@ unique_name_in_owner = true
 anims/RESET = SubResource( 4 )
 anims/explode = SubResource( 3 )
 
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+
 [connection signal="body_entered" from="." to="." method="_on_base_body_entered"]

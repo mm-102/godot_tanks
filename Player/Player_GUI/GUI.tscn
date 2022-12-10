@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Player/Player_GUI/BulletCounter.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Player/Player_GUI/RocketCounter.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Player/Player_GUI/FragBombCounter.tscn" type="PackedScene" id=3]
+
+[node name="GUI" type="MarginContainer"]
+anchor_right = 1.0
+margin_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 40.0
+
+[node name="BulletCounter" parent="HBoxContainer" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="RocketCounter" parent="HBoxContainer" instance=ExtResource( 2 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 44.0
+margin_top = 0.0
+margin_right = 84.0
+margin_bottom = 40.0
+
+[node name="FragBombCounter" parent="HBoxContainer" instance=ExtResource( 3 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 88.0
+margin_top = 0.0
+margin_right = 128.0
+margin_bottom = 40.0

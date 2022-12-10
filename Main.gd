@@ -8,7 +8,6 @@ const MODE_DICT = {
 }
 var is_multiplayer = false
 
-
 func game_mode(sel_mode: int, adress):
 	var mode_inst = MODE_DICT[sel_mode].instance()
 	if sel_mode == GAME_MODE.MULTI:
@@ -17,3 +16,5 @@ func game_mode(sel_mode: int, adress):
 		transfer_inst.ip = adress
 		get_node("/root").add_child(transfer_inst)
 	add_child(mode_inst)
+	
+	get_node("Player_Gui_Layer").visible = true
