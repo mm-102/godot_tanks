@@ -1,17 +1,17 @@
 extends "res://Player/Projectiles/Projectile.gd"
 
-onready var frag_tscn = Ammunition.get_tscn(Ammunition.TYPES.BULLET)
 
 const FRAG_COUNT = 30
 const FRAG_SPEED = 150
 const FRAG_SCALE = 0.5
 const FRAG_LIFETIME_MULTIPLIER = 0.2
 
+const BULLET_TSCN =  preload("res://Player/Projectiles/Bullet.tscn")
 
 
 func spawn_frag(rotation):
-	var frag_inst = frag_tscn.instance()
-		
+	var frag_inst = BULLET_TSCN.instance()
+
 	var frag_timer : Timer = frag_inst.get_node("LifeTime")
 	frag_timer.wait_time *= FRAG_LIFETIME_MULTIPLIER
 	

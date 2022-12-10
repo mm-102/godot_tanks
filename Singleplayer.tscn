@@ -36,6 +36,7 @@ scale = Vector2( 5, 1 )
 
 [node name="AmmoBox" parent="Objects" instance=ExtResource( 3 )]
 position = Vector2( 535, 420 )
+type = 2
 
 [node name="Projectiles" type="Node" parent="."]
 

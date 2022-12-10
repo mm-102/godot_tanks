@@ -1,8 +1,7 @@
 extends RigidBody2D
+class_name Projectile
 
 var player_path = null
-
-
 
 func _on_LifeTime_timeout():
 	die()

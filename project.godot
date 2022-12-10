@@ -9,12 +9,24 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Reference",
+"class": "Ammunition",
+"language": "GDScript",
+"path": "res://Global/Ammunition.gd"
+}, {
+"base": "RigidBody2D",
+"class": "Projectile",
+"language": "GDScript",
+"path": "res://Player/Projectiles/Projectile.gd"
+}, {
 "base": "Node",
 "class": "T_Clock",
 "language": "GDScript",
 "path": "res://Singletons/T_Clock.gd"
 } ]
 _global_script_class_icons={
+"Ammunition": "",
+"Projectile": "",
 "T_Clock": ""
 }
 
@@ -23,10 +35,6 @@ _global_script_class_icons={
 config/name="t"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
-
-[autoload]
-
-Ammunition="*res://Global/Ammunition.gd"
 
 [gdnative]
 

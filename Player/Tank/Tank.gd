@@ -1,7 +1,6 @@
 extends RigidBody2D
 
-const TYPES = Ammunition.TYPES
-export(TYPES) var ammo_type = Ammunition.TYPES.BULLET
+export(Ammunition.TYPES) var ammo_type = Ammunition.TYPES.BULLET
 
 const SPEED = 100
 const ROTATION_SPEED = 2
