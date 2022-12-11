@@ -74,6 +74,7 @@ func _shoot():
 		return
 	if ammo_type == BASE_AMMO_TYPE or special_ammo[ammo_type] <= 0:
 		ammo_type = BASE_AMMO_TYPE
+		emit_signal("special_ammo_type_change", ammo_type)
 	else:
 		special_ammo[ammo_type] -= 1
 		emit_signal("special_ammo_change", ammo_type, special_ammo[ammo_type])
