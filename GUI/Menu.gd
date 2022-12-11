@@ -26,5 +26,5 @@ func _ready():
 
 func _on_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
-	$"%PublicIPButton".set_text(str(json.result["ip"]))
+#	$"%PublicIPButton".set_text(str(json.result["ip"]))
 	$HTTPRequest.queue_free()
