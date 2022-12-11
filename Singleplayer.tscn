@@ -38,6 +38,19 @@ scale = Vector2( 5, 1 )
 position = Vector2( 535, 420 )
 type = 2
 
+[node name="AmmoBox2" parent="Objects" instance=ExtResource( 3 )]
+position = Vector2( 398, 452 )
+
+[node name="AmmoBox3" parent="Objects" instance=ExtResource( 3 )]
+position = Vector2( 582, 519 )
+
+[node name="AmmoBox4" parent="Objects" instance=ExtResource( 3 )]
+position = Vector2( 438, 527 )
+
+[node name="AmmoBox5" parent="Objects" instance=ExtResource( 3 )]
+position = Vector2( 290, 504 )
+type = 2
+
 [node name="Projectiles" type="Node" parent="."]
 
 [node name="Players" type="Node" parent="."]
@@ -45,6 +58,3 @@ type = 2
 [node name="Tank" parent="Players" instance=ExtResource( 1 )]
 position = Vector2( 234, 362 )
 ammo_type = 1
-
-[node name="Tank2" parent="Players" instance=ExtResource( 1 )]
-position = Vector2( 811, 386 )

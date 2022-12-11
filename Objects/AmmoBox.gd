@@ -6,7 +6,8 @@ export(Ammunition.TYPES) var type = Ammunition.TYPES.ROCKET
 
 func _on_AmmoBox_body_entered(player):
 	player.ammo_type = type
-	player.special_ammo_left += 1
+	player.special_ammo[type] += 1
+	player.emit_signal("special_ammo_change", type, player.special_ammo[type])
 	queue_free()
 	
 func _ready():

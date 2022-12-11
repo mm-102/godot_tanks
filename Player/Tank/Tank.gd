@@ -9,8 +9,13 @@ const MAX_AMMO = 5
 const DEATH_TIME = 20
 const BASE_AMMO_TYPE = Ammunition.TYPES.BULLET
 
+signal special_ammo_change(type, amount_left)
+
 var ammo_left = MAX_AMMO
-var special_ammo_left = 0
+var special_ammo = {
+	Ammunition.TYPES.ROCKET : 0,
+	Ammunition.TYPES.FRAG_BOMB : 0
+}
 var dead = false
 # Defined in code
 var player_stance: Dictionary 
@@ -26,7 +31,8 @@ onready var turret_node =  $"%Turret"
 onready var bullet_point_node = $"%BulletPoint"
 
 
-
+func _ready():
+	connect("special_ammo_change",get_node("/root/Main/Player_Gui_Layer/GUI"),"_on_special_ammo_change")
 
 func _integrate_forces(_state):
 	var velocity = Vector2.ZERO
@@ -52,10 +58,11 @@ func _integrate_forces(_state):
 func _shoot():
 	if ammo_left <= 0:
 		return
-	if special_ammo_left <= 0:
+	if ammo_type == BASE_AMMO_TYPE or special_ammo[ammo_type] <= 0:
 		ammo_type = BASE_AMMO_TYPE
 	else:
-		special_ammo_left -= 1
+		special_ammo[ammo_type] -= 1
+		emit_signal("special_ammo_change", ammo_type, special_ammo[ammo_type])
 	ammo_left -= 1
 	if is_multiplayer:
 		$"/root/Transfer".fetch_shoot(player_stance, ammo_type)
@@ -66,7 +73,6 @@ func _shoot():
 	bullet_inst.player_path = get_path()
 	bullet_inst.set_linear_velocity(velocity * BULLET_SPEED)
 	get_node("/root/Main/Map/Projectiles").add_child(bullet_inst)
-
 
 func _on_base_body_entered(body):
 	if !body.is_in_group("Projectiles"):
