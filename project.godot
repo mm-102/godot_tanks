@@ -36,6 +36,10 @@ config/name="t"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
+[debug]
+
+gdscript/warnings/enable=false
+
 [gdnative]
 
 singletons=[  ]

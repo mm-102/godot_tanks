@@ -63,7 +63,14 @@ func _shoot():
 	else:
 		special_ammo[ammo_type] -= 1
 		emit_signal("special_ammo_change", ammo_type, special_ammo[ammo_type])
+		emit_signal("special_ammo_change", ammo_type, special_ammo[ammo_type])
 	ammo_left -= 1
+	player_stance = {
+		"T": OS.get_ticks_msec(),
+		"P": position,
+		"R": rotation,
+		"TR": turret_node.global_rotation,
+	}
 	if is_multiplayer:
 		$"/root/Transfer".fetch_shoot(player_stance, ammo_type)
 	var bullet_inst = Ammunition.get_tscn(ammo_type).instance()

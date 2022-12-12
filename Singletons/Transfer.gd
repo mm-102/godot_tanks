@@ -40,25 +40,36 @@ func _on_connection_succeeded():
 func fetch_init_data():
 	rpc_id(1, "recive_init_data")
 
-remote func recive_init_data(init_data):
+remote func recive_init_data(spawn_point, init_data):
 	map_node = $"/root/Main/Map"
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	map_node.self_initiation()
+	map_node.self_initiation(spawn_point)
 	for player_id in init_data:
 		map_node.create_player(player_id)
 
 #---------- CORE GAME MECHANIC ----------
+
+remote func recive_player_destroyed(player_id, position, rotation):
+	if !get_tree().get_rpc_sender_id() == 1:
+		return
+	if player_id == get_tree().get_network_unique_id():
+		$"/root/Main".exit_to_menu()
+		return
+	map_node = $"/root/Main/Map"
+	map_node.player_destroyed(player_id, position, rotation)
+
 func fetch_stance(player_stance: Dictionary):
 	rpc_unreliable_id(1, "recive_stance", player_stance)
+
 func fetch_shoot(player_stance, shoot_type):
 	rpc_unreliable_id(1, "recive_shoot", player_stance, shoot_type)
 
-remote func recive_world_stance(playerS_stance):
+remote func recive_world_stance(time, playerS_stance):
 	map_node = $"/root/Main/Map"
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	map_node.add_world_stance(playerS_stance)
+	map_node.add_world_stance(time, playerS_stance)
 
 remote func recive_shoot(player_id, player_stance, ammo_type):
 	if !get_tree().get_rpc_sender_id() == 1:
@@ -71,7 +82,3 @@ remote func recive_new_player(player_id: int):
 		return
 	if !player_id == get_tree().get_network_unique_id():
 		map_node.create_player(player_id)
-
-remote func recive_despawn_player(player_id: int):
-	if !get_tree().get_rpc_sender_id() == 1:
-		return

@@ -1,5 +1,6 @@
 extends KinematicBody2D
-
+onready var wall = $Hitbox.duplicate(true)
+onready var animation_player = $"%AnimationPlayer"
 
 
 func template_stance(previous_stance, next_stance, interpolation_factor):
@@ -9,3 +10,14 @@ func template_stance(previous_stance, next_stance, interpolation_factor):
 	set_position(_position)
 	$Hitbox.set_rotation(_rotation)
 	$Turret.set_rotation(_turret_rotation)
+
+func get_hitbox():
+	return wall
+
+func die():
+	$Hitbox.set_disabled(true)
+	animation_player.play("explode")
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	queue_free()
