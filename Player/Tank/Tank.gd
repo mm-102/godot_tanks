@@ -10,6 +10,7 @@ const DEATH_TIME = 20
 const BASE_AMMO_TYPE = Ammunition.TYPES.BULLET
 
 signal special_ammo_change(type, amount_left)
+signal special_ammo_type_change(new_type)
 
 var ammo_left = MAX_AMMO
 var special_ammo = {
@@ -33,8 +34,21 @@ onready var bullet_point_node = $"%BulletPoint"
 
 func _ready():
 	connect("special_ammo_change",get_node("/root/Main/Player_Gui_Layer/GUI"),"_on_special_ammo_change")
+	connect("special_ammo_type_change",get_node("/root/Main/Player_Gui_Layer/GUI"),"_on_special_ammo_type_change")
 
 func _integrate_forces(_state):
+	if Input.is_action_just_pressed("p_bullet"):
+		ammo_type = Ammunition.TYPES.BULLET
+		emit_signal("special_ammo_type_change", ammo_type)
+	
+	if Input.is_action_just_pressed("p_rocket"):
+		ammo_type = Ammunition.TYPES.ROCKET
+		emit_signal("special_ammo_type_change", ammo_type)
+	
+	if Input.is_action_just_pressed("p_frag"):
+		ammo_type = Ammunition.TYPES.FRAG_BOMB
+		emit_signal("special_ammo_type_change", ammo_type)
+	
 	var velocity = Vector2.ZERO
 	velocity.y = int(Input.is_action_pressed("p_backward")) - int(Input.is_action_pressed("p_forward"))
 	var direction = int(Input.is_action_pressed("p_right")) - int(Input.is_action_pressed("p_left"))
@@ -60,6 +74,7 @@ func _shoot():
 		return
 	if ammo_type == BASE_AMMO_TYPE or special_ammo[ammo_type] <= 0:
 		ammo_type = BASE_AMMO_TYPE
+		emit_signal("special_ammo_type_change", ammo_type)
 	else:
 		special_ammo[ammo_type] -= 1
 		emit_signal("special_ammo_change", ammo_type, special_ammo[ammo_type])

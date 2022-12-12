@@ -29,7 +29,9 @@ func _on_request_completed(_result, _response_code, _headers, body):
 		$"%PublicIPButton".set_text(str(json.result["ip"]))
 		$HTTPRequest.queue_free()
 
+
 func _on_PublicIPButton_pressed():
+	#warning-ignore:return_value_discarded
 	if has_node("HTTPRequest"):
 		$HTTPRequest.cancel_request()
 		$"%PublicIPButton".set_text("...")
