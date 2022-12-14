@@ -20,4 +20,5 @@ func die():
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):
+	print("[TankTemplate]: finished of animation player, name: "+anim_name)
 	queue_free()

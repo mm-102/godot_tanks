@@ -26,6 +26,7 @@ func _connect_to_server():
 
 func _server_disconnected():
 	print("[Transfer]: Connection lost")
+	$"/root/Main".exit_to_menu()
 
 func _on_connection_failed():
 	print("[Transfer]: Faild to connect")
@@ -35,18 +36,21 @@ func _on_connection_succeeded():
 	fetch_init_data()
 	clock_node.determine_begining_time_diff()
 	time_diff_timer_node.start()
+	$"/root/Main/Menu".queue_free()
 
 #---- INIT DATA ----
 func fetch_init_data():
 	rpc_id(1, "recive_init_data")
 
-remote func recive_init_data(spawn_point, init_data):
+remote func recive_init_data(spawn_point, playerS_name, playerS_corpseS):
 	map_node = $"/root/Main/Map"
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
 	map_node.self_initiation(spawn_point)
-	for player_id in init_data:
+	for player_id in playerS_name:
 		map_node.create_player(player_id)
+	for corpse_data in playerS_corpseS:
+		map_node.create_corpse(corpse_data.Name, corpse_data.P, corpse_data.R)
 
 #---------- CORE GAME MECHANIC ----------
 
@@ -71,10 +75,14 @@ remote func recive_world_stance(time, playerS_stance):
 		return
 	map_node.add_world_stance(time, playerS_stance)
 
-remote func recive_shoot(player_id, player_stance, ammo_type):
+remote func recive_shoot(player_id, bullet_data):
+	map_node = $"/root/Main/Map"
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	#To-Do
+	if player_id == get_tree().get_network_unique_id():
+		map_node.spawn_bullet(player_id, bullet_data)
+	else:
+		map_node.spawn_bullet(player_id, bullet_data)
 
 remote func recive_new_player(player_id: int):
 	map_node = $"/root/Main/Map"

@@ -2,6 +2,7 @@ extends Node2D
 
 var tank = preload("res://Player/Tank/Tank.tscn")
 var tank_template = preload("res://Player/Tank/TankTemplate.tscn")
+var empty_gd = preload("res://Empty.gd")
 var time_of_last_stance = -INF
 var world_stance_buffer: Array
 onready var playerS_node = $"%Players"
@@ -17,17 +18,26 @@ func create_player(player_id):
 	tank_inst.name = str(player_id)
 	$Players.add_child(tank_inst, true)
 
+
 func player_destroyed(player_id, _position, _rotation):
+	get_node("Players/" + str(player_id)).die()
+	create_corpse(player_id, _position, _rotation)
+
+func create_corpse(player_id, _position, _rotation):
 	var static_body2d = StaticBody2D.new()
-	var wall = get_node("Players/" + str(player_id)).get_hitbox()
+	var wall_inst = tank_template.instance()
 	static_body2d.name = str(player_id)
 	static_body2d.set_collision_mask(3)
 	static_body2d.set_position(_position)
 	static_body2d.rotation = _rotation
-	wall.get_child(0).set_frame(4)
-	static_body2d.add_child(wall)
-	get_node("Players/" + str(player_id)).die()
+	wall_inst.replace_by(static_body2d, true)
+	static_body2d.get_node("%Sprite").set_frame(4)
+	static_body2d.get_node("%Turret").queue_free()
 	$Objects.add_child(static_body2d)
+
+
+func spawn_bullet(player_id, bullet_data):
+	pass
 
 
 
@@ -36,8 +46,6 @@ func add_world_stance(time, world_stance):
 		time_of_last_stance = time
 		world_stance_buffer.append({"T": time, "WS": world_stance})
 
-func process_world_stance(playerS_stance):
-	pass
 
 func _physics_process(_delta: float) -> void:
 	var render_time = get_node("/root/Transfer/Clock").client_clock

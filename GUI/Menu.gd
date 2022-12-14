@@ -9,6 +9,7 @@ onready var main_node = $"/root/Main"
 
 
 func _ready():
+	#warning-ignore:return_value_discarded
 	$HTTPRequest.connect("request_completed", self, "_on_request_completed")
 
 
@@ -18,7 +19,7 @@ func _on_SingleplayerButton_pressed():
 
 func _on_MultiplayerButton_pressed():
 	main_node.game_mode(1, ADRESS[$"%OptionButton".get_selected()])
-	queue_free()
+	# freed only on conneciton
 
 
 func _on_request_completed(_result, _response_code, _headers, body):

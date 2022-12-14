@@ -33,7 +33,9 @@ onready var bullet_point_node = $"%BulletPoint"
 
 
 func _ready():
+	#warning-ignore:return_value_discarded
 	connect("special_ammo_change",get_node("/root/Main/Player_Gui_Layer/GUI"),"_on_special_ammo_change")
+	#warning-ignore:return_value_discarded
 	connect("special_ammo_type_change",get_node("/root/Main/Player_Gui_Layer/GUI"),"_on_special_ammo_type_change")
 
 func _integrate_forces(_state):
@@ -88,13 +90,14 @@ func _shoot():
 	}
 	if is_multiplayer:
 		$"/root/Transfer".fetch_shoot(player_stance, ammo_type)
-	var bullet_inst = Ammunition.get_tscn(ammo_type).instance()
-	var rot = turret_node.global_rotation
-	var velocity = Vector2.UP.rotated(rot)
-	bullet_inst.position = bullet_point_node.global_position
-	bullet_inst.player_path = get_path()
-	bullet_inst.set_linear_velocity(velocity * BULLET_SPEED)
-	get_node("/root/Main/Map/Projectiles").add_child(bullet_inst)
+	else:
+		var bullet_inst = Ammunition.get_tscn(ammo_type).instance()
+		var rot = turret_node.global_rotation
+		var velocity = Vector2.UP.rotated(rot)
+		bullet_inst.position = bullet_point_node.global_position
+		bullet_inst.player_path = get_path()
+		bullet_inst.set_linear_velocity(velocity * BULLET_SPEED)
+		get_node("/root/Main/Map/Projectiles").add_child(bullet_inst)
 
 func _on_base_body_entered(body):
 	if !body.is_in_group("Projectiles"):
