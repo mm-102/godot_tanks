@@ -19,7 +19,8 @@ func create_player(player_id):
 	$Players.add_child(tank_inst, true)
 
 
-func player_destroyed(player_id, _position, _rotation):
+func player_destroyed(player_id, _position, _rotation, projectile_name):
+	get_node("/root/Main/Map/Projectiles/" + projectile_name).die()
 	get_node("Players/" + str(player_id)).die()
 	create_corpse(player_id, _position, _rotation)
 
@@ -37,7 +38,13 @@ func create_corpse(player_id, _position, _rotation):
 
 
 func spawn_bullet(player_id, bullet_data):
-	pass
+	var bullet_inst = Ammunition.get_tscn(bullet_data.AT).instance()
+	bullet_inst.name = bullet_data.Name
+	bullet_inst.position = bullet_data.SP
+	bullet_inst.set_linear_velocity(bullet_data.V)
+	if player_id == get_tree().get_network_unique_id():
+		bullet_inst.player_path = NodePath(Paths.SELF_PLAYER)
+	get_node("/root/Main/Map/Projectiles").add_child(bullet_inst)
 
 
 

@@ -54,14 +54,14 @@ remote func recive_init_data(spawn_point, playerS_name, playerS_corpseS):
 
 #---------- CORE GAME MECHANIC ----------
 
-remote func recive_player_destroyed(player_id, position, rotation):
+remote func recive_player_destroyed(player_id, position, rotation, projectile_name):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
 	if player_id == get_tree().get_network_unique_id():
 		$"/root/Main".exit_to_menu()
 		return
 	map_node = $"/root/Main/Map"
-	map_node.player_destroyed(player_id, position, rotation)
+	map_node.player_destroyed(player_id, position, rotation, projectile_name)
 
 func fetch_stance(player_stance: Dictionary):
 	rpc_unreliable_id(1, "recive_stance", player_stance)
@@ -79,10 +79,7 @@ remote func recive_shoot(player_id, bullet_data):
 	map_node = $"/root/Main/Map"
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	if player_id == get_tree().get_network_unique_id():
-		map_node.spawn_bullet(player_id, bullet_data)
-	else:
-		map_node.spawn_bullet(player_id, bullet_data)
+	map_node.spawn_bullet(player_id, bullet_data)
 
 remote func recive_new_player(player_id: int):
 	map_node = $"/root/Main/Map"
