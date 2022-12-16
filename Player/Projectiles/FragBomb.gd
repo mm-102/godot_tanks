@@ -23,7 +23,6 @@ func spawn_frag(rotation):
 	
 	var velocity = Vector2.UP.rotated(rotation)
 	frag_inst.position = position + 1 * velocity # separate frags from each other
-	frag_inst.player_path = get_path()
 	frag_inst.set_linear_velocity(velocity * FRAG_SPEED)
 	get_node("/root/Main/Map/Projectiles").add_child(frag_inst)
 	
