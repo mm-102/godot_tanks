@@ -23,7 +23,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4 ]
 }
 
-[node name="PlayerIntoWall" type="Area2D"]
+[node name="PlayerCorpse" type="Area2D"]
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
