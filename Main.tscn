@@ -13,7 +13,3 @@ script = ExtResource( 2 )
 visible = false
 
 [node name="GUI" parent="Player_Gui_Layer" instance=ExtResource( 3 )]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_top = -40.0
-margin_bottom = 0.0

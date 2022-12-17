@@ -6,14 +6,14 @@ const selection_color = "70ffff"
 const base_color = "ffffff"
 
 onready var Numbers = {
-	Ammunition.TYPES.ROCKET : $"HBoxContainer/RocketCounter/Background/Number",
-	Ammunition.TYPES.FRAG_BOMB : $"HBoxContainer/FragBombCounter/Background/Number"
+	Ammunition.TYPES.ROCKET : $"Ammunition/RocketCounter/Background/Number",
+	Ammunition.TYPES.FRAG_BOMB : $"Ammunition/FragBombCounter/Background/Number"
 }
 
 onready var Backgrounds = {
-	Ammunition.TYPES.BULLET : $"HBoxContainer/BulletCounter/Background",
-	Ammunition.TYPES.ROCKET : $"HBoxContainer/RocketCounter/Background",
-	Ammunition.TYPES.FRAG_BOMB : $"HBoxContainer/FragBombCounter/Background"
+	Ammunition.TYPES.BULLET : $"Ammunition/BulletCounter/Background",
+	Ammunition.TYPES.ROCKET : $"Ammunition/RocketCounter/Background",
+	Ammunition.TYPES.FRAG_BOMB : $"Ammunition/FragBombCounter/Background"
 }
 
 
