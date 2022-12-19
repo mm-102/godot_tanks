@@ -21,7 +21,10 @@ func game_mode(sel_mode: int, adress):
 
 func exit_to_menu():
 	#[improve] Figure out way to just queue free everything and start main tscn
-	$"/root/Transfer".queue_free()
-	$Map.queue_free()
+	if is_multiplayer:
+		$"/root/Transfer".close()
+		$"/root/Transfer".queue_free()
+	#warning-ignore:return_value_discarded
+	get_tree().reload_current_scene() # I guess it works
 	add_child(menu_gui_tscn.instance())
 	

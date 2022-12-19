@@ -8,7 +8,7 @@ const MAP_PATH_OUT = "/root/Main/Map"
 onready var time_diff_timer_node = $"%TimeDiffTimer"
 onready var clock_node = $"%Clock"
 onready var map_node
-
+var network : NetworkedMultiplayerENet = null
 
 
 #---------- SERVER CREATION ----------
@@ -16,7 +16,7 @@ func _ready():
 	_connect_to_server()
 
 func _connect_to_server():
-	var network = NetworkedMultiplayerENet.new()
+	network = NetworkedMultiplayerENet.new()
 	network.connect("connection_failed", self, "_on_connection_failed")
 	network.connect("connection_succeeded", self, "_on_connection_succeeded")
 	network.connect("server_disconnected", self, "_server_disconnected")
@@ -87,3 +87,8 @@ remote func recive_new_player(player_id: int):
 		return
 	if !player_id == get_tree().get_network_unique_id():
 		map_node.create_player(player_id)
+		
+
+func close():
+	network.call_deferred("close_connection")
+	print("[Transfer]: Disconnected")

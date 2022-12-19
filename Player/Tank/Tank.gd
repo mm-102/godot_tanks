@@ -66,10 +66,13 @@ func _integrate_forces(_state):
 		$"/root/Transfer".fetch_stance(player_stance)
 	set_angular_velocity(direction * ROTATION_SPEED)
 	set_linear_velocity(velocity.rotated(rotation) * SPEED)
-	if Input.is_action_just_pressed("p_shoot"):
+#	if Input.is_action_just_pressed("p_shoot"):
+#		call_deferred("p_shoot")
+#		print("tank")
+
+func _unhandled_input(event):	#prevent shooting while clicking on gui		maybe all player input should go here?
+	if event.is_action_pressed("p_shoot"):
 		call_deferred("_shoot")
-
-
 
 func _shoot():
 	if ammo_left <= 0:
