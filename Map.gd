@@ -7,6 +7,18 @@ var time_of_last_stance = -INF
 var world_stance_buffer: Array
 onready var playerS_node = $"%Players"
 
+signal new_scoreboard_player(name)
+signal update_player_score(name, score)
+signal delete_scoreboard_player(name)
+
+
+func _ready():
+	#warning-ignore:return_value_discarded
+	connect("new_scoreboard_player",get_node("/root/Main/Player_Gui_Layer/GUI"),"_on_new_scoreboard_player")
+	#warning-ignore:return_value_discarded
+	connect("update_player_score",get_node("/root/Main/Player_Gui_Layer/GUI"),"_on_update_player_score")
+	#warning-ignore:return_value_discarded
+	connect("delete_scoreboard_player",get_node("/root/Main/Player_Gui_Layer/GUI"),"_on_delete_scoreboard_player")
 
 func self_initiation(spawn_point):
 	var tank_inst = tank.instance()
@@ -17,12 +29,16 @@ func create_player(player_id):
 	var tank_inst = tank_template.instance()
 	tank_inst.name = str(player_id)
 	$Players.add_child(tank_inst, true)
+	emit_signal("new_scoreboard_player", tank_inst.name) # change to proper player name when nicks implemented
 
 
 func player_destroyed(player_id, _position, _rotation, projectile_name):
 	get_node("/root/Main/Map/Projectiles/" + projectile_name).die()
 	get_node("Players/" + str(player_id)).die()
 	create_corpse(player_id, _position, _rotation)
+	
+	#temp
+	emit_signal("delete_scoreboard_player", str(player_id))
 
 func create_corpse(player_id, _position, _rotation):
 	var static_body2d = StaticBody2D.new()
