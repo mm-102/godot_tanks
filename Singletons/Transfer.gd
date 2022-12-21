@@ -42,7 +42,7 @@ func _on_connection_succeeded():
 func fetch_init_data():
 	rpc_id(1, "recive_init_data")
 
-remote func recive_init_data(spawn_point, playerS_name, playerS_corpseS):
+remote func recive_init_data(spawn_point, playerS_name, playerS_corpseS, playerS_score):
 	map_node = $"/root/Main/Map"
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
@@ -51,6 +51,8 @@ remote func recive_init_data(spawn_point, playerS_name, playerS_corpseS):
 		map_node.create_player(player_id)
 	for corpse_data in playerS_corpseS:
 		map_node.create_corpse(corpse_data.Name, corpse_data.P, corpse_data.R)
+	for score_data in playerS_score:
+		map_node.update_player_score(score_data.Name, score_data.Score)
 
 #---------- CORE GAME MECHANIC ----------
 
@@ -88,6 +90,16 @@ remote func recive_new_player(player_id: int):
 	if !player_id == get_tree().get_network_unique_id():
 		map_node.create_player(player_id)
 		
+remote func recive_score_update(player_id: String, new_score: int):
+	map_node = $"/root/Main/Map"
+	if !get_tree().get_rpc_sender_id() == 1:
+		return
+	var player_name
+	if player_id == str(get_tree().get_network_unique_id()):
+		player_name = "LocalPlayer"
+	else:
+		player_name = player_id
+	map_node.update_player_score(player_name, new_score)
 
 func close():
 	network.call_deferred("close_connection")

@@ -44,6 +44,6 @@ margin_right = 165.0
 margin_bottom = 123.0
 theme = SubResource( 4 )
 
-[node name="LocalPlayerScore" parent="Scores" instance=ExtResource( 2 )]
+[node name="LocalPlayer" parent="Scores" instance=ExtResource( 2 )]
 margin_right = 165.0
 margin_bottom = 20.0

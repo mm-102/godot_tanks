@@ -20,6 +20,9 @@ func _ready():
 	#warning-ignore:return_value_discarded
 	connect("delete_scoreboard_player",get_node("/root/Main/Player_Gui_Layer/GUI"),"_on_delete_scoreboard_player")
 
+func update_player_score(player_name, new_score):
+	emit_signal("update_player_score", player_name, new_score)
+
 func self_initiation(spawn_point):
 	var tank_inst = tank.instance()
 	tank_inst.position = spawn_point
