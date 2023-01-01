@@ -9,10 +9,11 @@ const MODE_DICT = {
 }
 var is_multiplayer = false
 
-func game_mode(sel_mode: int, adress):
+func game_mode(sel_mode: int, adress, player_nick):
 	var mode_inst = MODE_DICT[sel_mode].instance()
 	if sel_mode == GAME_MODE.MULTI:
 		is_multiplayer = true
+		mode_inst.local_player_name = player_nick
 		var transfer_inst = transfe_pck.instance()
 		transfer_inst.ip = adress
 		get_node("/root").add_child(transfer_inst)

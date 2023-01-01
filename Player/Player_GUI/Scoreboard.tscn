@@ -29,6 +29,7 @@ margin_top = 4.0
 margin_bottom = 150.0
 grow_horizontal = 0
 rect_min_size = Vector2( 165, 200 )
+mouse_filter = 2
 
 [node name="Label" type="Label" parent="."]
 margin_right = 165.0
@@ -42,8 +43,10 @@ Scoreboard"
 margin_top = 103.0
 margin_right = 165.0
 margin_bottom = 123.0
+mouse_filter = 2
 theme = SubResource( 4 )
 
 [node name="LocalPlayer" parent="Scores" instance=ExtResource( 2 )]
 margin_right = 165.0
 margin_bottom = 20.0
+mouse_filter = 2

@@ -6,6 +6,7 @@ var empty_gd = preload("res://Empty.gd")
 var time_of_last_stance = -INF
 var world_stance_buffer: Array
 onready var playerS_node = $"%Players"
+var local_player_name = ""
 
 signal new_scoreboard_player(name)
 signal update_player_score(name, score)
@@ -20,19 +21,23 @@ func _ready():
 	#warning-ignore:return_value_discarded
 	connect("delete_scoreboard_player",get_node("/root/Main/Player_Gui_Layer/GUI"),"_on_delete_scoreboard_player")
 
-func update_player_score(player_name, new_score):
-	emit_signal("update_player_score", player_name, new_score)
+func update_player_score(score_name, new_score):
+	emit_signal("update_player_score", score_name, new_score)
 
 func self_initiation(spawn_point):
 	var tank_inst = tank.instance()
 	tank_inst.position = spawn_point
+	tank_inst.player_name = local_player_name
 	add_child_below_node($Players, tank_inst, true)
 
-func create_player(player_id):
+func create_player(player_id : int, player_name : String):
 	var tank_inst = tank_template.instance()
 	tank_inst.name = str(player_id)
+	if player_name.empty():
+		player_name = "Player" + str(player_id)
+	tank_inst.player_name = player_name
 	$Players.add_child(tank_inst, true)
-	emit_signal("new_scoreboard_player", tank_inst.name) # change to proper player name when nicks implemented
+	emit_signal("new_scoreboard_player", tank_inst.name, tank_inst.player_name)
 
 
 func player_destroyed(player_id, _position, _rotation, projectile_name):

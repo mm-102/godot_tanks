@@ -40,15 +40,16 @@ func _on_connection_succeeded():
 
 #---- INIT DATA ----
 func fetch_init_data():
-	rpc_id(1, "recive_init_data")
+	map_node = $"/root/Main/Map"
+	rpc_id(1, "recive_init_data", map_node.local_player_name)
 
 remote func recive_init_data(spawn_point, playerS_name, playerS_corpseS, playerS_score):
 	map_node = $"/root/Main/Map"
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
 	map_node.self_initiation(spawn_point)
-	for player_id in playerS_name:
-		map_node.create_player(player_id)
+	for player in playerS_name:
+		map_node.create_player(player.ID, player.PlayerName)
 	for corpse_data in playerS_corpseS:
 		map_node.create_corpse(corpse_data.Name, corpse_data.P, corpse_data.R)
 	for score_data in playerS_score:
@@ -83,23 +84,23 @@ remote func recive_shoot(player_id, bullet_data):
 		return
 	map_node.spawn_bullet(player_id, bullet_data)
 
-remote func recive_new_player(player_id: int):
+remote func recive_new_player(player_id: int, player_name : String):
 	map_node = $"/root/Main/Map"
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
 	if !player_id == get_tree().get_network_unique_id():
-		map_node.create_player(player_id)
+		map_node.create_player(player_id, player_name)
 		
 remote func recive_score_update(player_id: String, new_score: int):
 	map_node = $"/root/Main/Map"
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	var player_name
+	var score_name
 	if player_id == str(get_tree().get_network_unique_id()):
-		player_name = "LocalPlayer"
+		score_name = "LocalPlayer"
 	else:
-		player_name = player_id
-	map_node.update_player_score(player_name, new_score)
+		score_name = player_id
+	map_node.update_player_score(score_name, new_score)
 
 func close():
 	network.call_deferred("close_connection")

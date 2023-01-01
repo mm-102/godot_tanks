@@ -78,6 +78,26 @@ margin_right = 274.0
 margin_bottom = 220.0
 text = "Check ip"
 
+[node name="PlayerNickInput" type="LineEdit" parent="Background"]
+unique_name_in_owner = true
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -63.0
+margin_top = 60.0
+margin_right = 121.0
+margin_bottom = 86.0
+align = 1
+max_length = 20
+context_menu_enabled = false
+
+[node name="Nick" type="Label" parent="Background"]
+margin_left = 40.0
+margin_top = 64.0
+margin_right = 110.0
+margin_bottom = 104.0
+rect_scale = Vector2( 0.5, 0.5 )
+text = "Nick:"
+
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
 [connection signal="pressed" from="Background/SingleplayerButton" to="." method="_on_SingleplayerButton_pressed"]

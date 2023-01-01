@@ -48,10 +48,10 @@ func _on_PauseButton_toggled(button_pressed):
 
 # ---- scoreboard ----
 
-func _on_new_scoreboard_player(name):
+func _on_new_scoreboard_player(name, player_name):
 	var player_name_score = name_score_tscn.instance()
 	player_name_score.name = name
-	player_name_score.get_node("Name").text = name + ':'
+	player_name_score.get_node("Name").text = player_name + ':'
 	player_name_score.get_node("Score").text = "0"
 	scores_node.add_child(player_name_score)
 
