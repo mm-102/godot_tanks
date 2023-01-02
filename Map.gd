@@ -27,6 +27,8 @@ func update_player_score(score_name, new_score):
 func self_initiation(spawn_point):
 	var tank_inst = tank.instance()
 	tank_inst.position = spawn_point
+	if local_player_name.empty():
+		local_player_name = "You"
 	tank_inst.player_name = local_player_name
 	add_child_below_node($Players, tank_inst, true)
 
@@ -56,6 +58,7 @@ func create_corpse(player_id, _position, _rotation):
 	static_body2d.set_position(_position)
 	static_body2d.rotation = _rotation
 	wall_inst.replace_by(static_body2d, true)
+	static_body2d.get_node("%Tank").disconnect("ready", static_body2d, "_on_Tank_ready")
 	static_body2d.get_node("%Sprite").set_frame(4)
 	static_body2d.get_node("%Turret").queue_free()
 	$Objects.add_child(static_body2d)

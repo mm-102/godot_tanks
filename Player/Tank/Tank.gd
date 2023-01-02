@@ -9,7 +9,6 @@ const MAX_AMMO = 5
 const DEATH_TIME = 20
 const BASE_AMMO_TYPE = Ammunition.TYPES.BULLET
 
-var player_name = "Player" # defined when spawning
 
 signal special_ammo_change(type, amount_left)
 signal special_ammo_type_change(new_type)
@@ -33,6 +32,9 @@ onready var animation_player = $"%AnimationPlayer"
 onready var turret_node =  $"%Turret"
 onready var bullet_point_node = $"%BulletPoint"
 
+
+func set_display_name(text):
+	$"%NickLabel".text = text
 
 func _ready():
 	#warning-ignore:return_value_discarded

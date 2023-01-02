@@ -2,8 +2,9 @@ extends KinematicBody2D
 onready var wall = $Hitbox.duplicate(true)
 onready var animation_player = $"%AnimationPlayer"
 
-var player_name = "Player" # defined when spawning
 
+func set_display_name(text):
+	$"%NickLabel".text = text
 
 func template_stance(previous_stance, next_stance, interpolation_factor):
 	var _position = lerp(previous_stance.P, next_stance.P, interpolation_factor)
