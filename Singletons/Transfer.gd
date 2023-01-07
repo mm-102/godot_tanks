@@ -43,7 +43,7 @@ func fetch_init_data():
 	map_node = $"/root/Main/Map"
 	rpc_id(1, "recive_init_data", map_node.local_player_name)
 
-remote func recive_init_data(spawn_point, playerS_name, playerS_corpseS, playerS_score):
+remote func recive_init_data(spawn_point, playerS_name, playerS_corpseS, playerS_score, mapset):
 	map_node = $"/root/Main/Map"
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
@@ -54,6 +54,7 @@ remote func recive_init_data(spawn_point, playerS_name, playerS_corpseS, playerS
 		map_node.create_corpse(corpse_data.Name, corpse_data.P, corpse_data.R)
 	for score_data in playerS_score:
 		map_node.update_player_score(score_data.Name, score_data.Score)
+	map_node.get_node("Map").set_mapset(mapset)
 
 #---------- CORE GAME MECHANIC ----------
 
