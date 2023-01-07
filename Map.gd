@@ -6,23 +6,49 @@ var empty_gd = preload("res://Empty.gd")
 var time_of_last_stance = -INF
 var world_stance_buffer: Array
 onready var playerS_node = $"%Players"
+var local_player_name = ""
 
+signal new_scoreboard_player(name)
+signal update_player_score(name, score)
+signal delete_scoreboard_player(name)
+
+
+func _ready():
+	#warning-ignore:return_value_discarded
+	connect("new_scoreboard_player",get_node("/root/Main/Player_Gui_Layer/GUI"),"_on_new_scoreboard_player")
+	#warning-ignore:return_value_discarded
+	connect("update_player_score",get_node("/root/Main/Player_Gui_Layer/GUI"),"_on_update_player_score")
+	#warning-ignore:return_value_discarded
+	connect("delete_scoreboard_player",get_node("/root/Main/Player_Gui_Layer/GUI"),"_on_delete_scoreboard_player")
+
+func update_player_score(score_name, new_score):
+	emit_signal("update_player_score", score_name, new_score)
 
 func self_initiation(spawn_point):
 	var tank_inst = tank.instance()
 	tank_inst.position = spawn_point
+	if local_player_name.empty():
+		local_player_name = "You"
+	tank_inst.player_name = local_player_name
 	add_child_below_node($Players, tank_inst, true)
 
-func create_player(player_id):
+func create_player(player_id : int, player_name : String):
 	var tank_inst = tank_template.instance()
 	tank_inst.name = str(player_id)
+	if player_name.empty():
+		player_name = "Player" + str(player_id)
+	tank_inst.player_name = player_name
 	$Players.add_child(tank_inst, true)
+	emit_signal("new_scoreboard_player", tank_inst.name, tank_inst.player_name)
 
 
 func player_destroyed(player_id, _position, _rotation, projectile_name):
 	get_node("/root/Main/Map/Projectiles/" + projectile_name).die()
 	get_node("Players/" + str(player_id)).die()
 	create_corpse(player_id, _position, _rotation)
+	
+	#temp
+	emit_signal("delete_scoreboard_player", str(player_id))
 
 func create_corpse(player_id, _position, _rotation):
 	var static_body2d = StaticBody2D.new()
@@ -32,6 +58,7 @@ func create_corpse(player_id, _position, _rotation):
 	static_body2d.set_position(_position)
 	static_body2d.rotation = _rotation
 	wall_inst.replace_by(static_body2d, true)
+	static_body2d.get_node("%Tank").disconnect("ready", static_body2d, "_on_Tank_ready")
 	static_body2d.get_node("%Sprite").set_frame(4)
 	static_body2d.get_node("%Turret").queue_free()
 	$Objects.add_child(static_body2d)

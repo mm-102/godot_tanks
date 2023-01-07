@@ -14,11 +14,11 @@ func _ready():
 
 
 func _on_SingleplayerButton_pressed():
-	main_node.game_mode(0, null)
+	main_node.game_mode(0, null, $"%PlayerNickInput".text)
 	queue_free()
 
 func _on_MultiplayerButton_pressed():
-	main_node.game_mode(1, ADRESS[$"%OptionButton".get_selected()])
+	main_node.game_mode(1, ADRESS[$"%OptionButton".get_selected()], $"%PlayerNickInput".text)
 	# freed only on conneciton
 
 

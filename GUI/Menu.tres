@@ -1,0 +1,37 @@
+[gd_resource type="Theme" load_steps=9 format=2]
+
+[ext_resource path="res://textures/GUI/Button.png" type="Texture" id=1]
+[ext_resource path="res://textures/text/Bosk.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=6]
+size = 20
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 244, 43 )
+modulate_color = Color( 0.909804, 0.909804, 0.909804, 1 )
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 244, 43 )
+
+[sub_resource type="StyleBoxTexture" id=3]
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 244, 43 )
+modulate_color = Color( 0.54902, 0.54902, 0.54902, 1 )
+
+[sub_resource type="DynamicFont" id=8]
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 40
+font_data = ExtResource( 2 )
+
+[resource]
+Button/fonts/font = SubResource( 6 )
+Button/styles/hover = SubResource( 1 )
+Button/styles/normal = SubResource( 2 )
+Button/styles/pressed = SubResource( 3 )
+CheckBox/fonts/font = SubResource( 8 )
+Label/fonts/font = SubResource( 4 )
