@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://textures/tank_base_anim.png" type="Texture" id=1]
 [ext_resource path="res://Player/Tank/Tank.gd" type="Script" id=2]
 [ext_resource path="res://textures/tank_turret.png" type="Texture" id=3]
 [ext_resource path="res://Player/Tank/Turret.gd" type="Script" id=4]
-[ext_resource path="res://Player/Tank/TankContainer.gd" type="Script" id=5]
 
 [sub_resource type="PhysicsMaterial" id=2]
 
@@ -54,10 +53,7 @@ tracks/1/keys = {
 "values": [ true, false ]
 }
 
-[node name="TankContainer" type="Node"]
-script = ExtResource( 5 )
-
-[node name="Tank" type="RigidBody2D" parent="." groups=["Players"]]
+[node name="Tank" type="RigidBody2D" groups=["Players"]]
 unique_name_in_owner = true
 collision_mask = 7
 physics_material_override = SubResource( 2 )
@@ -66,46 +62,54 @@ contacts_reported = 1
 contact_monitor = true
 script = ExtResource( 2 )
 
-[node name="Hitbox" type="CollisionShape2D" parent="Tank"]
+[node name="Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="Tank"]
+[node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 hframes = 5
 
-[node name="Turret" type="Sprite" parent="Tank"]
+[node name="Turret" type="Sprite" parent="."]
 unique_name_in_owner = true
 texture = ExtResource( 3 )
 script = ExtResource( 4 )
 
-[node name="BulletPoint" type="Position2D" parent="Tank/Turret"]
+[node name="BulletPoint" type="Position2D" parent="Turret"]
 unique_name_in_owner = true
 position = Vector2( 0, -60 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Tank"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 anims/RESET = SubResource( 4 )
 anims/explode = SubResource( 3 )
 
-[node name="Camera2D" type="Camera2D" parent="Tank"]
+[node name="Camera2D" type="Camera2D" parent="."]
 current = true
 
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Tank"]
-remote_path = NodePath("../../NickPosition")
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+remote_path = NodePath("../CanvasLayer/NickPosition")
 update_rotation = false
 update_scale = false
 
-[node name="NickPosition" type="Position2D" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+offset = Vector2( 0, 40 )
+transform = Transform2D( 1, 0, 0, 1, 0, 40 )
+follow_viewport_enable = true
 
-[node name="NickLabel" type="Label" parent="NickPosition"]
+[node name="NickPosition" type="Position2D" parent="CanvasLayer"]
+
+[node name="NickLabel" type="Label" parent="CanvasLayer/NickPosition"]
 unique_name_in_owner = true
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
+anchor_bottom = 0.5
 margin_left = -20.0
-margin_top = 37.0
+margin_top = -7.0
 margin_right = 20.0
-margin_bottom = 51.0
+margin_bottom = 7.0
+grow_horizontal = 2
+text = "test"
 align = 1
 
-[connection signal="body_entered" from="Tank" to="Tank" method="_on_base_body_entered"]
-[connection signal="ready" from="Tank" to="." method="_on_Tank_ready"]
+[connection signal="body_entered" from="." to="." method="_on_base_body_entered"]

@@ -5,6 +5,8 @@ const ADRESS = {
 	1: "194.187.72.136",
 }
 onready var main_node = $"/root/Main"
+onready var multiplayer_button = $"%MultiplayerButton"
+onready var multiplayer_refresh = $"%MultiplayerRefresh"
 
 
 
@@ -19,7 +21,11 @@ func _on_SingleplayerButton_pressed():
 
 func _on_MultiplayerButton_pressed():
 	main_node.game_mode(1, ADRESS[$"%OptionButton".get_selected()], $"%PlayerNickInput".text)
-	# freed only on conneciton
+	multiplayer_button.set_disabled(true)
+	multiplayer_refresh.start()
+
+func _on_MultiplayerRefresh_timeout():
+	multiplayer_button.set_disabled(false)
 
 
 func _on_request_completed(_result, _response_code, _headers, body):
@@ -42,3 +48,4 @@ func _on_PublicIPButton_pressed():
 			$"%PublicIPButton".set_text(err_comm)
 	else:
 		OS.set_clipboard($Background/PublicIPButton.text)
+

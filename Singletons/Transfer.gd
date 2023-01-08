@@ -4,10 +4,9 @@ extends Node
 const PORT = 42521
 var ip = null
 
-const MAP_PATH_OUT = "/root/Main/Map"
 onready var time_diff_timer_node = $"%TimeDiffTimer"
 onready var clock_node = $"%Clock"
-onready var map_node
+onready var game_n = $"/root/Main/Game"
 var network : NetworkedMultiplayerENet = null
 
 
@@ -17,10 +16,10 @@ func _ready():
 
 func _connect_to_server():
 	network = NetworkedMultiplayerENet.new()
-	network.connect("connection_failed", self, "_on_connection_failed")
-	network.connect("connection_succeeded", self, "_on_connection_succeeded")
-	network.connect("server_disconnected", self, "_server_disconnected")
-	network.create_client(ip, PORT)
+	var _err = network.connect("connection_failed", self, "_on_connection_failed")
+	_err = network.connect("connection_succeeded", self, "_on_connection_succeeded")
+	_err = network.connect("server_disconnected", self, "_server_disconnected")
+	_err = network.create_client(ip, PORT)
 	get_tree().set_network_peer(network)
 	print("[Transfer]: Connecting to server...")
 
@@ -36,27 +35,36 @@ func _on_connection_succeeded():
 	fetch_init_data()
 	clock_node.determine_begining_time_diff()
 	time_diff_timer_node.start()
+	get_node("/root/Main/Player_Gui_Layer").set_visible(true)
 	$"/root/Main/Menu".queue_free()
+
+func _exit_tree():
+	network.call_deferred("close_connection")
+	print("[Transfer]: Disconnected")
 
 #---- INIT DATA ----
 func fetch_init_data():
-	map_node = $"/root/Main/Map"
-	rpc_id(1, "recive_init_data", map_node.local_player_name)
+	
+	rpc_id(1, "recive_init_data", game_n.local_player_name)
 
-remote func recive_init_data(spawn_point, playerS_name, playerS_corpseS, playerS_score, mapset):
-	map_node = $"/root/Main/Map"
+remote func recive_init_data(init_data):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	map_node.self_initiation(spawn_point)
-	for player in playerS_name:
-		map_node.create_player(player.ID, player.PlayerName)
-	for corpse_data in playerS_corpseS:
-		map_node.create_corpse(corpse_data.Name, corpse_data.P, corpse_data.R)
-	for score_data in playerS_score:
-		map_node.update_player_score(score_data.Name, score_data.Score)
-	map_node.get_node("Map").set_mapset(mapset)
+	game_n.self_initiation(init_data.SP)
+	for player_template in init_data.PlayerSTemplateData:
+		game_n.create_player(player_template.ID, player_template.PlayerName, player_template.SP)
+		game_n.update_player_score(player_template.ID, player_template.Score)
+	for corpse_data in init_data.PlayerSCorpses:
+		game_n.create_corpse(corpse_data.Name, corpse_data.P, corpse_data.R)
+	game_n.get_node("Map").set_mapset(init_data.MapSet)
 
 #---------- CORE GAME MECHANIC ----------
+
+remote func recive_new_player(player_id: int, player_name : String, spawn_point):
+	if !get_tree().get_rpc_sender_id() == 1:
+		return
+	if !player_id == get_tree().get_network_unique_id():
+		game_n.create_player(player_id, player_name, spawn_point)
 
 remote func recive_player_destroyed(player_id, position, rotation, projectile_name):
 	if !get_tree().get_rpc_sender_id() == 1:
@@ -64,8 +72,7 @@ remote func recive_player_destroyed(player_id, position, rotation, projectile_na
 	if player_id == get_tree().get_network_unique_id():
 		$"/root/Main".exit_to_menu()
 		return
-	map_node = $"/root/Main/Map"
-	map_node.player_destroyed(player_id, position, rotation, projectile_name)
+	game_n.player_destroyed(player_id, position, rotation, projectile_name)
 
 func fetch_stance(player_stance: Dictionary):
 	rpc_unreliable_id(1, "recive_stance", player_stance)
@@ -74,26 +81,16 @@ func fetch_shoot(player_stance, shoot_type):
 	rpc_unreliable_id(1, "recive_shoot", player_stance, shoot_type)
 
 remote func recive_world_stance(time, playerS_stance):
-	map_node = $"/root/Main/Map"
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	map_node.add_world_stance(time, playerS_stance)
+	game_n.add_world_stance(time, playerS_stance)
 
 remote func recive_shoot(player_id, bullet_data):
-	map_node = $"/root/Main/Map"
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	map_node.spawn_bullet(player_id, bullet_data)
+	game_n.spawn_bullet(player_id, bullet_data)
 
-remote func recive_new_player(player_id: int, player_name : String):
-	map_node = $"/root/Main/Map"
-	if !get_tree().get_rpc_sender_id() == 1:
-		return
-	if !player_id == get_tree().get_network_unique_id():
-		map_node.create_player(player_id, player_name)
-		
 remote func recive_score_update(player_id: String, new_score: int):
-	map_node = $"/root/Main/Map"
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
 	var score_name
@@ -101,8 +98,4 @@ remote func recive_score_update(player_id: String, new_score: int):
 		score_name = "LocalPlayer"
 	else:
 		score_name = player_id
-	map_node.update_player_score(score_name, new_score)
-
-func close():
-	network.call_deferred("close_connection")
-	print("[Transfer]: Disconnected")
+	game_n.update_player_score(score_name, new_score)

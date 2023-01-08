@@ -1,9 +1,12 @@
 extends KinematicBody2D
+
+var player_name: String = ""
 onready var wall = $Hitbox.duplicate(true)
 onready var animation_player = $"%AnimationPlayer"
 
 
 func set_display_name(text):
+	player_name = text
 	$"%NickLabel".text = text
 
 func template_stance(previous_stance, next_stance, interpolation_factor):
@@ -23,4 +26,6 @@ func die():
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):
-	queue_free()
+	print("[TankTemplate]: ", anim_name)
+	if anim_name == "explode":
+		queue_free()

@@ -104,7 +104,7 @@ func _shoot():
 		bullet_inst.position = bullet_point_node.global_position
 		bullet_inst.player_path = get_path()
 		bullet_inst.set_linear_velocity(velocity * BULLET_SPEED)
-		get_node("/root/Main/Map/Projectiles").add_child(bullet_inst)
+		get_node("/root/Main/Game/Projectiles").add_child(bullet_inst)
 
 func _on_base_body_entered(body):
 	if !body.is_in_group("Projectiles"):
