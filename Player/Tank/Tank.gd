@@ -15,6 +15,7 @@ signal special_ammo_type_change(new_type)
 
 var ammo_left = MAX_AMMO
 var special_ammo = {
+	Ammunition.TYPES.BULLET : INF,
 	Ammunition.TYPES.ROCKET : 0,
 	Ammunition.TYPES.FRAG_BOMB : 0
 }

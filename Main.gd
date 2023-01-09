@@ -5,7 +5,7 @@ const menu_gui_tscn = preload("res://GUI/Menu.tscn")
 const transfe_pck = preload("res://Singletons/Transfer.tscn")
 const MODE_DICT = {
 	GAME_MODE.SINGLE: preload("res://Singleplayer.tscn"),
-	GAME_MODE.MULTI: preload("res://Multiplayer.tscn"),
+	GAME_MODE.MULTI: preload("res://Multiplayer/Game/Multi_Game.tscn"),
 }
 var is_multiplayer = false
 

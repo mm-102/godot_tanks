@@ -1,3 +1,3 @@
-extends "res://Player/Projectiles/Projectile.gd"
+extends Projectile
 
 

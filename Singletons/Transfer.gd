@@ -56,7 +56,7 @@ remote func recive_init_data(init_data):
 		game_n.update_player_score(player_template.ID, player_template.Score)
 	for corpse_data in init_data.PlayerSCorpses:
 		game_n.create_corpse(corpse_data.Name, corpse_data.P, corpse_data.R)
-	game_n.get_node("Map").set_mapset(init_data.MapSet)
+	game_n.get_node("Map").set_map_data(init_data.MapData)
 
 #---------- CORE GAME MECHANIC ----------
 

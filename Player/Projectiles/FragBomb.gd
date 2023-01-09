@@ -1,4 +1,4 @@
-extends "res://Player/Projectiles/Projectile.gd"
+extends Projectile
 
 
 const FRAG_COUNT = 30

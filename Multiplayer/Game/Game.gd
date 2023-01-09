@@ -55,6 +55,7 @@ func create_corpse(player_id, _position, _rotation):
 	var static_body2d = StaticBody2D.new()
 	var wall_inst = tank_template.instance()
 	static_body2d.name = str(player_id)
+	static_body2d.set_collision_layer(4)
 	static_body2d.set_collision_mask(3)
 	static_body2d.set_position(_position)
 	static_body2d.rotation = _rotation

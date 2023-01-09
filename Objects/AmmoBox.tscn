@@ -8,6 +8,7 @@ extents = Vector2( 32, 32 )
 
 [node name="AmmoBox" type="Area2D"]
 scale = Vector2( 0.5, 0.5 )
+collision_layer = 8
 script = ExtResource( 2 )
 
 [node name="MainSprite" type="Sprite" parent="."]

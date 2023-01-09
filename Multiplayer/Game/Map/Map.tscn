@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://textures/square64.png" type="Texture" id=1]
-[ext_resource path="res://Multiplayer/Main/Map/Map.gd" type="Script" id=2]
+[ext_resource path="res://Multiplayer/Game/Map/Map.gd" type="Script" id=2]
 
 [sub_resource type="ConvexPolygonShape2D" id=4]
 points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
@@ -38,3 +38,6 @@ tile_set = SubResource( 1 )
 collision_layer = 4
 collision_mask = 0
 format = 1
+
+[node name="AmmoBoxes" type="Node" parent="."]
+unique_name_in_owner = true

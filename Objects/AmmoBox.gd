@@ -4,9 +4,11 @@ export(Ammunition.TYPES) var type = Ammunition.TYPES.ROCKET
 
 
 
-func _on_AmmoBox_body_entered(player):
-	player.special_ammo[type] += 1
-	player.emit_signal("special_ammo_change", type, player.special_ammo[type])
+func _on_AmmoBox_body_entered(body):
+	if !body.is_in_group("Players"):
+		return
+	body.special_ammo[type] += 1
+	body.emit_signal("special_ammo_change", type, body.special_ammo[type])
 	queue_free()
 	
 func _ready():

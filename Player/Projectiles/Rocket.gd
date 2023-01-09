@@ -1,4 +1,4 @@
-extends "res://Player/Projectiles/Projectile.gd"
+extends Projectile
 
 const SPEED = 200
 const FOLLOW_SPEED = 5
