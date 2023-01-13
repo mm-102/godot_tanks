@@ -26,6 +26,7 @@ func update_player_score(player_id, new_score):
 
 func self_initiation(spawn_point):
 	var tank_inst = tank.instance()
+	tank_inst.add_to_group("ME") # [info] missing "ME" by no persistent
 	tank_inst.position = spawn_point
 	if local_player_name.empty():
 		local_player_name = "You"
