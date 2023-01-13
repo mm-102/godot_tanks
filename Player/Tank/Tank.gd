@@ -5,7 +5,7 @@ export(Ammunition.TYPES) var ammo_type = Ammunition.TYPES.BULLET
 const SPEED = 100
 const ROTATION_SPEED = 2
 const BULLET_SPEED = 200
-const MAX_AMMO = 5
+const MAX_AMMO = 50
 const DEATH_TIME = 20
 const BASE_AMMO_TYPE = Ammunition.TYPES.BULLET
 

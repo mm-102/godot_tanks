@@ -1,13 +1,9 @@
 extends RigidBody2D
 class_name Projectile
 
-
 var player_path = NodePath("")
 
-func _init():
-	# collision and mask for every projectile
-	set_collision_layer(2)
-	set_collision_mask(7)
+
 
 func _on_LifeTime_timeout():
 	die()
