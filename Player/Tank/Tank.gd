@@ -111,6 +111,7 @@ func _on_base_body_entered(body):
 	if !body.is_in_group("Projectiles"):
 		return
 	dead = true
+	$AudioStreamPlayer2D.play()
 	animation_player.play("explode")
 	set_deferred("mode", RigidBody2D.MODE_STATIC)
 	set_angular_velocity(0)
