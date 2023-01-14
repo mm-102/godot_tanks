@@ -3,7 +3,7 @@ extends Projectile
 const SPEED = 200
 const FOLLOW_SPEED = 5
 
-var _target : RigidBody2D = null
+var _target : PhysicsBody2D = null
 
 
 
@@ -14,8 +14,8 @@ func _set_target():
 	var t = null
 	var d = INF
 	for player_node in get_tree().get_nodes_in_group("Players"):
-		if player_node.dead:
-			continue
+#		if player_node.dead:
+#			continue
 		var cd = global_transform.origin.distance_to(player_node.global_transform.origin)
 		if cd < d:
 			d = cd
@@ -27,7 +27,7 @@ func _integrate_forces(_state):
 	if !_target:
 		rotation = linear_velocity.angle()
 		return
-	if _target.dead:
+	if !_target.is_in_group("Players"):
 		_set_target()
 		return
 		

@@ -1,5 +1,7 @@
 extends Node2D
 
+const CORPSE_LIFE_TIME = 20
+
 var tank = preload("res://Player/Tank/Tank.tscn")
 var tank_template = preload("res://Player/Tank/TankTemplate.tscn")
 var empty_gd = preload("res://Empty.gd")
@@ -55,6 +57,7 @@ func player_destroyed(player_id, _position, _rotation, projectile_name):
 func create_corpse(player_id, _position, _rotation):
 	var static_body2d = StaticBody2D.new()
 	var wall_inst = tank_template.instance()
+	wall_inst.remove_from_group("Players")
 	static_body2d.name = str(player_id)
 	static_body2d.set_collision_layer(4)
 	static_body2d.set_collision_mask(3)
@@ -66,6 +69,13 @@ func create_corpse(player_id, _position, _rotation):
 	static_body2d.get_node("%Turret").queue_free()
 	static_body2d.get_node("%RemoteTransform2D").queue_free()
 	static_body2d.get_node("%CanvasLayer").queue_free()
+	
+	var lifeTime = Timer.new()
+	lifeTime.wait_time = CORPSE_LIFE_TIME
+	lifeTime.autostart = true
+	static_body2d.add_child(lifeTime)
+	lifeTime.connect("timeout",static_body2d,"queue_free")
+	
 	$Objects.add_child(static_body2d)
 
 

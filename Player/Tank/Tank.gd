@@ -6,7 +6,7 @@ const SPEED = 100
 const ROTATION_SPEED = 2
 const BULLET_SPEED = 200
 const MAX_AMMO = 50
-const DEATH_TIME = 20
+const CORPSE_LIFE_TIME = 20
 const BASE_AMMO_TYPE = Ammunition.TYPES.BULLET
 
 
@@ -19,7 +19,7 @@ var special_ammo = {
 	Ammunition.TYPES.ROCKET : 0,
 	Ammunition.TYPES.FRAG_BOMB : 0
 }
-var dead = false
+#var dead = false
 # Defined in code
 var player_stance: Dictionary 
 
@@ -110,7 +110,8 @@ func _shoot():
 func _on_base_body_entered(body):
 	if !body.is_in_group("Projectiles"):
 		return
-	dead = true
+#	dead = true
+	remove_from_group("Players")
 	$AudioStreamPlayer2D.play()
 	animation_player.play("explode")
 	set_deferred("mode", RigidBody2D.MODE_STATIC)
@@ -121,7 +122,7 @@ func _on_base_body_entered(body):
 	var timer = Timer.new()
 	timer.connect("timeout", self, "_on_timer_timeout")
 	add_child(timer)
-	timer.start(DEATH_TIME)
+	timer.start(CORPSE_LIFE_TIME)
 
 
 func _on_timer_timeout():
