@@ -17,11 +17,13 @@ var ammo_left = MAX_AMMO
 var special_ammo = {
 	Ammunition.TYPES.BULLET : INF,
 	Ammunition.TYPES.ROCKET : 0,
-	Ammunition.TYPES.FRAG_BOMB : 0
+	Ammunition.TYPES.FRAG_BOMB : 0,
+	Ammunition.TYPES.LASER : INF
 }
 #var dead = false
 # Defined in code
-var player_stance: Dictionary 
+var player_stance: Dictionary
+var laser_path = NodePath("")
 
 onready var is_multiplayer = $"/root/Main".is_multiplayer
 #var projectiles_tscn = {
@@ -32,6 +34,7 @@ onready var is_multiplayer = $"/root/Main".is_multiplayer
 onready var animation_player = $"%AnimationPlayer"
 onready var turret_node =  $"%Turret"
 onready var bullet_point_node = $"%BulletPoint"
+onready var laset_point_node = $"%LaserPoint"
 
 
 func set_display_name(text):
@@ -54,6 +57,10 @@ func _integrate_forces(_state):
 	
 	if Input.is_action_just_pressed("p_frag"):
 		ammo_type = Ammunition.TYPES.FRAG_BOMB
+		emit_signal("special_ammo_type_change", ammo_type)
+	
+	if Input.is_action_just_pressed("p_laser"):
+		ammo_type = Ammunition.TYPES.LASER
 		emit_signal("special_ammo_type_change", ammo_type)
 	
 	var velocity = Vector2.ZERO
@@ -88,7 +95,6 @@ func _shoot():
 	else:
 		special_ammo[ammo_type] -= 1
 		emit_signal("special_ammo_change", ammo_type, special_ammo[ammo_type])
-		emit_signal("special_ammo_change", ammo_type, special_ammo[ammo_type])
 	ammo_left -= 1
 	player_stance = {
 		"T": OS.get_ticks_msec(),
@@ -98,32 +104,37 @@ func _shoot():
 	}
 	if is_multiplayer:
 		$"/root/Transfer".fetch_shoot(player_stance, ammo_type)
-	else:
-		var bullet_inst = Ammunition.get_tscn(ammo_type).instance()
-		var rot = turret_node.global_rotation
-		var velocity = Vector2.UP.rotated(rot)
-		bullet_inst.position = bullet_point_node.global_position
-		bullet_inst.player_path = get_path()
-		bullet_inst.set_linear_velocity(velocity * BULLET_SPEED)
-		get_node("/root/Main/Game/Projectiles").add_child(bullet_inst)
+		return
+	
+	var bullet_inst = Ammunition.get_tscn(ammo_type).instance()
+#	var rot = turret_node.global_rotation
+#	var velocity = Vector2.UP.rotated(rot)
+#	bullet_inst.position = bullet_point_node.global_position
+#	bullet_inst.player_path = get_path()
+#	bullet_inst.set_linear_velocity(velocity * BULLET_SPEED)
+#	bullet_inst.setup(bullet_point_node.global_position, turret_node.global_rotation, get_path())
+	bullet_inst.setup(self)
+	get_node("/root/Main/Game/Projectiles").add_child(bullet_inst)
 
 func _on_base_body_entered(body):
 	if !body.is_in_group("Projectiles"):
 		return
-#	dead = true
+	body.die()
+	die()
+	
+
+func die():
 	remove_from_group("Players")
 	$AudioStreamPlayer2D.play()
 	animation_player.play("explode")
 	set_deferred("mode", RigidBody2D.MODE_STATIC)
 	set_angular_velocity(0)
 	set_linear_velocity(Vector2.ZERO)
-	body.die()
 	
 	var timer = Timer.new()
 	timer.connect("timeout", self, "_on_timer_timeout")
 	add_child(timer)
 	timer.start(CORPSE_LIFE_TIME)
-
 
 func _on_timer_timeout():
 	queue_free()

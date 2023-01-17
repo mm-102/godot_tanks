@@ -8,13 +8,15 @@ const base_color = "ffffff"
 
 onready var Numbers = {
 	Ammunition.TYPES.ROCKET : $"Ammunition/RocketCounter/Background/Number",
-	Ammunition.TYPES.FRAG_BOMB : $"Ammunition/FragBombCounter/Background/Number"
+	Ammunition.TYPES.FRAG_BOMB : $"Ammunition/FragBombCounter/Background/Number",
+	Ammunition.TYPES.LASER : $"Ammunition/LaserCounter/Background/Number"
 }
 
 onready var Backgrounds = {
 	Ammunition.TYPES.BULLET : $"Ammunition/BulletCounter/Background",
 	Ammunition.TYPES.ROCKET : $"Ammunition/RocketCounter/Background",
-	Ammunition.TYPES.FRAG_BOMB : $"Ammunition/FragBombCounter/Background"
+	Ammunition.TYPES.FRAG_BOMB : $"Ammunition/FragBombCounter/Background",
+	Ammunition.TYPES.LASER : $"Ammunition/LaserCounter/Background"
 }
 
 onready var scores_node = $"Scoreboard/Scores"
