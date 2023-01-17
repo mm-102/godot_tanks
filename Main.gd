@@ -29,5 +29,7 @@ func exit_to_menu():
 		$"/root/Transfer".queue_free()
 	#warning-ignore:return_value_discarded
 	get_tree().reload_current_scene() # I guess it works
-	add_child(menu_gui_tscn.instance())
 	
+func end_of_battle():
+	var mode_inst = MODE_DICT[GAME_MODE.MULTI].instance()
+	add_child(mode_inst)

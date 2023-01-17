@@ -6,12 +6,17 @@ var ip = null
 
 onready var time_diff_timer_node = $"%TimeDiffTimer"
 onready var clock_node = $"%Clock"
+onready var main_n = $"/root/Main"
 onready var game_n = $"/root/Main/Game"
 var network : NetworkedMultiplayerENet = null
 
 
 #---------- SERVER CREATION ----------
 func _ready():
+	game_n = $"/root/Main/Game"
+	
+
+func _enter_tree():
 	_connect_to_server()
 
 func _connect_to_server():
@@ -44,21 +49,34 @@ func _exit_tree():
 
 #---- INIT DATA ----
 func fetch_init_data():
-	
 	rpc_id(1, "recive_init_data", game_n.local_player_name)
 
+#[info] Init data only allow to spectate mode
 remote func recive_init_data(init_data):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	game_n.self_initiation(init_data.SP)
 	for player_template in init_data.PlayerSTemplateData:
-		game_n.create_player(player_template.ID, player_template.PlayerName, player_template.SP)
-		game_n.update_player_score(player_template.ID, player_template.Score)
+		game_n.create_player(player_template)
 	for corpse_data in init_data.PlayerSCorpses:
 		game_n.create_corpse(corpse_data.Name, corpse_data.P, corpse_data.R)
 	game_n.get_node("Map").set_map_data(init_data.MapData)
 
-#---------- CORE GAME MECHANIC ----------
+remote func recive_new_battle(new_game_data):
+	if !get_tree().get_rpc_sender_id() == 1:
+		return
+	game_n.queue_free()
+	yield(game_n, "tree_exited")
+	main_n.end_of_battle()
+	game_n = $"/root/Main/Game"
+	game_n.get_node("Map").set_map_data(new_game_data.MapData)
+	for player_id in new_game_data.PlayerSData:
+		if player_id == network.get_unique_id():
+			game_n.self_initiation(new_game_data.PlayerSData[player_id])
+			continue
+		game_n.create_player(new_game_data.PlayerSData[player_id])
+	game_n #Do smth with time to new game
+
+#---------- CORE GAME MECHANIC ---------
 
 remote func recive_new_player(player_id: int, player_name : String, spawn_point):
 	if !get_tree().get_rpc_sender_id() == 1:

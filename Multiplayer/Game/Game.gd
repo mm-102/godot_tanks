@@ -26,7 +26,11 @@ func _ready():
 func update_player_score(player_id, new_score):
 	emit_signal("update_player_score", NodePath(str(player_id)), new_score)
 
-func self_initiation(spawn_point):
+func self_initiation(player_data):
+	var player_id :int = player_data.ID
+	var player_name :String = player_data.Nick
+	var spawn_point = player_data.SP
+	var score = player_data.Score
 	var tank_inst = tank.instance()
 	tank_inst.add_to_group("ME") # [info] missing "ME" by no persistent
 	tank_inst.position = spawn_point
@@ -34,8 +38,13 @@ func self_initiation(spawn_point):
 		local_player_name = "You"
 	tank_inst.set_display_name(local_player_name)
 	add_child_below_node($Players, tank_inst, true)
+	update_player_score(player_id, score)
 
-func create_player(player_id : int, player_name : String, spawn_point):
+func create_player(player_data):
+	var player_id :int = player_data.ID
+	var player_name :String = player_data.Nick
+	var spawn_point = player_data.SP
+	var score = player_data.Score
 	var tank_inst = tank_template.instance()
 	tank_inst.name = str(player_id)
 	if player_name.empty():
@@ -44,10 +53,12 @@ func create_player(player_id : int, player_name : String, spawn_point):
 	tank_inst.set_display_name(player_name)
 	$Players.add_child(tank_inst, true)
 	emit_signal("new_scoreboard_player", tank_inst.name, tank_inst.player_name)
+	update_player_score(player_id, score)
 
 
 func player_destroyed(player_id, _position, _rotation, projectile_name):
-	get_node("/root/Main/Game/Projectiles/" + projectile_name).die()
+	if projectile_name != null:
+		get_node("/root/Main/Game/Projectiles/" + projectile_name).die()
 	get_node("Players/" + str(player_id)).die()
 	create_corpse(player_id, _position, _rotation)
 	
