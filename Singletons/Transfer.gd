@@ -70,7 +70,8 @@ remote func recive_player_destroyed(player_id, position, rotation, projectile_na
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
 	if player_id == get_tree().get_network_unique_id():
-		$"/root/Main".exit_to_menu()
+#		$"/root/Main".exit_to_menu()
+		game_n.local_player_destroyed(projectile_name)
 		return
 	game_n.player_destroyed(player_id, position, rotation, projectile_name)
 

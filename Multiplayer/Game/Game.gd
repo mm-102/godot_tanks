@@ -55,6 +55,11 @@ func player_destroyed(player_id, _position, _rotation, projectile_name):
 	#temp
 	emit_signal("delete_scoreboard_player", NodePath(str(player_id)))
 
+func local_player_destroyed(projectile_name):
+	var projectile = get_node_or_null("/root/Main/Game/Projectiles/" + projectile_name)
+	if projectile != null:	projectile.die()
+	get_node("Tank").die()
+
 func create_corpse(player_id, _position, _rotation):
 	var static_body2d = StaticBody2D.new()
 	var wall_inst = tank_template.instance()

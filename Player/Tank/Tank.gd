@@ -117,6 +117,8 @@ func _shoot():
 	get_node("/root/Main/Game/Projectiles").add_child(bullet_inst)
 
 func _on_base_body_entered(body):
+	if is_multiplayer:
+		return
 	if !body.is_in_group("Projectiles"):
 		return
 	body.die()
@@ -125,6 +127,7 @@ func _on_base_body_entered(body):
 
 func die():
 	remove_from_group("Players")
+	add_to_group("Corpse")
 	$AudioStreamPlayer2D.play()
 	animation_player.play("explode")
 	set_deferred("mode", RigidBody2D.MODE_STATIC)
@@ -135,6 +138,10 @@ func die():
 	timer.connect("timeout", self, "_on_timer_timeout")
 	add_child(timer)
 	timer.start(CORPSE_LIFE_TIME)
-
+	
+	var spectator_camera : Camera2D = load("res://Player/Spectator/Spectator.tscn").instance()
+	spectator_camera.global_position = global_position
+	spectator_camera.current = true
+	get_node("/root/Main/Game/Players").add_child(spectator_camera)
 func _on_timer_timeout():
 	queue_free()
