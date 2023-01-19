@@ -54,7 +54,7 @@ tracks/1/keys = {
 "values": [ true, false ]
 }
 
-[node name="Tank" type="RigidBody2D" groups=["Players"]]
+[node name="Tank" type="RigidBody2D" groups=["ME", "Players"]]
 unique_name_in_owner = true
 collision_mask = 7
 physics_material_override = SubResource( 2 )

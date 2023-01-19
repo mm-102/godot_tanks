@@ -100,8 +100,8 @@ remote func recive_player_destroyed(player_id, position, rotation, slayer_id, pr
 func fetch_stance(player_stance: Dictionary):
 	rpc_unreliable_id(1, "recive_stance", player_stance)
 
-func fetch_shoot(player_stance, shoot_type):
-	rpc_unreliable_id(1, "recive_shoot", player_stance, shoot_type)
+func fetch_shoot(player_stance, shoot_slot):
+	rpc_unreliable_id(1, "recive_shoot", player_stance, shoot_slot)
 
 remote func recive_world_stance(time, playerS_stance):
 	if !get_tree().get_rpc_sender_id() == 1:

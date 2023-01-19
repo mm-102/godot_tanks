@@ -1,22 +1,15 @@
 extends Control
 
 
-var current_type = Ammunition.TYPES.BULLET
+var current_slot = Ammunition.TYPES.BULLET
 
 const selection_color = "70ffff"
 const base_color = "ffffff"
 
-onready var Numbers = {
-	Ammunition.TYPES.ROCKET : $"Ammunition/RocketCounter/Background/Number",
-	Ammunition.TYPES.FRAG_BOMB : $"Ammunition/FragBombCounter/Background/Number",
-	Ammunition.TYPES.LASER : $"Ammunition/LaserCounter/Background/Number"
-}
-
-onready var Backgrounds = {
-	Ammunition.TYPES.BULLET : $"Ammunition/BulletCounter/Background",
-	Ammunition.TYPES.ROCKET : $"Ammunition/RocketCounter/Background",
-	Ammunition.TYPES.FRAG_BOMB : $"Ammunition/FragBombCounter/Background",
-	Ammunition.TYPES.LASER : $"Ammunition/LaserCounter/Background"
+const counters_tscn = {
+	Ammunition.TYPES.ROCKET : preload("res://Player/Player_GUI/RocketCounter.tscn"),
+	Ammunition.TYPES.FRAG_BOMB : preload("res://Player/Player_GUI/FragBombCounter.tscn"),
+	Ammunition.TYPES.LASER : preload("res://Player/Player_GUI/LaserCounter.tscn")
 }
 
 onready var scores_node = $"Scoreboard/Scores"
@@ -24,7 +17,7 @@ const name_score_tscn = preload("res://Player/Player_GUI/SBPlayer.tscn")
 
 
 func _ready():
-	Backgrounds[current_type].modulate = selection_color
+	$Ammunition.get_child(current_slot).get_node("Background").modulate = selection_color
 
 func _input(event : InputEvent):
 	# ---- pause ----
@@ -33,14 +26,25 @@ func _input(event : InputEvent):
 	
 # ---- display ammo ----
 func _on_special_ammo_change(type, amount_left):
-	Numbers[type].text = str(amount_left)
+	if $Ammunition.has_node(str(type)):
+		if amount_left <= 0:
+			_on_special_ammo_type_change(0)
+			$Ammunition.get_node(str(type)).queue_free()
+			return
+		if amount_left != INF:
+			$Ammunition.get_node(str(type) + "/Background/Number").text = str(amount_left)
+		return
+	var new_counter = counters_tscn[type].instance()
+	new_counter.get_node("Background/Number").text = str(amount_left)
+	new_counter.name = str(type)
+	$Ammunition.add_child(new_counter)
 
-func _on_special_ammo_type_change(new_type):
-	Backgrounds[current_type].modulate = base_color
-	Backgrounds[new_type].modulate = selection_color
-	
-	current_type = new_type
-	
+
+func _on_special_ammo_type_change(new_slot):
+	if $Ammunition.get_child_count() > current_slot:
+		$Ammunition.get_child(current_slot).get_node("Background").modulate = base_color
+	$Ammunition.get_child(new_slot).get_node("Background").modulate = selection_color
+	current_slot = new_slot
 	
 # ---- pause ----
 

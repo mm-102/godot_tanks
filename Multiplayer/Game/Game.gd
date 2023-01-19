@@ -21,7 +21,6 @@ func self_initiation(player_data):
 	var tank_inst = tank.instance()
 	local_player_id = player_id
 	tank_inst.name = str(player_id)
-	tank_inst.add_to_group("ME") # [info] missing "ME" by no persistent
 	tank_inst.position = spawn_point
 	if local_player_name.empty():
 		local_player_name = "You"
