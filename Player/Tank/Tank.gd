@@ -22,6 +22,7 @@ var special_ammo = {
 #var dead = false
 # Defined in code
 var player_stance: Dictionary 
+var nick = "You"
 
 onready var is_multiplayer = $"/root/Main".is_multiplayer
 #var projectiles_tscn = {
@@ -34,7 +35,9 @@ onready var turret_node =  $"%Turret"
 onready var bullet_point_node = $"%BulletPoint"
 
 
+
 func set_display_name(text):
+	nick = text
 	$"%NickLabel".text = text
 
 func _ready():
@@ -107,8 +110,14 @@ func _shoot():
 		bullet_inst.set_linear_velocity(velocity * BULLET_SPEED)
 		get_node("/root/Main/Game/Projectiles").add_child(bullet_inst)
 
+
+func die():
+	$Hitbox.set_disabled(true)
+	animation_player.play("explode")
+	remove_from_group("Players")
+
 func _on_base_body_entered(body):
-	if !body.is_in_group("Projectiles"):
+	if !body.is_in_group("Projectiles") or is_multiplayer:
 		return
 #	dead = true
 	remove_from_group("Players")

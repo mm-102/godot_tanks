@@ -13,6 +13,8 @@ func game_mode(sel_mode: int, adress, player_nick):
 	#[info] Transfer node have to be after main
 	var mode_inst = MODE_DICT[sel_mode].instance()
 	add_child(mode_inst)
+	if sel_mode == GAME_MODE.SINGLE:
+		get_node("/root/Main/Player_Gui_Layer").set_visible(true)
 	if sel_mode == GAME_MODE.MULTI:
 		if get_node_or_null("/root/Transfer") != null:
 			get_node("/root/Transfer").request_ready()
@@ -24,12 +26,11 @@ func game_mode(sel_mode: int, adress, player_nick):
 		get_node("/root").add_child(transfer_inst)
 
 func exit_to_menu():
-	#[improve] Figure out way to just queue free everything and start main tscn
 	if is_multiplayer:
 		$"/root/Transfer".queue_free()
 	#warning-ignore:return_value_discarded
-	get_tree().reload_current_scene() # I guess it works
+	get_tree().reload_current_scene()
 	
-func end_of_battle():
+func end_of_battle(): #[Important!] How to name functions: According to time when its called, or what this function does?
 	var mode_inst = MODE_DICT[GAME_MODE.MULTI].instance()
 	add_child(mode_inst)

@@ -42,11 +42,9 @@ Scoreboard"
 [node name="Scores" type="VBoxContainer" parent="."]
 margin_top = 103.0
 margin_right = 165.0
-margin_bottom = 123.0
+margin_bottom = 143.0
 mouse_filter = 2
 theme = SubResource( 4 )
 
 [node name="LocalPlayer" parent="Scores" instance=ExtResource( 2 )]
 margin_right = 165.0
-margin_bottom = 20.0
-mouse_filter = 2

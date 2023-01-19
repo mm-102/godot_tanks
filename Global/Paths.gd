@@ -2,4 +2,7 @@ extends Reference
 class_name Paths
 
 
-const SELF_PLAYER = "/root/Main/Game/Tank"
+const PLAYERS_N = "/root/Main/Game/Players"
+
+static func get_player_path():
+	return 

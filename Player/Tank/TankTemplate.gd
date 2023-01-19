@@ -1,12 +1,12 @@
 extends KinematicBody2D
 
-var player_name: String = ""
+var nick: String = ""
 onready var wall = $Hitbox.duplicate(true)
 onready var animation_player = $"%AnimationPlayer"
 
 
 func set_display_name(text):
-	player_name = text
+	nick = text
 	$"%NickLabel".text = text
 
 func template_stance(previous_stance, next_stance, interpolation_factor):

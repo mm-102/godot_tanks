@@ -8,6 +8,7 @@ onready var time_diff_timer_node = $"%TimeDiffTimer"
 onready var clock_node = $"%Clock"
 onready var main_n = $"/root/Main"
 onready var game_n = $"/root/Main/Game"
+onready var gui_n = $"/root/Main/Player_Gui_Layer/GUI"
 var network : NetworkedMultiplayerENet = null
 
 
@@ -64,12 +65,14 @@ remote func recive_init_data(init_data):
 remote func recive_new_battle(new_game_data):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
+	gui_n.clear_scores()
 	game_n.queue_free()
 	yield(game_n, "tree_exited")
 	main_n.end_of_battle()
 	game_n = $"/root/Main/Game"
 	game_n.get_node("Map").set_map_data(new_game_data.MapData)
 	for player_id in new_game_data.PlayerSData:
+		gui_n.add_scoreboard_player(player_id, new_game_data.PlayerSData[player_id])
 		if player_id == network.get_unique_id():
 			game_n.self_initiation(new_game_data.PlayerSData[player_id])
 			continue
@@ -78,19 +81,21 @@ remote func recive_new_battle(new_game_data):
 
 #---------- CORE GAME MECHANIC ---------
 
-remote func recive_new_player(player_id: int, player_name : String, spawn_point):
+remote func recive_new_player(player_id: int, nick : String, spawn_point):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
 	if !player_id == get_tree().get_network_unique_id():
-		game_n.create_player(player_id, player_name, spawn_point)
+		game_n.create_player(player_id, nick, spawn_point)
 
-remote func recive_player_destroyed(player_id, position, rotation, projectile_name):
+remote func recive_player_destroyed(player_id, position, rotation, slayer_id, projectile_name):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
 	if player_id == get_tree().get_network_unique_id():
-		$"/root/Main".exit_to_menu()
-		return
+		pass
+		# Here should be applied spectate mode
 	game_n.player_destroyed(player_id, position, rotation, projectile_name)
+	if player_id != slayer_id:
+		gui_n.add_kill(slayer_id)
 
 func fetch_stance(player_stance: Dictionary):
 	rpc_unreliable_id(1, "recive_stance", player_stance)
