@@ -92,7 +92,7 @@ remote func recive_player_destroyed(player_id, position, rotation, slayer_id, pr
 		return
 	if player_id == get_tree().get_network_unique_id():
 		pass
-		# Here should be applied spectate mode
+		# Here should be applied spectate mode?
 	game_n.player_destroyed(player_id, position, rotation, projectile_name)
 	if player_id != slayer_id:
 		gui_n.add_kill(slayer_id)

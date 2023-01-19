@@ -79,6 +79,10 @@ script = ExtResource( 4 )
 unique_name_in_owner = true
 position = Vector2( 0, -60 )
 
+[node name="LaserPoint" type="Position2D" parent="Turret"]
+unique_name_in_owner = true
+position = Vector2( 0, -47 )
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 anims/RESET = SubResource( 4 )
@@ -111,7 +115,7 @@ margin_top = -7.0
 margin_right = 20.0
 margin_bottom = 7.0
 grow_horizontal = 2
-text = "test"
+text = "Player"
 align = 1
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

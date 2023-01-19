@@ -21,12 +21,12 @@ position = Vector2( 1057, 300 )
 scale = Vector2( 1, 9.5 )
 
 [node name="obstacle4" parent="Objects" instance=ExtResource( 2 )]
-position = Vector2( -31, 299 )
+position = Vector2( -190, 391 )
 scale = Vector2( 1, 9.5 )
 
 [node name="obstacle5" parent="Objects" instance=ExtResource( 2 )]
 position = Vector2( 316, 207 )
-rotation = 0.733038
+rotation = 0.785398
 scale = Vector2( 5, 1 )
 
 [node name="obstacle6" parent="Objects" instance=ExtResource( 2 )]
@@ -50,6 +50,10 @@ position = Vector2( 438, 527 )
 [node name="AmmoBox5" parent="Objects" instance=ExtResource( 3 )]
 position = Vector2( 290, 504 )
 type = 2
+
+[node name="AmmoBox6" parent="Objects" instance=ExtResource( 3 )]
+position = Vector2( 679, 443 )
+type = 3
 
 [node name="Projectiles" type="Node" parent="."]
 

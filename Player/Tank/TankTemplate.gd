@@ -24,6 +24,7 @@ func die():
 	$Hitbox.set_disabled(true)
 	animation_player.play("explode")
 	remove_from_group("Players")
+	add_to_group("Corpse")
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):

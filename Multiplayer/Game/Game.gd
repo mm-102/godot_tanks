@@ -44,15 +44,22 @@ func create_player(player_data):
 
 
 func player_destroyed(player_id, _position, _rotation, projectile_name):
-	if projectile_name != null:
-		get_node("/root/Main/Game/Projectiles/" + projectile_name).die()
+	var projectile = get_node_or_null("/root/Main/Game/Projectiles/" + projectile_name)
+	if projectile != null:
+		projectile.die()
 	get_node("Players/" + str(player_id)).die()
 	create_corpse(player_id, _position, _rotation)
+
+func local_player_destroyed(projectile_name):
+	var projectile = get_node_or_null("/root/Main/Game/Projectiles/" + projectile_name)
+	if projectile != null:	projectile.die()
+	get_node("Tank").die()
 
 func create_corpse(player_id, _position, _rotation):
 	var static_body2d = StaticBody2D.new()
 	var wall_inst = tank_template.instance()
 	wall_inst.remove_from_group("Players")
+	wall_inst.add_to_group("Corpse")
 	static_body2d.name = str(player_id)
 	static_body2d.set_collision_layer(4)
 	static_body2d.set_collision_mask(3)
@@ -76,8 +83,9 @@ func create_corpse(player_id, _position, _rotation):
 func spawn_bullet(player_id, bullet_data):
 	var bullet_inst = Ammunition.get_tscn(bullet_data.AT).instance()
 	bullet_inst.name = bullet_data.Name
-	bullet_inst.position = bullet_data.SP
-	bullet_inst.set_linear_velocity(bullet_data.V)
+#	bullet_inst.position = bullet_data.SP
+#	bullet_inst.set_linear_velocity(bullet_data.V)
+	bullet_inst.setup_multiplayer(bullet_data)
 	if player_id == get_tree().get_network_unique_id():
 		bullet_inst.player_path = NodePath(Paths.PLAYERS_N + "/" + str(local_player_id))
 	get_node("/root/Main/Game/Projectiles").add_child(bullet_inst)
