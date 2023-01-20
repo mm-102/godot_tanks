@@ -4,11 +4,11 @@ const SPEED = 200
 const FOLLOW_SPEED = 5
 
 var _target : PhysicsBody2D = null
-
+var started_targeting = false
 
 
 func _on_StartTargeting_timeout():
-	_set_target()
+	started_targeting = true
 	
 func _set_target():
 	var t = null
@@ -24,10 +24,10 @@ func _set_target():
 	_target = t
 
 func _integrate_forces(_state):
-	if !_target:
+	if !started_targeting:
 		rotation = linear_velocity.angle()
 		return
-	if !_target.is_in_group("Players"):
+	elif _target == null or !is_instance_valid(_target) or !_target.is_in_group("Players"):
 		_set_target()
 		return
 		

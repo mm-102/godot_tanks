@@ -64,9 +64,10 @@ func pick_up_ammo_box(type):
 		picked = true
 	elif special_ammo.size() < MAX_AMMO_TYPES:
 		special_ammo.push_back({"type" : int(type), "amount" : 1})
+		type_slot[special_ammo[-1].type] = -1
 		picked = true
 	if picked:
-		emit_signal("special_ammo_change", type, special_ammo[-1].amount)
+		emit_signal("special_ammo_change", type, special_ammo[type_slot[type]].amount)
 	return picked
 
 func _integrate_forces(_state):
