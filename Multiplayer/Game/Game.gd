@@ -43,9 +43,8 @@ func create_player(player_data):
 
 
 func player_destroyed(player_id, _position, _rotation, projectile_name):
-	var projectile = get_node_or_null("/root/Main/Game/Projectiles/" + projectile_name)
-	if projectile != null:
-		projectile.die()
+	if projectile_name != null:
+		get_node_or_null("/root/Main/Game/Projectiles/" + projectile_name).die()
 	get_node("Players/" + str(player_id)).die()
 	create_corpse(player_id, _position, _rotation)
 
