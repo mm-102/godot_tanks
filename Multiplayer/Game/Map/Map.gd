@@ -7,6 +7,7 @@ onready var ammo_boxes_n = $"%AmmoBoxes"
 
 
 func set_map_data(map_data):
+	$"%TileMap".scale = map_data.Scale
 	set_mapset(map_data.MapSet)
 	set_ammo_boxes(map_data.AB)
 	$"%TileMap".build_collision()
@@ -14,6 +15,7 @@ func set_map_data(map_data):
 func set_mapset(tiles_pos):
 	for tile_pos in tiles_pos:
 		tilemap_n.set_cellv(tile_pos, 0)
+		tilemap_n.update_bitmask_area(tile_pos)
 
 func set_ammo_boxes(ab_many_data):
 	for ab_data in ab_many_data:
