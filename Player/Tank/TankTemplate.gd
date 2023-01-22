@@ -28,6 +28,5 @@ func die():
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):
-	print("[TankTemplate]: ", anim_name)
 	if anim_name == "explode":
 		queue_free()

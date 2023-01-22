@@ -8,7 +8,7 @@ onready var time_diff_timer_node = $"%TimeDiffTimer"
 onready var clock_node = $"%Clock"
 onready var main_n = $"/root/Main"
 onready var game_n = $"/root/Main/Game"
-onready var gui_n = $"/root/Main/Player_Gui_Layer/GUI"
+onready var gui_n = $"/root/Main/PlayerGUILayer/GUI"
 var network : NetworkedMultiplayerENet = null
 
 
@@ -41,7 +41,7 @@ func _on_connection_succeeded():
 	fetch_init_data()
 	clock_node.determine_begining_time_diff()
 	time_diff_timer_node.start()
-	get_node("/root/Main/Player_Gui_Layer").set_visible(true)
+	get_node("/root/Main/PlayerGUILayer").set_visible(true)
 	$"/root/Main/Menu".queue_free()
 
 func _exit_tree():
@@ -65,11 +65,12 @@ remote func recive_init_data(init_data):
 remote func recive_new_battle(new_game_data):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	gui_n.clear_scores()
+	gui_n.queue_free()
 	game_n.queue_free()
 	yield(game_n, "tree_exited")
 	main_n.end_of_battle()
 	game_n = $"/root/Main/Game"
+	gui_n = $"/root/Main/PlayerGUILayer/GUI" 
 	game_n.get_node("Map").set_map_data(new_game_data.MapData)
 	for player_id in new_game_data.PlayerSData:
 		gui_n.add_scoreboard_player(player_id, new_game_data.PlayerSData[player_id])
@@ -80,6 +81,9 @@ remote func recive_new_battle(new_game_data):
 	game_n #Do smth with time to new game
 
 #---------- CORE GAME MECHANIC ---------
+
+remote func recive_new_battle_time(left_sec):
+	gui_n.battle_time(left_sec)
 
 remote func recive_new_player(player_id: int, nick : String, spawn_point):
 	if !get_tree().get_rpc_sender_id() == 1:

@@ -50,9 +50,9 @@ func set_display_name(text):
 
 func _ready():
 	#warning-ignore:return_value_discarded
-	connect("special_ammo_change",get_node("/root/Main/Player_Gui_Layer/GUI"),"_on_special_ammo_change")
+	connect("special_ammo_change",get_node("/root/Main/PlayerGUILayer/GUI"),"_on_special_ammo_change")
 	#warning-ignore:return_value_discarded
-	connect("special_ammo_type_change",get_node("/root/Main/Player_Gui_Layer/GUI"),"_on_special_ammo_type_change")
+	connect("special_ammo_type_change",get_node("/root/Main/PlayerGUILayer/GUI"),"_on_special_ammo_type_change")
 	
 func pick_up_ammo_box(type):
 	var picked = false

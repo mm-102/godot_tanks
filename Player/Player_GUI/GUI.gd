@@ -12,8 +12,12 @@ const counters_tscn = {
 	Ammunition.TYPES.LASER : preload("res://Player/Player_GUI/LaserCounter.tscn")
 }
 
-onready var scores_node = $"Scoreboard/Scores"
 const name_score_tscn = preload("res://Player/Player_GUI/SBPlayer.tscn")
+onready var scores_node = $"Scoreboard/Scores"
+
+var time_left
+onready var battle_timer = $"BattleTimeUpdate"
+onready var battle_time_label = $"BattleTimeUpdate/TimerLabel"
 
 
 func _ready():
@@ -92,5 +96,23 @@ func _on_update_player_score(name, score=0):
 	var player_name_score = scores_node.get_node_or_null(name)
 	if player_name_score == null: return
 	player_name_score.get_node("Score").text = str(score)
-	
 
+# ------- battle time -------
+func battle_time(left_sec):
+	battle_time_label.show()
+	time_left = left_sec
+	battle_timer.start()
+	_on_BattleTimeUpdate_timeout()
+
+func proper_time_format(val)->String:
+	if val < 0:
+		return str("00")
+	if val < 10:
+		return str("0"+str(val))
+	return str(val)
+
+func _on_BattleTimeUpdate_timeout():
+	time_left = time_left - 1
+	var mins = proper_time_format(int(time_left) / 60)
+	var secs = proper_time_format(int(time_left) % 60)
+	battle_time_label.set_text(str(mins+":"+secs))

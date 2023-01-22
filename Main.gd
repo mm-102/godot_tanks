@@ -2,6 +2,7 @@ extends Node
 
 enum GAME_MODE{SINGLE, MULTI}
 const menu_gui_tscn = preload("res://GUI/Menu.tscn")
+const gui_tscn = preload("res://Player/Player_GUI/GUI.tscn")
 const transfe_pck = preload("res://Singletons/Transfer.tscn")
 const MODE_DICT = {
 	GAME_MODE.SINGLE: preload("res://Singleplayer.tscn"),
@@ -14,7 +15,7 @@ func game_mode(sel_mode: int, adress, player_nick):
 	var mode_inst = MODE_DICT[sel_mode].instance()
 	add_child(mode_inst)
 	if sel_mode == GAME_MODE.SINGLE:
-		get_node("/root/Main/Player_Gui_Layer").set_visible(true)
+		get_node("/root/Main/PlayerGUILayer").set_visible(true)
 	if sel_mode == GAME_MODE.MULTI:
 		if get_node_or_null("/root/Transfer") != null:
 			get_node("/root/Transfer").request_ready()
@@ -34,3 +35,4 @@ func exit_to_menu():
 func end_of_battle(): #[Important!] How to name functions: According to time when its called, or what this function does?
 	var mode_inst = MODE_DICT[GAME_MODE.MULTI].instance()
 	add_child(mode_inst)
+	$PlayerGUILayer.add_child(gui_tscn.instance())

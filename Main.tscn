@@ -9,8 +9,8 @@ script = ExtResource( 2 )
 
 [node name="Menu" parent="." instance=ExtResource( 1 )]
 
-[node name="Player_Gui_Layer" type="CanvasLayer" parent="."]
+[node name="PlayerGUILayer" type="CanvasLayer" parent="."]
 layer = 5
 visible = false
 
-[node name="GUI" parent="Player_Gui_Layer" instance=ExtResource( 3 )]
+[node name="GUI" parent="PlayerGUILayer" instance=ExtResource( 3 )]
