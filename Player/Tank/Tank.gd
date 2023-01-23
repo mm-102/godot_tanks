@@ -41,6 +41,7 @@ onready var animation_player = $"%AnimationPlayer"
 onready var turret_node =  $"%Turret"
 onready var bullet_point_node = $"%BulletPoint"
 onready var laset_point_node = $"%LaserPoint"
+onready var gun_ray_cast_node = $"%GunRayCast"
 
 
 
@@ -53,6 +54,9 @@ func _ready():
 	connect("special_ammo_change",get_node("/root/Main/PlayerGUILayer/GUI"),"_on_special_ammo_change")
 	#warning-ignore:return_value_discarded
 	connect("special_ammo_type_change",get_node("/root/Main/PlayerGUILayer/GUI"),"_on_special_ammo_type_change")
+	
+	gun_ray_cast_node.cast_to = bullet_point_node.position
+	gun_ray_cast_node.add_exception(self)
 	
 func pick_up_ammo_box(type):
 	var picked = false
@@ -116,6 +120,15 @@ func _unhandled_input(event):	#prevent shooting while clicking on gui		maybe all
 func _shoot():
 	if ammo_left <= 0:
 		return
+	
+	gun_ray_cast_node.enabled = true
+	gun_ray_cast_node.force_raycast_update()
+	if gun_ray_cast_node.is_colliding() and !gun_ray_cast_node.get_collider().is_in_group("Players"):
+		print(gun_ray_cast_node.get_collider())
+		gun_ray_cast_node.enabled = false
+		return
+	gun_ray_cast_node.enabled = false
+		
 	special_ammo[ammo_slot].amount -= 1
 	ammo_left -= 1
 	player_stance = {
