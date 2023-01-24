@@ -4,8 +4,6 @@ var ammo_box_tscn = preload("res://Objects/AmmoBox.tscn")
 onready var tilemap_n = $"%TileMap"
 onready var ammo_boxes_n = $"%AmmoBoxes"
 
-
-
 func set_map_data(map_data):
 	$"%TileMap".scale = map_data.Scale
 	set_mapset(map_data.MapSet)
@@ -23,3 +21,9 @@ func set_ammo_boxes(ab_many_data):
 		ab_inst.type = ab_data.Type
 		ab_inst.set_position(ab_data.P)
 		ammo_boxes_n.add_child(ab_inst)
+
+func get_map_boundaries():
+	var multiplier = $TileMap.get_cell_size() * 1.5
+	var pos = $TileMap.get_used_rect().position * multiplier
+	var end = $TileMap.get_used_rect().end * multiplier
+	return {"Pos": pos, "End": end}

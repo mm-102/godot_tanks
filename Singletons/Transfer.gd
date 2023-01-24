@@ -70,7 +70,7 @@ remote func recive_new_battle(new_game_data):
 	yield(game_n, "tree_exited")
 	main_n.end_of_battle()
 	game_n = $"/root/Main/Game"
-	gui_n = $"/root/Main/PlayerGUILayer/GUI" 
+	gui_n = $"/root/Main/PlayerGUILayer/GUI"
 	game_n.get_node("Map").set_map_data(new_game_data.MapData)
 	for player_id in new_game_data.PlayerSData:
 		gui_n.add_scoreboard_player(player_id, new_game_data.PlayerSData[player_id])

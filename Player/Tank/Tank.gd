@@ -42,6 +42,7 @@ onready var turret_node =  $"%Turret"
 onready var bullet_point_node = $"%BulletPoint"
 onready var laset_point_node = $"%LaserPoint"
 onready var gun_ray_cast_node = $"%GunRayCast"
+onready var camera2d_n = $"%Camera2D"
 
 
 
@@ -54,10 +55,22 @@ func _ready():
 	connect("special_ammo_change",get_node("/root/Main/PlayerGUILayer/GUI"),"_on_special_ammo_change")
 	#warning-ignore:return_value_discarded
 	connect("special_ammo_type_change",get_node("/root/Main/PlayerGUILayer/GUI"),"_on_special_ammo_type_change")
-	
+#	get_node(Paths.MAP_N).connect("map_rect", self, "set_camera_limit")
+	set_camera_limit()
 	gun_ray_cast_node.cast_to = bullet_point_node.position
 	gun_ray_cast_node.add_exception(self)
-	
+
+func set_camera_limit():
+	var map_rect = get_node(Paths.MAP_N).get_map_boundaries()
+	if map_rect == null:
+		print("[Tank]: Get map rect too quick. Consider signal method.")
+		return
+	camera2d_n.limit_left = map_rect.Pos.x
+	camera2d_n.limit_top = map_rect.Pos.y
+	camera2d_n.limit_right = map_rect.End.x
+	camera2d_n.limit_bottom = map_rect.End.y
+	print(map_rect.End)
+
 func pick_up_ammo_box(type):
 	var picked = false
 	var type_slot = {}

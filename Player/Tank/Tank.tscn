@@ -95,6 +95,7 @@ anims/RESET = SubResource( 4 )
 anims/explode = SubResource( 3 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
+unique_name_in_owner = true
 current = true
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
