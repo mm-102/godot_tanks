@@ -8,9 +8,8 @@ var empty_gd = preload("res://Empty.gd")
 var time_of_last_stance = -INF
 var world_stance_buffer: Array
 var local_player_name = ""
-var local_player_id = ""
+var local_player_id = 0
 onready var playerS_node = $"%Players"
-
 
 
 func self_initiation(player_data):
@@ -40,6 +39,10 @@ func create_player(player_data):
 	tank_inst.position = spawn_point
 	tank_inst.set_display_name(nick)
 	$Players.add_child(tank_inst, true)
+	if local_player_id:
+		get_node("/root/Main/Game/Players/" + str(local_player_id))\
+		.get_node("%PlayerIndicators")\
+		.add_indicated_player(tank_inst)
 
 
 func player_destroyed(player_id, _position, _rotation, projectile_name):

@@ -3,7 +3,7 @@ extends KinematicBody2D
 var nick: String = ""
 onready var wall = $Hitbox.duplicate(true)
 onready var animation_player = $"%AnimationPlayer"
-
+var visible_to_local_player = false
 
 func set_display_name(text):
 	nick = text
@@ -31,3 +31,11 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 	print("[TankTemplate]: ", anim_name)
 	if anim_name == "explode":
 		queue_free()
+
+
+func _on_screen_entered():
+	visible_to_local_player = true
+
+
+func _on_screen_exited():
+	visible_to_local_player = false
