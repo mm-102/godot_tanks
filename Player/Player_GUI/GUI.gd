@@ -9,7 +9,8 @@ const base_color = "ffffff"
 const counters_tscn = {
 	Ammunition.TYPES.ROCKET : preload("res://Player/Player_GUI/RocketCounter.tscn"),
 	Ammunition.TYPES.FRAG_BOMB : preload("res://Player/Player_GUI/FragBombCounter.tscn"),
-	Ammunition.TYPES.LASER : preload("res://Player/Player_GUI/LaserCounter.tscn")
+	Ammunition.TYPES.LASER : preload("res://Player/Player_GUI/LaserCounter.tscn"),
+	Ammunition.TYPES.LASER_BULLET : preload("res://Player/Player_GUI/LaserBulletCounter.tscn")
 }
 
 onready var scores_node = $"Scoreboard/Scores"

@@ -40,6 +40,7 @@ type = 2
 
 [node name="AmmoBox2" parent="Objects" instance=ExtResource( 3 )]
 position = Vector2( 398, 452 )
+type = 4
 
 [node name="AmmoBox3" parent="Objects" instance=ExtResource( 3 )]
 position = Vector2( 582, 519 )
