@@ -14,9 +14,18 @@ func _process(delta):
 	if !visible:
 		return
 	
-	var direction = (target_player.global_position - player.global_position).normalized()
+	var to_target = (target_player.global_position - player.global_position)
+	var disance = to_target.length()
+	var direction = to_target.normalized()
 	var angle = direction.angle()
 	var viewport_size = get_viewport().size
+	
+	if direction.y > 0:
+		$Label.rect_rotation = 180
+	
+	else:
+		$Label.rect_rotation = 0
+	$Label.text = str(round(disance))
 	
 	rotation = angle + PI/2
 	
