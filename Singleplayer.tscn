@@ -47,6 +47,7 @@ position = Vector2( 582, 519 )
 
 [node name="AmmoBox4" parent="Objects" instance=ExtResource( 3 )]
 position = Vector2( 438, 527 )
+type = 5
 
 [node name="AmmoBox5" parent="Objects" instance=ExtResource( 3 )]
 position = Vector2( 290, 504 )

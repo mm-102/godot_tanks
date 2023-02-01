@@ -47,7 +47,9 @@ func create_player(player_data):
 
 func player_destroyed(player_id, _position, _rotation, projectile_name):
 	if projectile_name != null:
-		get_node_or_null("/root/Main/Game/Projectiles/" + projectile_name).die()
+		var projectile = get_node_or_null("/root/Main/Game/Projectiles/" + projectile_name)
+		if projectile != null:
+			projectile.die()
 	get_node("Players/" + str(player_id)).die()
 	create_corpse(player_id, _position, _rotation)
 
@@ -71,6 +73,7 @@ func create_corpse(player_id, _position, _rotation):
 	static_body2d.get_node("%Turret").queue_free()
 	static_body2d.get_node("%RemoteTransform2D").queue_free()
 	static_body2d.get_node("%CanvasLayer").queue_free()
+	static_body2d.get_node("%VisibilityNotifier2D").queue_free()
 	
 	var lifeTime = Timer.new()
 	lifeTime.wait_time = CORPSE_LIFE_TIME
