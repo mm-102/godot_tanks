@@ -129,8 +129,13 @@ align = 1
 unique_name_in_owner = true
 script = ExtResource( 6 )
 
+[node name="RefreshTimer" type="Timer" parent="CanvasLayer/CenterPosition/PlayerIndicators"]
+wait_time = 0.2
+
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 5 )
 max_distance = 600.0
 
 [connection signal="body_entered" from="." to="." method="_on_base_body_entered"]
+[connection signal="ready" from="." to="CanvasLayer/CenterPosition/PlayerIndicators" method="_on_Tank_ready"]
+[connection signal="timeout" from="CanvasLayer/CenterPosition/PlayerIndicators/RefreshTimer" to="CanvasLayer/CenterPosition/PlayerIndicators" method="_on_RefreshTimer_timeout"]

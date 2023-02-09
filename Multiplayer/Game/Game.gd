@@ -39,10 +39,10 @@ func create_player(player_data):
 	tank_inst.position = spawn_point
 	tank_inst.set_display_name(nick)
 	$Players.add_child(tank_inst, true)
-	if local_player_id:
-		get_node("/root/Main/Game/Players/" + str(local_player_id))\
-		.get_node("%PlayerIndicators")\
-		.add_indicated_player(tank_inst)
+#	if local_player_id:
+#		get_node("/root/Main/Game/Players/" + str(local_player_id))\
+#		.get_node("%PlayerIndicators")\
+#		.add_indicated_player(tank_inst)
 
 
 func player_destroyed(player_id, _position, _rotation, projectile_name):
