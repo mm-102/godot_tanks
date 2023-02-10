@@ -23,17 +23,11 @@ _global_script_classes=[ {
 "class": "Projectile",
 "language": "GDScript",
 "path": "res://Player/Projectiles/Projectile.gd"
-}, {
-"base": "Node",
-"class": "T_Clock",
-"language": "GDScript",
-"path": "res://Singletons/T_Clock.gd"
 } ]
 _global_script_class_icons={
 "Ammunition": "",
 "Paths": "",
-"Projectile": "",
-"T_Clock": ""
+"Projectile": ""
 }
 
 [application]
@@ -127,6 +121,10 @@ project/assembly_name="t"
 [physics]
 
 common/physics_jitter_fix=0.0
+common/enable_pause_aware_picking=true
+2d/use_bvh=false
+2d/bvh_collision_margin=0.0
+common/enable_object_picking=false
 
 [rendering]
 

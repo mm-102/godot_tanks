@@ -23,7 +23,7 @@ func set_ammo_boxes(ab_many_data):
 		ammo_boxes_n.add_child(ab_inst)
 
 func get_map_boundaries():
-	var multiplier = $TileMap.get_cell_size() * 1.5
+	var multiplier = $TileMap.get_cell_size() * $"%TileMap".scale
 	var pos = $TileMap.get_used_rect().position * multiplier
 	var end = $TileMap.get_used_rect().end * multiplier
 	return {"Pos": pos, "End": end}

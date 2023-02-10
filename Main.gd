@@ -10,6 +10,11 @@ const MODE_DICT = {
 }
 var is_multiplayer = false
 
+
+func _ready():
+	#Physics2DServer.set_active(false)
+	set_physics_process(false)
+
 func game_mode(sel_mode: int, adress, player_nick):
 	#[info] Transfer node have to be after main
 	var mode_inst = MODE_DICT[sel_mode].instance()
@@ -32,7 +37,11 @@ func exit_to_menu():
 	#warning-ignore:return_value_discarded
 	get_tree().reload_current_scene()
 	
-func end_of_battle(): #[Important!] How to name functions: According to time when its called, or what this function does?
+func end_of_battle():
+	var game_n = $"/root/Main/Game"
+	$"/root/Main/PlayerGUILayer/GUI".queue_free()
+	game_n.queue_free()
+	yield(game_n, "tree_exited")
 	var mode_inst = MODE_DICT[GAME_MODE.MULTI].instance()
 	add_child(mode_inst)
 	$PlayerGUILayer.add_child(gui_tscn.instance())

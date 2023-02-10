@@ -13,10 +13,6 @@ var network : NetworkedMultiplayerENet = null
 
 
 #---------- SERVER CREATION ----------
-func _ready():
-	game_n = $"/root/Main/Game"
-	
-
 func _enter_tree():
 	_connect_to_server()
 
@@ -65,12 +61,8 @@ remote func recive_init_data(init_data):
 remote func recive_new_battle(new_game_data):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	gui_n.queue_free()
-	game_n.queue_free()
-	yield(game_n, "tree_exited")
-	main_n.end_of_battle()
-	game_n = $"/root/Main/Game"
-	gui_n = $"/root/Main/PlayerGUILayer/GUI"
+	yield(main_n.end_of_battle(), "completed")
+	_ready()
 	game_n.get_node("Map").set_map_data(new_game_data.MapData)
 	for player_id in new_game_data.PlayerSData:
 		gui_n.add_scoreboard_player(player_id, new_game_data.PlayerSData[player_id])
@@ -104,18 +96,23 @@ remote func recive_player_destroyed(player_id, position, rotation, slayer_id, pr
 func fetch_stance(player_stance: Dictionary):
 	rpc_unreliable_id(1, "recive_stance", player_stance)
 
-func fetch_shoot(player_stance, shoot_slot):
-	rpc_unreliable_id(1, "recive_shoot", player_stance, shoot_slot)
-
 remote func recive_world_stance(time, playerS_stance):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
 	game_n.add_world_stance(time, playerS_stance)
 
-remote func recive_shoot(player_id, bullet_data):
+func fetch_shoot(player_stance, shoot_slot):
+	rpc_unreliable_id(1, "recive_shoot", player_stance, shoot_slot)
+
+remote func recive_shoot(player_id, bullet_data, spawn_time):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	game_n.spawn_bullet(player_id, bullet_data)
+	game_n.spawn_bullet(player_id, bullet_data, spawn_time)
+
+remote func recive_shoot_bounce_state(bulletS_state, time):
+	if !get_tree().get_rpc_sender_id() == 1:
+		return
+	game_n.update_bounce_bullet(bulletS_state, time)
 
 remote func recive_score_update(player_id: String, new_score: int):
 	if !get_tree().get_rpc_sender_id() == 1:

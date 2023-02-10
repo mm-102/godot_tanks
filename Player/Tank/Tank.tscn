@@ -57,6 +57,7 @@ tracks/1/keys = {
 
 [node name="Tank" type="RigidBody2D" groups=["ME", "Players"]]
 unique_name_in_owner = true
+rotation = 1.5708
 collision_mask = 7
 physics_material_override = SubResource( 2 )
 gravity_scale = 0.0

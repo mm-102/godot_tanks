@@ -15,9 +15,8 @@ onready var playerS_node = $"%Players"
 
 func self_initiation(player_data):
 	var player_id :int = player_data.ID
-	var nick :String = player_data.Nick
+#	var nick :String = player_data.Nick
 	var spawn_point = player_data.SP
-	var score = player_data.Score
 	var tank_inst = tank.instance()
 	local_player_id = player_id
 	tank_inst.name = str(player_id)
@@ -32,7 +31,6 @@ func create_player(player_data):
 	var player_id :int = player_data.ID
 	var nick :String = player_data.Nick
 	var spawn_point = player_data.SP
-	var score = player_data.Score
 	var tank_inst = tank_template.instance()
 	tank_inst.name = str(player_id)
 	if nick.empty():
@@ -78,17 +76,25 @@ func create_corpse(player_id, _position, _rotation):
 	$Objects.add_child(static_body2d)
 
 
-func spawn_bullet(player_id, bullet_data):
+func spawn_bullet(player_id, bullet_data, spawn_time):
 	var bullet_inst = Ammunition.get_tscn(bullet_data.AT).instance()
-	bullet_inst.name = bullet_data.Name
-#	bullet_inst.position = bullet_data.SP
-#	bullet_inst.set_linear_velocity(bullet_data.V)
+	var client_clock = get_node("/root/Transfer/Clock").client_clock
+	yield(get_tree().create_timer((spawn_time - client_clock)*0.001), "timeout")
+#	print("[Bullet", bullet_data.Name, "]: Time: ", get_node(Paths.T_CLOCK).get_time())
 	bullet_inst.setup_multiplayer(bullet_data)
 	if player_id == get_tree().get_network_unique_id():
 		bullet_inst.player_path = NodePath(Paths.PLAYERS_N + "/" + str(local_player_id))
-	get_node("/root/Main/Game/Projectiles").add_child(bullet_inst)
+	get_node("/root/Main/Game/Projectiles").add_child(bullet_inst, true)
 
-
+func update_bounce_bullet(bulletS_state, time):
+	if time < get_node(Paths.T_CLOCK).get_time():
+		print("[GAME]: Recived bullet bounce data too old.")
+		return
+	for bullet_state in bulletS_state:
+		var projectile_node = get_node_or_null("/root/Main/Game/Projectiles/" + bullet_state.Name)
+		if projectile_node == null:
+			return
+		projectile_node.append_new_state(bullet_state, time - get_node(Paths.T_CLOCK).get_time())
 
 func add_world_stance(time, world_stance):
 	if time_of_last_stance < time:
