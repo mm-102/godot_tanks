@@ -4,18 +4,21 @@
 [ext_resource path="res://GUI/Menu.tres" type="Theme" id=2]
 
 [node name="Scoreboard" type="Control"]
-anchor_right = 0.287
-anchor_bottom = 0.396
-margin_right = 5.112
-margin_bottom = -0.600021
-rect_min_size = Vector2( 80, 0 )
+anchor_right = 0.154
+anchor_bottom = 0.213
+margin_right = 0.319977
+margin_bottom = 7.95999
+rect_min_size = Vector2( 296, 238 )
 mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 theme = ExtResource( 2 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 modulate = Color( 1, 1, 1, 0.294118 )
 margin_right = 298.0
 margin_bottom = 236.0
+rect_min_size = Vector2( 298, 236 )
 mouse_filter = 2
 texture = ExtResource( 1 )
 
@@ -28,36 +31,39 @@ align = 1
 valign = 1
 
 [node name="Scores" type="VBoxContainer" parent="."]
-anchor_top = 1.0
+anchor_left = 0.02
+anchor_top = 0.21
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 21.0
-margin_top = -193.0
-margin_right = -19.0
-margin_bottom = -16.0
+margin_left = 0.0799994
+margin_top = 10.02
+margin_right = -2.0
+margin_bottom = -138.0
 mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
 [node name="Headers" type="HBoxContainer" parent="Scores"]
-margin_right = 259.0
+margin_right = 288.0
 margin_bottom = 40.0
 mouse_filter = 2
 alignment = 1
 
 [node name="Label" type="Label" parent="Scores/Headers"]
-margin_left = 5.0
-margin_right = 96.0
+margin_left = 19.0
+margin_right = 110.0
 margin_bottom = 40.0
 text = "Name  "
 
 [node name="Label2" type="Label" parent="Scores/Headers"]
-margin_left = 100.0
-margin_right = 190.0
+margin_left = 114.0
+margin_right = 204.0
 margin_bottom = 40.0
 text = "Wins  "
 
 [node name="Label3" type="Label" parent="Scores/Headers"]
-margin_left = 194.0
-margin_right = 254.0
+margin_left = 208.0
+margin_right = 268.0
 margin_bottom = 40.0
 text = "Kills"
 align = 2

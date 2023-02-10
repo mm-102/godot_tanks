@@ -105,4 +105,10 @@ grow_horizontal = 2
 text = "test"
 align = 1
 
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+unique_name_in_owner = true
+rect = Rect2( -1, -1, 2, 2 )
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_screen_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_screen_exited"]

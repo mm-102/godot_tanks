@@ -8,9 +8,8 @@ var empty_gd = preload("res://Empty.gd")
 var time_of_last_stance = -INF
 var world_stance_buffer: Array
 var local_player_name = ""
-var local_player_id = ""
+var local_player_id = 0
 onready var playerS_node = $"%Players"
-
 
 
 func self_initiation(player_data):
@@ -38,11 +37,17 @@ func create_player(player_data):
 	tank_inst.position = spawn_point
 	tank_inst.set_display_name(nick)
 	$Players.add_child(tank_inst, true)
+#	if local_player_id:
+#		get_node("/root/Main/Game/Players/" + str(local_player_id))\
+#		.get_node("%PlayerIndicators")\
+#		.add_indicated_player(tank_inst)
 
 
 func player_destroyed(player_id, _position, _rotation, projectile_name):
 	if projectile_name != null:
-		get_node_or_null("/root/Main/Game/Projectiles/" + projectile_name).die()
+		var projectile = get_node_or_null("/root/Main/Game/Projectiles/" + projectile_name)
+		if projectile != null:
+			projectile.die()
 	get_node("Players/" + str(player_id)).die()
 	create_corpse(player_id, _position, _rotation)
 
@@ -66,6 +71,7 @@ func create_corpse(player_id, _position, _rotation):
 	static_body2d.get_node("%Turret").queue_free()
 	static_body2d.get_node("%RemoteTransform2D").queue_free()
 	static_body2d.get_node("%CanvasLayer").queue_free()
+	static_body2d.get_node("%VisibilityNotifier2D").queue_free()
 	
 	var lifeTime = Timer.new()
 	lifeTime.wait_time = CORPSE_LIFE_TIME

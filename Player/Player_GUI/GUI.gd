@@ -9,7 +9,9 @@ const base_color = "ffffff"
 const counters_tscn = {
 	Ammunition.TYPES.ROCKET : preload("res://Player/Player_GUI/RocketCounter.tscn"),
 	Ammunition.TYPES.FRAG_BOMB : preload("res://Player/Player_GUI/FragBombCounter.tscn"),
-	Ammunition.TYPES.LASER : preload("res://Player/Player_GUI/LaserCounter.tscn")
+	Ammunition.TYPES.LASER : preload("res://Player/Player_GUI/LaserCounter.tscn"),
+	Ammunition.TYPES.LASER_BULLET : preload("res://Player/Player_GUI/LaserBulletCounter.tscn"),
+	Ammunition.TYPES.FIREBALL : preload("res://Player/Player_GUI/FireballCounter.tscn")
 }
 
 const name_score_tscn = preload("res://Player/Player_GUI/SBPlayer.tscn")
@@ -65,8 +67,8 @@ func add_scoreboard_player(player_id, data):
 	var nick = data.Nick
 	var player_name_score = name_score_tscn.instance()
 	player_name_score.name = str(player_id)
-	player_name_score.get_node("Nick").text = str(nick) + ' : '
-	player_name_score.get_node("Wins").text = str(score.Wins) + ' : '
+	player_name_score.get_node("Nick").text = str(nick)# + ' : '
+	player_name_score.get_node("Wins").text = str(score.Wins)# + ' : '
 	player_name_score.get_node("Kills").text = str(score.Kills)
 	scores_node.add_child(player_name_score)
 
