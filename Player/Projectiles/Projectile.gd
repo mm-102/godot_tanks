@@ -47,5 +47,5 @@ func die():
 	var player = get_node_or_null(player_path)
 	if !(player == null):
 		player.ammo_left += 1
-	print("[Bullet", name, "]: Pos ", position, " | Time: ", get_node(Paths.T_CLOCK).get_time())
+#	print("[Bullet", name, "]: Pos ", position, " | Time: ", get_node(Paths.T_CLOCK).get_time())
 	queue_free()

@@ -61,10 +61,11 @@ func _ready():
 	gun_ray_cast_node.add_exception(self)
 
 func set_camera_limit():
-	var map_rect = get_node(Paths.MAP_N).get_map_boundaries()
-	if map_rect == null:
+	var map_node = get_node_or_null(Paths.MAP_N)
+	if map_node == null:
 		print("[Tank]: Get map rect too quick. Consider signal method.")
 		return
+	var map_rect = map_node.get_map_boundaries()
 	camera2d_n.limit_left = map_rect.Pos.x
 	camera2d_n.limit_top = map_rect.Pos.y
 	camera2d_n.limit_right = map_rect.End.x
