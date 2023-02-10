@@ -14,6 +14,8 @@ func _process(delta):
 	if !visible:
 		return
 	
+	var camera_zoom = player.get_node("%Camera2D").zoom.x
+	
 	var to_target = (target_player.global_position - player.global_position)
 	var disance = to_target.length()
 	var direction = to_target.normalized()
@@ -30,15 +32,15 @@ func _process(delta):
 	rotation = angle + PI/2
 	
 	if cos(angle) == 0:
-		position = direction * ((viewport_size.y - texture_size) * 0.5 - margin)
+		position = direction * ((viewport_size.y * camera_zoom - texture_size) * 0.5 - margin)
 		return
 	
 	if sin(angle) == 0:
-		position = direction * ((viewport_size.x - texture_size) * 0.5 - margin)
+		position = direction * ((viewport_size.x * camera_zoom - texture_size) * 0.5 - margin)
 		return
 	
 	var factor = min(\
 	abs(viewport_size.x / cos(angle)),\
 	abs(viewport_size.y / sin(angle))\
 	)
-	position = direction * ((factor - texture_size) * 0.5 - margin)
+	position = direction * ((factor * camera_zoom - texture_size) * 0.5 - margin)
