@@ -6,7 +6,7 @@
 [ext_resource path="res://Player/Player_GUI/Scoreboard2.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Player/Player_GUI/Pause.tscn" type="PackedScene" id=7]
 
-[node name="GUI" type="Control"]
+[node name="GUI" type="MarginContainer"]
 pause_mode = 2
 process_priority = 1
 anchor_right = 1.0
@@ -31,7 +31,7 @@ expand_icon = true
 
 [node name="Ammunition" type="HBoxContainer" parent="."]
 margin_top = 560.0
-margin_right = 172.0
+margin_right = 150.0
 margin_bottom = 600.0
 grow_vertical = 0
 rect_min_size = Vector2( 150, 40 )
@@ -66,7 +66,7 @@ size_flags_vertical = 4
 [node name="Scoreboard" parent="." instance=ExtResource( 6 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 299.0
-margin_bottom = 243.0
+margin_right = 296.0
+margin_bottom = 238.0
 
 [connection signal="toggled" from="PauseButton" to="." method="_on_PauseButton_toggled"]

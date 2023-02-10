@@ -30,11 +30,11 @@ func _process(delta):
 	rotation = angle + PI/2
 	
 	if cos(angle) == 0:
-		position = direction * ((viewport_size.x - texture_size) * 0.5 - margin)
+		position = direction * ((viewport_size.y - texture_size) * 0.5 - margin)
 		return
 	
 	if sin(angle) == 0:
-		position = direction * ((viewport_size.y - texture_size) * 0.5 - margin)
+		position = direction * ((viewport_size.x - texture_size) * 0.5 - margin)
 		return
 	
 	var factor = min(\
