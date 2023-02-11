@@ -14,13 +14,10 @@ const counters_tscn = {
 	Ammunition.TYPES.FIREBALL : preload("res://Player/Player_GUI/FireballCounter.tscn")
 }
 
-const name_score_tscn = preload("res://Player/Player_GUI/SBPlayer.tscn")
-onready var scores_node = $"Scoreboard/Scores"
-onready var scoreboard_n = $"Scoreboard"
-
 var time_left
 onready var battle_timer = $"BattleTimeUpdate"
 onready var battle_time_label = $"BattleTimeUpdate/TimerLabel"
+
 
 
 func _ready():
@@ -30,11 +27,6 @@ func _input(event : InputEvent):
 	# ---- pause ----
 	if event.is_action_pressed("ui_cancel"):
 		$PauseButton.pressed = !$PauseButton.pressed
-	
-	if event.is_action_pressed("Scoreboard"):
-		scoreboard_n.set_visible(true)
-	if event.is_action_released("Scoreboard"):
-		scoreboard_n.set_visible(false)
 	
 # ---- display ammo ----
 func _on_special_ammo_change(type, amount_left):
@@ -65,47 +57,6 @@ func _on_PauseButton_toggled(button_pressed):
 	if !(is_multiplayer):
 		get_tree().paused = button_pressed
 	$Pause.visible = button_pressed
-
-# ---- scoreboard ----
-
-func add_scoreboard_player(player_id, data):
-	var score = data.Score
-	var nick = data.Nick
-	var player_name_score = scoreboard_n.get_node("Scores/Headers").duplicate()
-	player_name_score.name = str(player_id)
-	if nick.empty():
-		nick = "Player" + str(player_id)
-	player_name_score.get_node("Nick").text = str(nick)# + ' : '
-	player_name_score.get_node("Wins").text = str(score.Wins)# + ' : '
-	player_name_score.get_node("Kills").text = str(score.Kills)
-	scores_node.add_child(player_name_score)
-
-func clear_scores():
-	for score in scores_node.get_children():
-		if score.name == "Headers":
-			continue
-		score.queue_free()
-
-func add_kill(player_id):
-	var player_name_score = scores_node.get_node_or_null(str(player_id) + "/Kills")
-	if player_name_score == null:
-		return
-	var kills = int(player_name_score.get_text())
-	kills += 1
-	scores_node.get_node(str(player_id) + "/Kills").set_text(str(kills))
-	
-
-func _on_new_scoreboard_player(name, nick):
-	var player_name_score = name_score_tscn.instance()
-	player_name_score.name = name
-	player_name_score.get_node("Name").text = nick + ':'
-	player_name_score.get_node("Score").text = "0"
-	scores_node.add_child(player_name_score)
-
-func _on_update_player_score(name, score=0):
-	var player_name_score = scores_node.get_node_or_null(name)
-	if player_name_score == null: return
-	player_name_score.get_node("Score").text = str(score)
 
 # ------- battle time -------
 func battle_time(left_sec):

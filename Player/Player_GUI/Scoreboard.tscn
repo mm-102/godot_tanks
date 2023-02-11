@@ -1,50 +1,152 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Player/Player_GUI/NameScore.tscn" type="PackedScene" id=2]
-[ext_resource path="res://textures/text/Bosk.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://textures/GUI/MiniMenu.png" type="Texture" id=1]
+[ext_resource path="res://GUI/Menu.tres" type="Theme" id=2]
+[ext_resource path="res://Player/Player_GUI/Scoreboard.gd" type="Script" id=3]
 
-[sub_resource type="DynamicFont" id=1]
-size = 30
-font_data = ExtResource( 3 )
+[sub_resource type="StyleBoxEmpty" id=1]
 
-[sub_resource type="Theme" id=2]
-resource_local_to_scene = true
-default_font = SubResource( 1 )
-
-[sub_resource type="DynamicFont" id=3]
-size = 20
-font_data = ExtResource( 3 )
-
-[sub_resource type="Theme" id=4]
-resource_local_to_scene = true
-default_font = SubResource( 3 )
-
-[node name="Scoreboard" type="VBoxContainer"]
-anchor_left = 0.839
-anchor_top = 0.2
-anchor_right = 1.0
-anchor_bottom = 0.7
-margin_left = -0.136047
-margin_top = 4.0
-margin_bottom = 150.0
-grow_horizontal = 0
-rect_min_size = Vector2( 165, 200 )
+[node name="Scoreboard" type="PanelContainer"]
+anchor_right = 0.334344
+anchor_bottom = 0.433
+margin_right = -0.368011
+margin_bottom = 0.199982
+rect_min_size = Vector2( 300, 260 )
 mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 8.89
+theme = ExtResource( 2 )
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
-[node name="Label" type="Label" parent="."]
-margin_right = 309.0
-margin_bottom = 99.0
-theme = SubResource( 2 )
-text = "
-
-Scoreboard"
+[node name="TextureRect" type="NinePatchRect" parent="."]
+modulate = Color( 1, 1, 1, 0.294118 )
+margin_right = 342.0
+margin_bottom = 260.0
+texture = ExtResource( 1 )
+patch_margin_left = 27
+patch_margin_top = 49
+patch_margin_right = 22
+patch_margin_bottom = 20
 
 [node name="Scores" type="VBoxContainer" parent="."]
-margin_top = 103.0
-margin_right = 309.0
-margin_bottom = 143.0
+margin_right = 342.0
+margin_bottom = 78.0
 mouse_filter = 2
-theme = SubResource( 4 )
+size_flags_vertical = 0
 
-[node name="LocalPlayer" parent="Scores" instance=ExtResource( 2 )]
-margin_right = 309.0
+[node name="MarginContainer" type="MarginContainer" parent="Scores"]
+margin_right = 342.0
+margin_bottom = 4.0
+rect_min_size = Vector2( 0, 4 )
+
+[node name="Title" type="Label" parent="Scores"]
+margin_top = 8.0
+margin_right = 342.0
+margin_bottom = 38.0
+rect_min_size = Vector2( 300, 0 )
+text = "Score board"
+align = 1
+valign = 3
+uppercase = true
+
+[node name="Headers" type="HBoxContainer" parent="Scores"]
+margin_top = 42.0
+margin_right = 342.0
+margin_bottom = 72.0
+mouse_filter = 2
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Scores/Headers"]
+margin_right = 20.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 20, 10 )
+
+[node name="Nick" type="Label" parent="Scores/Headers"]
+margin_left = 24.0
+margin_right = 208.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 20, 0 )
+size_flags_horizontal = 3
+text = "Nick"
+align = 1
+valign = 2
+
+[node name="CrossLine" type="ColorRect" parent="Scores/Headers/Nick"]
+visible = false
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_vertical = 2
+rect_min_size = Vector2( 0, 4 )
+color = Color( 0.643137, 0.643137, 0.643137, 1 )
+
+[node name="Separator" type="Label" parent="Scores/Headers"]
+margin_left = 212.0
+margin_right = 219.0
+margin_bottom = 30.0
+size_flags_horizontal = 8
+text = "|"
+
+[node name="Wins" type="Label" parent="Scores/Headers"]
+margin_left = 223.0
+margin_right = 263.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 40, 0 )
+size_flags_horizontal = 8
+text = "W"
+align = 1
+valign = 2
+
+[node name="Separator2" type="Label" parent="Scores/Headers"]
+margin_left = 267.0
+margin_right = 274.0
+margin_bottom = 30.0
+size_flags_horizontal = 8
+text = "|"
+
+[node name="Kills" type="Label" parent="Scores/Headers"]
+margin_left = 278.0
+margin_right = 318.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 40, 0 )
+size_flags_horizontal = 8
+text = "K"
+align = 1
+valign = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="Scores/Headers"]
+margin_left = 322.0
+margin_right = 342.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 20, 0 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Scores"]
+margin_top = 76.0
+margin_right = 342.0
+margin_bottom = 78.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Scores/HBoxContainer"]
+margin_top = 1.0
+margin_right = 20.0
+margin_bottom = 1.0
+rect_min_size = Vector2( 20, 0 )
+size_flags_vertical = 4
+
+[node name="ColorRect" type="ColorRect" parent="Scores/HBoxContainer"]
+margin_left = 24.0
+margin_right = 318.0
+margin_bottom = 2.0
+rect_min_size = Vector2( 0, 2 )
+size_flags_horizontal = 3
+size_flags_vertical = 6
+
+[node name="MarginContainer2" type="MarginContainer" parent="Scores/HBoxContainer"]
+margin_left = 322.0
+margin_right = 342.0
+margin_bottom = 2.0
+rect_min_size = Vector2( 20, 0 )

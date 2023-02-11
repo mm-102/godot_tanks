@@ -9,6 +9,7 @@ onready var clock_node = $"%Clock"
 onready var main_n = $"/root/Main"
 onready var game_n = $"/root/Main/Game"
 onready var gui_n = $"/root/Main/PlayerGUILayer/GUI"
+onready var scoreboard_n = $"/root/Main/PlayerGUILayer/GUI/Scoreboard"
 var network : NetworkedMultiplayerENet = null
 
 
@@ -55,8 +56,11 @@ remote func recive_init_data(init_data):
 	for player_template in init_data.PlayerSTemplateData:
 		game_n.create_player(player_template)
 	for corpse_data in init_data.PlayerSCorpses:
-		game_n.create_corpse(corpse_data.Name, corpse_data.P, corpse_data.R)
+		game_n.create_corpse(corpse_data)
 	game_n.get_node("Map").set_map_data(init_data.MapData)
+	var spectator_camera : Camera2D = load("res://Player/Spectator/Spectator.tscn").instance()
+	spectator_camera.current = true
+	get_node("/root/Main/Game/Players").add_child(spectator_camera)
 
 remote func recive_new_battle(new_game_data):
 	if !get_tree().get_rpc_sender_id() == 1:
@@ -65,7 +69,7 @@ remote func recive_new_battle(new_game_data):
 	_ready()
 	game_n.get_node("Map").set_map_data(new_game_data.MapData)
 	for player_id in new_game_data.PlayerSData:
-		gui_n.add_scoreboard_player(player_id, new_game_data.PlayerSData[player_id])
+		scoreboard_n.add_scoreboard_player(player_id, new_game_data.PlayerSData[player_id])
 		if player_id == network.get_unique_id():
 			game_n.self_initiation(new_game_data.PlayerSData[player_id])
 			continue
@@ -87,8 +91,7 @@ remote func recive_player_destroyed(corpse_data, slayer_id, projectile_name):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
 	game_n.player_destroyed(corpse_data, projectile_name)
-	if corpse_data.Name != slayer_id:
-		gui_n.add_kill(slayer_id)
+	scoreboard_n.player_destroyed(corpse_data.ID, slayer_id)
 
 func fetch_stance(player_stance: Dictionary):
 	rpc_unreliable_id(1, "recive_stance", player_stance)

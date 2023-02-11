@@ -48,7 +48,7 @@ func player_destroyed(corpse_data, projectile_name):
 		var projectile = get_node_or_null("/root/Main/Game/Projectiles/" + projectile_name)
 		if projectile != null:
 			projectile.die()
-	get_node("Players/" + str(corpse_data.Name)).die()
+	get_node("Players/" + str(corpse_data.ID)).die()
 	create_corpse(corpse_data)
 
 func local_player_destroyed(projectile_name):
@@ -61,11 +61,11 @@ func create_corpse(corpse_data):
 	var wall_inst = tank_template.instance()
 	wall_inst.remove_from_group("Players")
 	wall_inst.add_to_group("Corpse")
-	static_body2d.name = str(corpse_data.Name)
+	static_body2d.name = str(corpse_data.ID)
 	static_body2d.set_collision_layer(4)
 	static_body2d.set_collision_mask(3)
-	static_body2d.set_position(corpse_data.Position)
-	static_body2d.rotation = corpse_data.Rotation
+	static_body2d.set_position(corpse_data.Pos)
+	static_body2d.rotation = corpse_data.Rot
 	wall_inst.replace_by(static_body2d, true)
 	static_body2d.get_node("%Sprite").set_frame(4)
 	static_body2d.get_node("%Turret").queue_free()

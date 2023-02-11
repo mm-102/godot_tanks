@@ -4,7 +4,7 @@
 [ext_resource path="res://GUI/Menu.tres" type="Theme" id=2]
 [ext_resource path="res://Player/Player_GUI/GUI.gd" type="Script" id=4]
 [ext_resource path="res://textures/PlayerGUI/pause.png" type="Texture" id=5]
-[ext_resource path="res://Player/Player_GUI/Scoreboard2.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Player/Player_GUI/Scoreboard.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Player/Player_GUI/Pause.tscn" type="PackedScene" id=7]
 
 [sub_resource type="StyleBoxEmpty" id=1]
@@ -53,6 +53,7 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="Scoreboard" parent="." instance=ExtResource( 6 )]
+visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 362.0

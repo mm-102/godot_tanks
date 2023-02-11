@@ -1,4 +1,4 @@
-extends Button
+extends TextureRect
 
 
 func _on_ExitToMenuButton_pressed():
