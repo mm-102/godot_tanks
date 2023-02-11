@@ -1,10 +1,23 @@
 extends Camera2D
 
-const ZOOM_SPEED = 0.3
-const MOVE_SPEED = 50
-const MAX_ZOOM_IN = Vector2(0.1, 0.1)
+var ZOOM_SPEED
+var MOVE_SPEED
+var MAX_ZOOM_IN
+var MAX_ZOOM_OUT
 
 var following = false
+
+
+func _ready():
+	$"/root/Main/Settings".connect("apply_changes", self, "apply_settings")
+	apply_settings()
+
+func apply_settings():
+	var settings = $"/root/Main/Settings".SETTINGS
+	ZOOM_SPEED = settings.SPECTATOR_CAMERA_ZOOM_SPEED
+	MOVE_SPEED = settings.SPECTATOR_CAMERA_MOVE_SPEED
+	MAX_ZOOM_IN = settings.SPECTATOR_CAMERA_MAX_ZOOM_IN
+	MAX_ZOOM_OUT = settings.SPECTATOR_CAMERA_MAX_ZOOM_OUT
 
 func zoom_point(zoom_diff, mouse_position):
 	var viewport_size = get_viewport().size

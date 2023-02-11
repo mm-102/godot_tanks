@@ -1,6 +1,6 @@
 extends Node2D
 
-export(int, 0, 100) var max_indicators = 2
+var max_indicators
 var tank = null
 var ind_list = []
 
@@ -44,4 +44,9 @@ func _on_Tank_ready():
 		queue_free()
 		return
 	tank = get_node("/root/Main/Game/Players/" + str(get_node("/root/Main/Game").local_player_id))
+	$"/root/Main/Settings".connect("apply_changes", self, "apply_settings")
+	apply_settings()
 	$RefreshTimer.start()
+
+func apply_settings():
+	max_indicators = $"/root/Main/Settings".SETTINGS.MAX_INDICATOR_COUNT

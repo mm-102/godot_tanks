@@ -4,14 +4,16 @@ const explosion_particles_tsnc = preload("res://Player/Projectiles/FireballExplo
 
 onready var is_multiplayer = get_node("/root/Main").is_multiplayer
 
+
+func set_params():
+	SPEED = $"/root/Main/Settings".SETTINGS.FIREBALL_SPEED
+
 func die():
 	explode()
-	
 
 func _on_Fireball_body_entered(_body):
 	# explode when fireball touch ANYTHING
 	explode()
-	
 	
 func explode():
 	var explosion_particles = explosion_particles_tsnc.instance()

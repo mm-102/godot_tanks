@@ -1,11 +1,15 @@
 extends Projectile
 
-const BULLET_LENGTH = 50
-const MAX_BOUNCES = 15
+var BULLET_LENGTH
+var MAX_BOUNCES
 
 onready var ray = $RayCast2D
 onready var line = $Line2D
 
+func set_params():
+	SPEED = $"/root/Main/Settings".SETTINGS.LASER_BULLET_SPEED
+	BULLET_LENGTH = $"/root/Main/Settings".SETTINGS.LASER_BULLET_LENGTH
+	MAX_BOUNCES = $"/root/Main/Settings".SETTINGS.LASER_BULLET_LASER_MAX_BOUNCES
 
 func _integrate_forces(state):
 	var length_left = BULLET_LENGTH

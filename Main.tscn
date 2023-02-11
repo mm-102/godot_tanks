@@ -1,11 +1,46 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://GUI/Menu.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
 [ext_resource path="res://Player/Player_GUI/GUI.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Global/Settings.gd" type="Script" id=4]
 
 [node name="Main" type="Node"]
 script = ExtResource( 2 )
+
+[node name="Settings" type="Node" parent="."]
+script = ExtResource( 4 )
+PLAYER_SPEED = 100.0
+PLAYER_ROTATION_SPEED = 2
+PLAYER_MAX_AMMO = 5
+PLAYER_BASE_AMMO_TYPE = 0
+PLAYER_MAX_AMMO_TYPES = 3
+CORPSE_LIFE_TIME = 20
+PLAYER_CAMERA_ZOOM_SPEED = 0.3
+PLAYER_CAMERA_MAX_ZOOM_IN = Vector2( 0.1, 0.1 )
+PLAYER_CAMERA_MAX_ZOOM_OUT = Vector2( 2, 2 )
+SPECTATOR_CAMERA_ZOOM_SPEED = 0.3
+SPECTATOR_CAMERA_MOVE_SPEED = 50
+SPECTATOR_CAMERA_MAX_ZOOM_IN = Vector2( 0.1, 0.1 )
+SPECTATOR_CAMERA_MAX_ZOOM_OUT = Vector2( 100, 100 )
+MAX_INDICATOR_COUNT = 5
+INDICATOR_ARROW_MARGIN = 20
+BULLET_SPEED = 200
+ROCKET_SPEED = 200
+ROCKET_FOLLOW_SPEED = 5
+FRAG_BOMB_SPEED = 200
+FRAG_COUNT = 30
+FRAG_SPEED = 150
+FRAG_SCALE = 0.5
+FRAG_LIFETIME_MULTIPLIER = 0.2
+FRAG_TYPE = 0
+LASER_BEAM_LENGTH = 2000
+LASER_BEAM_MAX_BOUNCES = 15
+LASER_BEAM_MAX_WIDTH = 5
+LASER_BULLET_SPEED = 200
+LASER_BULLET_LENGTH = 50
+LASER_BULLET_LASER_MAX_BOUNCES = 15
+FIREBALL_SPEED = 200
 
 [node name="Menu" parent="." instance=ExtResource( 1 )]
 

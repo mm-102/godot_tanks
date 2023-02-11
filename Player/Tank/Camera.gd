@@ -1,9 +1,19 @@
 extends Camera2D
 
-const ZOOM_SPEED = 0.3
-const MAX_ZOOM_IN = Vector2(0.1, 0.1)
-const MAX_ZOOM_OUT = Vector2(2, 2)
+var ZOOM_SPEED
+var MAX_ZOOM_IN
+var MAX_ZOOM_OUT
 
+func _ready():
+	$"/root/Main/Settings".connect("apply_changes", self, "apply_settings")
+	apply_settings()
+
+func apply_settings():
+	var settings = $"/root/Main/Settings".SETTINGS
+	ZOOM_SPEED = settings.PLAYER_CAMERA_ZOOM_SPEED
+	MAX_ZOOM_IN = settings.PLAYER_CAMERA_MAX_ZOOM_IN
+	MAX_ZOOM_OUT = settings.PLAYER_CAMERA_MAX_ZOOM_OUT
+	
 func _unhandled_input(event):
 	if event.is_action_released("p_zoom_in"):
 		if zoom - ZOOM_SPEED * Vector2.ONE < MAX_ZOOM_IN:

@@ -1,42 +1,30 @@
 extends RigidBody2D
 
-export(Ammunition.TYPES) var ammo_type = Ammunition.TYPES.BULLET
+export(Ammunition.TYPES) var ammo_type
 var ammo_slot = 0
-
-const SPEED = 100
-const ROTATION_SPEED = 2
-const BULLET_SPEED = 200
-const MAX_AMMO = 50
-const CORPSE_LIFE_TIME = 20
-const BASE_AMMO_TYPE = Ammunition.TYPES.BULLET
-const MAX_AMMO_TYPES = 3 # including default bullet
+var SPEED
+var ROTATION_SPEED
+var MAX_AMMO
+var CORPSE_LIFE_TIME
+var BASE_AMMO_TYPE
+var MAX_AMMO_TYPES
 
 
 signal special_ammo_change(type, amount_left)
 signal special_ammo_type_change(new_type)
 
-var ammo_left = MAX_AMMO
-#var special_ammo = {
-#	Ammunition.TYPES.BULLET : INF,
-#	Ammunition.TYPES.ROCKET : 0,
-#	Ammunition.TYPES.FRAG_BOMB : 0,
-#	Ammunition.TYPES.LASER : INF
-#}
+var ammo_left
 var special_ammo = [
 	 {"type" : ammo_type, "amount" : INF}
 ]
-#var dead = false
+
 # Defined in code
 var player_stance: Dictionary 
 var nick = "You"
 var laser_path = NodePath("")
 
 onready var is_multiplayer = $"/root/Main".is_multiplayer
-#var projectiles_tscn = {
-#	AMMO_TYPES.BULLET: preload("res://Player/Projectiles/Bullet.tscn"),
-#	AMMO_TYPES.ROCKET: preload("res://Player/Projectiles/Rocket.tscn"),
-#	AMMO_TYPES.FRAG_BOMB: preload("res://Player/Projectiles/FragBomb.tscn")
-#}
+
 onready var animation_player = $"%AnimationPlayer"
 onready var turret_node =  $"%Turret"
 onready var bullet_point_node = $"%BulletPoint"
@@ -44,7 +32,17 @@ onready var laset_point_node = $"%LaserPoint"
 onready var gun_ray_cast_node = $"%GunRayCast"
 onready var camera2d_n = $"%Camera2D"
 
-
+func apply_settings():
+	var settings = $"/root/Main/Settings".SETTINGS
+	ammo_left = settings.PLAYER_MAX_AMMO
+	ammo_slot = settings.PLAYER_BASE_AMMO_TYPE
+	SPEED = settings.PLAYER_SPEED
+	ROTATION_SPEED = settings.PLAYER_ROTATION_SPEED
+	MAX_AMMO = settings.PLAYER_MAX_AMMO
+	CORPSE_LIFE_TIME = settings.CORPSE_LIFE_TIME
+	BASE_AMMO_TYPE = settings.PLAYER_BASE_AMMO_TYPE
+	MAX_AMMO_TYPES = settings.PLAYER_MAX_AMMO_TYPES
+	
 
 func set_display_name(text):
 	nick = text
@@ -55,22 +53,11 @@ func _ready():
 	connect("special_ammo_change",get_node("/root/Main/PlayerGUILayer/GUI"),"_on_special_ammo_change")
 	#warning-ignore:return_value_discarded
 	connect("special_ammo_type_change",get_node("/root/Main/PlayerGUILayer/GUI"),"_on_special_ammo_type_change")
-#	get_node(Paths.MAP_N).connect("map_rect", self, "set_camera_limit")
-#	set_camera_limit()
+	$"/root/Main/Settings".connect("apply_changes", self, "apply_settings")
+	apply_settings()
 	gun_ray_cast_node.cast_to = bullet_point_node.position
 	gun_ray_cast_node.add_exception(self)
 
-#func set_camera_limit():
-#	var map_node = get_node_or_null(Paths.MAP_N)
-#	if map_node == null:
-#		print("[Tank]: Get map rect too quick. Consider signal method.")
-#		return
-#	var map_rect = map_node.get_map_boundaries()
-#	camera2d_n.limit_left = map_rect.Pos.x
-#	camera2d_n.limit_top = map_rect.Pos.y
-#	camera2d_n.limit_right = map_rect.End.x
-#	camera2d_n.limit_bottom = map_rect.End.y
-#	print(map_rect.End)
 
 func pick_up_ammo_box(type):
 	var picked = false
