@@ -56,11 +56,11 @@ func _ready():
 	#warning-ignore:return_value_discarded
 	connect("special_ammo_type_change",get_node("/root/Main/PlayerGUILayer/GUI"),"_on_special_ammo_type_change")
 #	get_node(Paths.MAP_N).connect("map_rect", self, "set_camera_limit")
-	set_camera_limit()
 	gun_ray_cast_node.cast_to = bullet_point_node.position
 	gun_ray_cast_node.add_exception(self)
 
 func set_camera_limit():
+	# Function closed
 	var map_node = get_node_or_null(Paths.MAP_N)
 	if map_node == null:
 		print("[Tank]: Get map rect too quick. Consider signal method.")

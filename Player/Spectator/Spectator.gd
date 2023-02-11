@@ -31,7 +31,7 @@ func _unhandled_input(event):
 	if event is InputEventMouseMotion and following:
 		position -= event.relative * zoom
 
-func _process(delta):
+func _process(_delta):
 	var velocity = Vector2.ZERO
 	velocity.y = int(Input.is_action_pressed("p_backward")) - int(Input.is_action_pressed("p_forward"))
 	velocity.x = int(Input.is_action_pressed("p_right")) - int(Input.is_action_pressed("p_left"))
