@@ -16,6 +16,7 @@ const counters_tscn = {
 
 const name_score_tscn = preload("res://Player/Player_GUI/SBPlayer.tscn")
 onready var scores_node = $"Scoreboard/Scores"
+onready var scoreboard_n = $"Scoreboard"
 
 var time_left
 onready var battle_timer = $"BattleTimeUpdate"
@@ -29,6 +30,11 @@ func _input(event : InputEvent):
 	# ---- pause ----
 	if event.is_action_pressed("ui_cancel"):
 		$PauseButton.pressed = !$PauseButton.pressed
+	
+	if event.is_action_pressed("Scoreboard"):
+		scoreboard_n.set_visible(true)
+	if event.is_action_released("Scoreboard"):
+		scoreboard_n.set_visible(false)
 	
 # ---- display ammo ----
 func _on_special_ammo_change(type, amount_left):
@@ -65,8 +71,10 @@ func _on_PauseButton_toggled(button_pressed):
 func add_scoreboard_player(player_id, data):
 	var score = data.Score
 	var nick = data.Nick
-	var player_name_score = name_score_tscn.instance()
+	var player_name_score = scoreboard_n.get_node("Scores/Headers").duplicate()
 	player_name_score.name = str(player_id)
+	if nick.empty():
+		nick = "Player" + str(player_id)
 	player_name_score.get_node("Nick").text = str(nick)# + ' : '
 	player_name_score.get_node("Wins").text = str(score.Wins)# + ' : '
 	player_name_score.get_node("Kills").text = str(score.Kills)

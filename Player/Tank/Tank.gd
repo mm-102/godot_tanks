@@ -191,5 +191,6 @@ func die():
 	spectator_camera.global_position = global_position
 	spectator_camera.current = true
 	get_node("/root/Main/Game/Players").add_child(spectator_camera)
+
 func _on_timer_timeout():
 	queue_free()
