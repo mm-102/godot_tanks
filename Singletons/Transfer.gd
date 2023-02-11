@@ -83,14 +83,11 @@ remote func recive_new_player(player_id: int, nick : String, spawn_point):
 	if !player_id == get_tree().get_network_unique_id():
 		game_n.create_player(player_id, nick, spawn_point)
 
-remote func recive_player_destroyed(player_id, position, rotation, slayer_id, projectile_name):
+remote func recive_player_destroyed(corpse_data, slayer_id, projectile_name):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	if player_id == get_tree().get_network_unique_id():
-		pass
-		# Here should be applied spectate mode?
-	game_n.player_destroyed(player_id, position, rotation, projectile_name)
-	if player_id != slayer_id:
+	game_n.player_destroyed(corpse_data, projectile_name)
+	if corpse_data.Name != slayer_id:
 		gui_n.add_kill(slayer_id)
 
 func fetch_stance(player_stance: Dictionary):
