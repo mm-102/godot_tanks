@@ -14,10 +14,11 @@ var current_selection = BASE_SLOT
 
 func _ready():
 	$"/root/Main/Settings".connect("apply_changes", self, "apply_settings")
+	apply_settings()
 
 func apply_settings():
 	var settings = $"/root/Main/Settings".SETTINGS
-	MAX_AMMO_TYPES = settings.PLAYER_MAX_AMMO
+	MAX_AMMO_TYPES = settings.PLAYER_MAX_AMMO_TYPES
 
 func _input(event):
 	choose_slot(event)
