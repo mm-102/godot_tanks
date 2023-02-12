@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://textures/ammo_box.png" type="Texture" id=1]
 [ext_resource path="res://textures/text/Bosk.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Player/Player_GUI/AmmoSlots/Slot.gd" type="Script" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 use_mipmaps = true
@@ -9,29 +10,34 @@ use_filter = true
 extra_spacing_bottom = -3
 font_data = ExtResource( 2 )
 
-[node name="AmmoCounter" type="MarginContainer"]
-anchor_left = 1.0
+[node name="Slot" type="Control"]
+anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -1024.0
-margin_top = -300.0
-margin_right = -984.0
-margin_bottom = -260.0
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
 rect_min_size = Vector2( 40, 40 )
+script = ExtResource( 3 )
 
 [node name="Background" type="NinePatchRect" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 texture = ExtResource( 1 )
 
 [node name="Number" type="Label" parent="Background"]
 modulate = Color( 0, 0, 0, 1 )
 self_modulate = Color( 0, 0, 0, 1 )
-margin_left = 2.0
-margin_top = 2.0
-margin_right = 38.0
-margin_bottom = 38.0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -10.0
+margin_top = -15.0
+margin_right = -2.0
+margin_bottom = -2.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 1 )
@@ -40,5 +46,14 @@ align = 2
 valign = 2
 
 [node name="Icon" type="TextureRect" parent="Background"]
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.0
+margin_top = -12.0
+margin_right = 16.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 20, 20 )
+expand = true
+stretch_mode = 6

@@ -12,8 +12,7 @@ const BASE_AMMO_TYPE = Ammunition.TYPES.BULLET
 const MAX_AMMO_TYPES = 3 # including default bullet
 
 
-signal special_ammo_change(type, amount_left)
-signal special_ammo_type_change(new_type)
+signal special_ammo_event(type, amount_left)
 
 var ammo_left = MAX_AMMO
 #var special_ammo = {
@@ -52,9 +51,7 @@ func set_display_name(text):
 
 func _ready():
 	#warning-ignore:return_value_discarded
-	connect("special_ammo_change",get_node("/root/Main/PlayerGUILayer/GUI"),"_on_special_ammo_change")
-	#warning-ignore:return_value_discarded
-	connect("special_ammo_type_change",get_node("/root/Main/PlayerGUILayer/GUI"),"_on_special_ammo_type_change")
+	connect("special_ammo_event",get_node("/root/Main/PlayerGUILayer/GUI/Ammunition"),"on_special_ammo_event")
 #	get_node(Paths.MAP_N).connect("map_rect", self, "set_camera_limit")
 	gun_ray_cast_node.cast_to = bullet_point_node.position
 	gun_ray_cast_node.add_exception(self)
@@ -84,29 +81,13 @@ func pick_up_ammo_box(type):
 		special_ammo.push_back({"type" : int(type), "amount" : 1})
 		type_slot[special_ammo[-1].type] = -1
 		picked = true
+	get_method_list()
 	if picked:
-		emit_signal("special_ammo_change", type, special_ammo[type_slot[type]].amount)
+		# [improve] This event 'pick_up' var may be done by constant ".PICK_UP with enum in global file
+		emit_signal("special_ammo_event", "pick_up" , type, special_ammo[type_slot[type]].amount)
 	return picked
 
 func _integrate_forces(_state):
-	if Input.is_action_just_pressed("p_slot_0"):
-		ammo_slot = 0
-		emit_signal("special_ammo_type_change", ammo_slot)
-	
-	if Input.is_action_just_pressed("p_slot_1"):
-		if special_ammo.size() > 1:
-			ammo_slot = 1
-			emit_signal("special_ammo_type_change", ammo_slot)
-	
-	if Input.is_action_just_pressed("p_slot_2"):
-		if special_ammo.size() > 2:
-			ammo_slot = 2
-			emit_signal("special_ammo_type_change", ammo_slot)
-	
-	if Input.is_action_just_pressed("p_slot_3"):
-		if special_ammo.size() > 3:
-			ammo_slot = 3
-			emit_signal("special_ammo_type_change", ammo_slot)
 	
 	var velocity = Vector2.ZERO
 	velocity.y = int(Input.is_action_pressed("p_backward")) - int(Input.is_action_pressed("p_forward"))
@@ -126,6 +107,19 @@ func _integrate_forces(_state):
 #	if Input.is_action_just_pressed("p_shoot"):
 #		call_deferred("p_shoot")
 #		print("tank")
+
+func _input(event):
+	if event.is_action_pressed("p_slot_0"):
+		ammo_slot = 0
+	if event.is_action_pressed("p_slot_1"):
+		if special_ammo.size() > 1:
+			ammo_slot = 1
+	if event.is_action_pressed("p_slot_2"):
+		if special_ammo.size() > 2:
+			ammo_slot = 2
+	if event.is_action_pressed("p_slot_3"):
+		if special_ammo.size() > 3:
+			ammo_slot = 3
 
 func _unhandled_input(event):	#prevent shooting while clicking on gui		maybe all player input should go here?
 	if event.is_action_pressed("p_shoot"):
@@ -159,7 +153,7 @@ func _shoot():
 		bullet_inst.setup(self)
 		get_node("/root/Main/Game/Projectiles").add_child(bullet_inst)
 	
-	emit_signal("special_ammo_change", special_ammo[ammo_slot].type, special_ammo[ammo_slot].amount)
+	emit_signal("special_ammo_event", "shoot", special_ammo[ammo_slot].type, special_ammo[ammo_slot].amount)
 	if special_ammo[ammo_slot].amount <= 0:
 		special_ammo.pop_at(ammo_slot)
 		ammo_slot = 0

@@ -8,12 +8,8 @@ const MODE_DICT = {
 	GAME_MODE.SINGLE: preload("res://Singleplayer.tscn"),
 	GAME_MODE.MULTI: preload("res://Multiplayer/Game/Multi_Game.tscn"),
 }
-var is_multiplayer = false
+var is_multiplayer = false 
 
-
-func _ready():
-	#Physics2DServer.set_active(false)
-	set_physics_process(false)
 
 func game_mode(sel_mode: int, adress, player_nick):
 	#[info] Transfer node have to be after main
