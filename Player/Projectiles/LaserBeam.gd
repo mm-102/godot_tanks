@@ -1,8 +1,7 @@
 extends Line2D
 
-const LASER_LENGTH = 2000
-const MAX_BOUNCES = 15
-const MAX_WIDTH = 5
+var LASER_LENGTH
+var MAX_BOUNCES
 
 onready var ray = $RayCast2D
 onready var tween = $Tween
@@ -11,6 +10,9 @@ var player_path = NodePath("")
 var point : Vector2 = Vector2.ZERO
 var point_rotation = 0
 
+func set_params():
+	LASER_LENGTH = $"/root/Main/Settings".SETTINGS.LASER_BEAM_LENGTH
+	MAX_BOUNCES = $"/root/Main/Settings".SETTINGS.LASER_BEAM_MAX_BOUNCES
 
 func setup(player : RigidBody2D):
 	var laser_point = player.get_node("%LaserPoint")
@@ -29,6 +31,8 @@ func _on_Tween_tween_all_completed():
 	queue_free()
 	
 func _ready():
+	set_params()
+	var MAX_WIDTH = $"/root/Main/Settings".SETTINGS.LASER_BEAM_MAX_WIDTH
 	tween.interpolate_property(self, "width", width, MAX_WIDTH, 0.2)
 	tween.interpolate_property(self, "width", MAX_WIDTH, 0, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, 0.3)
 	tween.start()

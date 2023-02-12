@@ -1,16 +1,22 @@
 extends Projectile
 
 
-const FRAG_COUNT = 30
-const FRAG_SPEED = 150
-const FRAG_SCALE = 0.5
-const FRAG_LIFETIME_MULTIPLIER = 0.2
+var FRAG_COUNT
+var FRAG_SPEED
+var FRAG_SCALE
+var FRAG_LIFETIME_MULTIPLIER
+var FRAG_TYPE
 
-const BULLET_TSCN =  preload("res://Player/Projectiles/Bullet.tscn")
-
+func set_params():
+	SPEED = $"/root/Main/Settings".SETTINGS.FRAG_BOMB_SPEED
+	FRAG_COUNT = $"/root/Main/Settings".SETTINGS.FRAG_COUNT
+	FRAG_SPEED = $"/root/Main/Settings".SETTINGS.FRAG_SPEED
+	FRAG_SCALE = $"/root/Main/Settings".SETTINGS.FRAG_SCALE
+	FRAG_LIFETIME_MULTIPLIER = $"/root/Main/Settings".SETTINGS.FRAG_LIFETIME_MULTIPLIER
+	FRAG_TYPE = $"/root/Main/Settings".SETTINGS.FRAG_TYPE
 
 func spawn_frag(rotation):
-	var frag_inst = BULLET_TSCN.instance()
+	var frag_inst = load("res://Global/Ammunition.gd").get_tscn(FRAG_TYPE).instance()
 
 	var frag_timer : Timer = frag_inst.get_node("LifeTime")
 	frag_timer.wait_time *= FRAG_LIFETIME_MULTIPLIER

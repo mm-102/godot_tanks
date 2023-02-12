@@ -1,10 +1,17 @@
 extends Sprite
 
-const margin = 20
+var margin
 
 var target_player = null
 var player = null
 var texture_size = max(texture.get_size().x, texture.get_size().y) * scale.x
+
+func _ready():
+	$"/root/Main/Settings".connect("apply_changes", self, "apply_settings")
+	apply_settings()
+
+func apply_settings():
+	margin = $"/root/Main/Settings".SETTINGS.INDICATOR_ARROW_MARGIN
 
 func _process(delta):
 	if target_player == null or !is_instance_valid(target_player):
@@ -13,6 +20,8 @@ func _process(delta):
 	visible = !target_player.visible_to_local_player
 	if !visible:
 		return
+	
+	var camera_zoom = player.get_node("%Camera2D").zoom.x
 	
 	var to_target = (target_player.global_position - player.global_position)
 	var disance = to_target.length()
@@ -30,15 +39,15 @@ func _process(delta):
 	rotation = angle + PI/2
 	
 	if cos(angle) == 0:
-		position = direction * ((viewport_size.y - texture_size) * 0.5 - margin)
+		position = direction * ((viewport_size.y * camera_zoom - texture_size) * 0.5 - margin)
 		return
 	
 	if sin(angle) == 0:
-		position = direction * ((viewport_size.x - texture_size) * 0.5 - margin)
+		position = direction * ((viewport_size.x * camera_zoom - texture_size) * 0.5 - margin)
 		return
 	
 	var factor = min(\
 	abs(viewport_size.x / cos(angle)),\
 	abs(viewport_size.y / sin(angle))\
 	)
-	position = direction * ((factor - texture_size) * 0.5 - margin)
+	position = direction * ((factor * camera_zoom - texture_size) * 0.5 - margin)

@@ -1,11 +1,13 @@
 extends Projectile
 
-const SPEED = 200
-const FOLLOW_SPEED = 5
+var FOLLOW_SPEED
 
 var _target : PhysicsBody2D = null
 var started_targeting = false
 
+func set_params():
+	SPEED = $"/root/Main/Settings".SETTINGS.ROCKET_SPEED
+	FOLLOW_SPEED = $"/root/Main/Settings".SETTINGS.ROCKET_FOLLOW_SPEED
 
 func _on_StartTargeting_timeout():
 	started_targeting = true

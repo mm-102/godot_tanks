@@ -6,11 +6,18 @@ var event_funcs = {
 	"shoot": funcref(self, "shoot_event"),
 	"pick_up": funcref(self, "pick_up_event"),
 }
-const MAX_AMMO_TYPES = 3
 const BASE_SLOT = 0
+var MAX_AMMO_TYPES
 var current_selection = BASE_SLOT
 
 
+
+func _ready():
+	$"/root/Main/Settings".connect("apply_changes", self, "apply_settings")
+
+func apply_settings():
+	var settings = $"/root/Main/Settings".SETTINGS
+	MAX_AMMO_TYPES = settings.PLAYER_MAX_AMMO
 
 func _input(event):
 	choose_slot(event)
@@ -40,8 +47,7 @@ func pick_up_event(type, amount_left):
 		add_child(new_slot)
 	elif amount_left != INF:
 		get_node(type).set_left_ammo(amount_left)
-	
-	
+
 func change_selection(new_selection):
 	if get_child_count() >= new_selection:
 		get_child(current_selection).set_is_selected(false)

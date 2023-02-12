@@ -1,18 +1,26 @@
 extends RigidBody2D
 class_name Projectile
 
-const BULLET_SPEED = 200
+var SPEED = null
 
 var player_path = NodePath("")
 var bullet_state_queue: Array
 
 
-# ----- initialisation -----
+
+func set_params():
+	SPEED = $"/root/Main/Settings".SETTINGS.BULLET_SPEED
+	
+func _ready():
+	if !$"/root/Main".is_multiplayer and player_path != NodePath(""):
+		set_params()
+		linear_velocity *= SPEED
+
 func setup(player : RigidBody2D):
 	player_path = player.get_path()
 	var point = player.get_node("%BulletPoint")
 	position = point.global_position
-	set_linear_velocity(Vector2.UP.rotated(point.global_rotation) * BULLET_SPEED)
+	set_linear_velocity(Vector2.UP.rotated(point.global_rotation))
 
 func setup_multiplayer(bullet_data : Dictionary):
 	set_name(bullet_data.Name)
