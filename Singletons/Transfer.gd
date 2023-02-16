@@ -54,8 +54,9 @@ func fetch_init_data():
 remote func recive_init_data(init_data):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	for player_template in init_data.PlayerSTemplateData:
-		game_n.create_player(player_template)
+	for player in init_data.PlayerSData:
+		gui_scoreboard_n.add_scoreboard_player(player.ID, player)
+		game_n.create_player(player)
 	for corpse_data in init_data.PlayerSCorpses:
 		game_n.create_corpse(corpse_data)
 	game_n.get_node("Map").set_map_data(init_data.MapData)

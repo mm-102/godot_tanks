@@ -2,7 +2,7 @@ extends TileMap
 # [info] Map cannot be on negative coordinates and have to start from 0,0
 
 enum TURN{FOWARD, LEFT, BACKWARD, RIGHT, FULL}
-const TILESIZE = 64
+var TILESIZE = cell_size.x
 const SEQUENCE = [\
 		TURN.LEFT,\
 		TURN.FOWARD,\

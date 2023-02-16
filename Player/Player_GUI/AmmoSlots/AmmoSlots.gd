@@ -7,17 +7,18 @@ var event_funcs = {
 	"pick_up": funcref(self, "pick_up_event"),
 }
 const BASE_SLOT = 0
-var MAX_AMMO_TYPES
+var MAX_AMMO_TYPES = 0
 var current_selection = BASE_SLOT
 
 
 
 func _ready():
 	$"/root/Main/Settings".connect("apply_changes", self, "apply_settings")
+	apply_settings()
 
 func apply_settings():
 	var settings = $"/root/Main/Settings".SETTINGS
-	MAX_AMMO_TYPES = settings.PLAYER_MAX_AMMO
+	MAX_AMMO_TYPES = settings.PLAYER_MAX_AMMO_TYPES
 
 func _input(event):
 	choose_slot(event)

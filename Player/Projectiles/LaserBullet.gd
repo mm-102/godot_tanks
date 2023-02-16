@@ -6,6 +6,9 @@ var MAX_BOUNCES
 onready var ray = $RayCast2D
 onready var line = $Line2D
 
+func _ready():
+	set_params()
+
 func set_params():
 	SPEED = $"/root/Main/Settings".SETTINGS.LASER_BULLET_SPEED
 	BULLET_LENGTH = $"/root/Main/Settings".SETTINGS.LASER_BULLET_LENGTH
