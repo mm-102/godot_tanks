@@ -69,6 +69,7 @@ remote func recive_new_battle(new_game_data):
 		return
 	yield(main_n.end_of_battle(), "completed")
 	_ready()
+	get_tree().set_pause(true)
 	game_n.get_node("Map").set_map_data(new_game_data.MapData)
 	for player_id in new_game_data.PlayerSData:
 		gui_scoreboard_n.add_scoreboard_player(player_id, new_game_data.PlayerSData[player_id])
@@ -76,7 +77,9 @@ remote func recive_new_battle(new_game_data):
 			game_n.self_initiation(new_game_data.PlayerSData[player_id])
 			continue
 		game_n.create_player(new_game_data.PlayerSData[player_id])
-	game_n #Do smth with time to new game
+	gui_timer_n.start_battle_time(new_game_data.TimeToStartNewGame)
+	#yield(get_tree().create_timer((new_game_data.TimeToStartNewGame - get_node(Paths.T_CLOCK).get_time())*0.001), "timeout")
+	#get_tree().set_pause(false)
 
 #---------- CORE GAME MECHANIC ---------
 

@@ -110,7 +110,6 @@ func _unhandled_input(event):	#prevent shooting while clicking on gui		maybe all
 func _shoot():
 	if ammo_left <= 0:
 		return
-	
 	gun_ray_cast_node.enabled = true
 	gun_ray_cast_node.force_raycast_update()
 	if gun_ray_cast_node.is_colliding() and !gun_ray_cast_node.get_collider().is_in_group("Players"):

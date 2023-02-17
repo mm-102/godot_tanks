@@ -1,9 +1,14 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://GUI/Menu.tres" type="Theme" id=1]
 [ext_resource path="res://Player/Player_GUI/BattleTime.gd" type="Script" id=2]
+[ext_resource path="res://textures/text/Bosk.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="DynamicFont" id=2]
+size = 100
+font_data = ExtResource( 3 )
 
 [node name="BattleTime" type="PanelContainer"]
 anchor_right = 1.0
@@ -14,7 +19,8 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Label" type="Label" parent="."]
+[node name="TopLabel" type="Label" parent="."]
+visible = false
 margin_left = 470.0
 margin_right = 553.0
 margin_bottom = 30.0
@@ -25,4 +31,56 @@ text = "00:00"
 
 [node name="SecClock" type="Timer" parent="."]
 
+[node name="BattleStartTimer" type="Timer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_horizontal = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 101.0
+mouse_filter = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer"]
+unique_name_in_owner = true
+margin_top = 105.0
+margin_right = 1024.0
+margin_bottom = 257.0
+rect_min_size = Vector2( 100, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.45
+color = Color( 0.0431373, 0.0392157, 0.0392157, 0.470588 )
+
+[node name="MiddleLabel" type="Label" parent="VBoxContainer/ColorRect"]
+unique_name_in_owner = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -81.0
+margin_top = -81.5
+margin_right = 81.0
+margin_bottom = 98.5
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+custom_fonts/font = SubResource( 2 )
+text = "3.23"
+align = 1
+valign = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+margin_top = 261.0
+margin_right = 1024.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_vertical = 3
+
 [connection signal="timeout" from="SecClock" to="." method="_on_TimeLeftClock_timeout"]
+[connection signal="timeout" from="BattleStartTimer" to="." method="_on_BattleStartTimer_timeout"]
