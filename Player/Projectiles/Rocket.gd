@@ -34,5 +34,4 @@ func _integrate_forces(_state):
 		return
 		
 	rotation = global_transform.origin.angle_to_point(_target.global_transform.origin) + PI
-	
 	linear_velocity = linear_velocity.linear_interpolate((_target.global_transform.origin.direction_to(global_transform.origin) * -SPEED), _state.get_step()*FOLLOW_SPEED)

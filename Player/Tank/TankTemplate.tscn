@@ -50,7 +50,7 @@ tracks/1/keys = {
 "values": [ true, false ]
 }
 
-[node name="Tank" type="KinematicBody2D" groups=["Players"]]
+[node name="Tank" type="KinematicBody2D" groups=["Players", "Template"]]
 unique_name_in_owner = true
 collision_layer = 3
 collision_mask = 3

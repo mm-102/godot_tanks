@@ -27,15 +27,12 @@ func start_battle_time(ms_to_new_game):
 	
 
 func battle_time(left_sec):
-	if left_sec == INF:
-		clock.set_paused(true)
-		return
-	if left_sec == -1:
-		clock.set_paused(false)
-		return
 	end_round_label.show()
 	time_left = left_sec
 	clock.start()
+	if left_sec == INF:
+		print("Diybke")
+		end_round_label.hide()
 	_on_TimeLeftClock_timeout()
 
 func proper_time_format(val)->String:

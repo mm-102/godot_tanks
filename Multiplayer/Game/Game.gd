@@ -11,6 +11,8 @@ var local_player_name = ""
 var local_player_id = 0
 onready var playerS_node = $"%Players"
 
+var interpolation_factor = 0
+
 
 func self_initiation(player_data):
 	var player_id :int = player_data.ID
@@ -27,15 +29,8 @@ func self_initiation(player_data):
 	$Players.move_child(tank_inst, 0)
 
 func create_player(player_data):
-	var player_id :int = player_data.ID
-	var nick :String = player_data.Nick
-	var spawn_point = player_data.SP
 	var tank_inst = tank_template.instance()
-	tank_inst.name = str(player_id)
-	if nick.empty():
-		nick = "Player" + str(player_id)
-	tank_inst.position = spawn_point
-	tank_inst.set_display_name(nick)
+	tank_inst.setup(player_data)
 	$Players.add_child(tank_inst, true)
 #	if local_player_id:
 #		get_node("/root/Main/Game/Players/" + str(local_player_id))\
@@ -60,6 +55,7 @@ func create_corpse(corpse_data):
 	var static_body2d = StaticBody2D.new()
 	var wall_inst = tank_template.instance()
 	wall_inst.remove_from_group("Players")
+	wall_inst.remove_from_group("Template")
 	wall_inst.add_to_group("Corpse")
 	static_body2d.name = str(corpse_data.ID)
 	static_body2d.set_collision_layer(4)
@@ -103,34 +99,67 @@ func update_bounce_bullet(bulletS_state, time):
 		projectile_node.append_new_state(bullet_state, time - get_node(Paths.T_CLOCK).get_time())
 
 func add_world_stance(time, world_stance):
-	if time_of_last_stance < time:
-		time_of_last_stance = time
-		world_stance_buffer.append({"T": time, "WS": world_stance})
+	if time_of_last_stance >= time:
+		return
+	time_of_last_stance = time
+	world_stance_buffer.append({"T": time, "WS": world_stance})
+	if world_stance_buffer.size() <= 1:
+		give_package_to_templates(world_stance)
+	
+#	if world_stance_buffer.size() > 2:
+#		interpolation(render_time)
+#	elif render_time > world_stance_buffer[1].T:
+#		extrapolation(render_time)
 
 
 func _physics_process(_delta: float) -> void:
-	var render_time = get_node("/root/Transfer/Clock").client_clock
-	if world_stance_buffer.size() <= 1:
-		return
+	var render_time = get_node(Paths.T_CLOCK).get_time()
+	if world_stance_buffer.size() > 1:
+		interpolation_factor(render_time)
 	while world_stance_buffer.size() > 2 and render_time > world_stance_buffer[2].T:
 		world_stance_buffer.remove(0)
-	if world_stance_buffer.size() > 2:
-		var interpolation_factor = \
-				float(render_time - world_stance_buffer[1].T) \
-				/ float(world_stance_buffer[2].T - world_stance_buffer[1].T)
-		for player in world_stance_buffer[2].WS.keys():
-			if playerS_node.has_node(str(player)) and !playerS_node.get_node(str(player)).is_in_group("ME") and world_stance_buffer[1].WS.has(player):
-				playerS_node.get_node(str(player)).template_stance(\
-						world_stance_buffer[1].WS[player], \
-						world_stance_buffer[2].WS[player], \
-						interpolation_factor)
-	elif render_time > world_stance_buffer[1].T:
-		var extrapolation_factor = \
-				float(render_time - world_stance_buffer[0].T) \
-				/ float(world_stance_buffer[1].T - world_stance_buffer[0].T) - 1.0
-		for player in world_stance_buffer[1].WS.keys():
-			if playerS_node.has_node(str(player)) and !playerS_node.get_node(str(player)).is_in_group("ME") and world_stance_buffer[0].WS.has(player):
-				playerS_node.get_node(str(player)).template_stance(\
-						world_stance_buffer[0].WS[player], \
-						world_stance_buffer[1].WS[player], \
-						extrapolation_factor)
+		var world_stance = null
+		if world_stance_buffer.size() > 3:
+			world_stance = world_stance_buffer[2].WS
+		give_package_to_templates(world_stance)
+
+func give_package_to_templates(world_stance):
+	if world_stance == null:
+		for player_node in get_tree().get_nodes_in_group("Template"):#and \
+					#world_stance_buffer[1].WS.has(player_stance.ID):
+				player_node.add_package(world_stance)
+		return
+	for player_stance in world_stance.PlayersStance.values():
+		if playerS_node.has_node(str(player_stance.ID)) and \
+				!playerS_node.get_node(str(player_stance.ID)).is_in_group("ME"): #and \
+				#world_stance_buffer[1].WS.has(player_stance.ID):
+			playerS_node.get_node(str(player_stance.ID)).add_package(player_stance)
+
+func interpolation_factor(render_time):
+	interpolation_factor = \
+			float(render_time - world_stance_buffer[-2].T) \
+			/ float(world_stance_buffer[-1].T - world_stance_buffer[-2].T)
+
+#func interpolation(render_time):
+#	var interpolation_factor = \
+#			float(render_time - world_stance_buffer[1].T) \
+#			/ float(world_stance_buffer[2].T - world_stance_buffer[1].T)
+#	for player_stance in world_stance_buffer[2].WS.PlayersStance:
+#		if playerS_node.has_node(str(player_stance.ID)) and \
+#				!playerS_node.get_node(str(player_stance.ID)).is_in_group("ME") and \
+#				world_stance_buffer[1].WS.has(player_stance.ID):
+#			playerS_node.get_node(str(player_stance.ID)).template_stance(\
+#					world_stance_buffer[1].WS[player], \
+#					player_stance, \
+#					interpolation_factor)
+#
+#func extrapolation(render_time):
+#		var extrapolation_factor = \
+#				float(render_time - world_stance_buffer[0].T) \
+#				/ float(world_stance_buffer[1].T - world_stance_buffer[0].T) - 1.0
+#		for player in world_stance_buffer[1].PlayersStance:
+#			if playerS_node.has_node(str(player)) and !playerS_node.get_node(str(player)).is_in_group("ME") and world_stance_buffer[0].WS.has(player):
+#				playerS_node.get_node(str(player)).template_stance(\
+#						world_stance_buffer[0].WS[player], \
+#						world_stance_buffer[1].WS[player], \
+#						extrapolation_factor)

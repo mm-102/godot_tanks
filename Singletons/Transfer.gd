@@ -60,6 +60,7 @@ remote func recive_init_data(init_data):
 	for corpse_data in init_data.PlayerSCorpses:
 		game_n.create_corpse(corpse_data)
 	game_n.get_node("Map").set_map_data(init_data.MapData)
+	gui_timer_n.battle_time(init_data.TimeLeft)
 	var spectator_camera : Camera2D = load("res://Player/Spectator/Spectator.tscn").instance()
 	spectator_camera.current = true
 	get_node("/root/Main/Game/Players").add_child(spectator_camera)
