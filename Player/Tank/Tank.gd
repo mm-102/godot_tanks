@@ -22,7 +22,10 @@ var player_stance: Dictionary
 var nick = "You"
 var laser_path = NodePath("")
 
-onready var is_multiplayer = $"/root/Main".is_multiplayer
+onready var transfer_n = get_node(Dir.TRANSFER)
+onready var players_n = get_node(Dir.PLAYERS)
+onready var projectiles_n = get_node(Dir.PROJECTILES)
+onready var is_multiplayer = $"/root/Master".is_multiplayer
 
 onready var animation_player = $"%AnimationPlayer"
 onready var turret_node =  $"%Turret"
@@ -32,7 +35,7 @@ onready var gun_ray_cast_node = $"%GunRayCast"
 onready var camera2d_n = $"%Camera2D"
 
 func apply_settings():
-	var settings = $"/root/Main/Settings".SETTINGS
+	var settings = $"/root/Master/Settings".SETTINGS
 	ammo_left = settings.PLAYER_MAX_AMMO
 	ammo_slot = settings.PLAYER_BASE_AMMO_TYPE
 	SPEED = settings.PLAYER_SPEED
@@ -48,8 +51,8 @@ func set_display_name(text):
 
 func _ready():
 	#warning-ignore:return_value_discarded
-	connect("special_ammo_event",get_node("/root/Main/PlayerGUILayer/GUI/Ammunition"),"on_special_ammo_event")
-	$"/root/Main/Settings".connect("apply_changes", self, "apply_settings")
+	connect("special_ammo_event",get_node(Dir.GUI_AMMUNITION),"on_special_ammo_event")
+	$"/root/Master/Settings".connect("apply_changes", self, "apply_settings")
 	apply_settings()
 	gun_ray_cast_node.cast_to = bullet_point_node.position
 	gun_ray_cast_node.add_exception(self)
@@ -86,7 +89,7 @@ func _integrate_forces(_state):
 		"TR": turret_node.global_rotation,
 	}
 	if is_multiplayer:
-		$"/root/Transfer".fetch_stance(player_stance)
+		transfer_n.fetch_stance(player_stance)
 	set_angular_velocity(direction * ROTATION_SPEED)
 	set_linear_velocity(velocity.rotated(rotation) * SPEED)
 
@@ -127,12 +130,12 @@ func _shoot():
 		"TR": turret_node.global_rotation,
 	}
 	if is_multiplayer:
-		$"/root/Transfer".fetch_shoot(player_stance, ammo_slot)
+		transfer_n.fetch_shoot(player_stance, ammo_slot)
 		
 	else:
 		var bullet_inst = Ammunition.get_tscn(special_ammo[ammo_slot].type).instance()
 		bullet_inst.setup(self)
-		get_node("/root/Main/Game/Projectiles").add_child(bullet_inst)
+		projectiles_n.add_child(bullet_inst)
 	
 	emit_signal("special_ammo_event", "shoot", special_ammo[ammo_slot].type, special_ammo[ammo_slot].amount)
 	if special_ammo[ammo_slot].amount <= 0:
@@ -165,7 +168,7 @@ func die():
 	var spectator_camera : Camera2D = load("res://Player/Spectator/Spectator.tscn").instance()
 	spectator_camera.global_position = global_position
 	spectator_camera.current = true
-	get_node("/root/Main/Game/Players").add_child(spectator_camera)
+	players_n.add_child(spectator_camera)
 
 func _on_timer_timeout():
 	queue_free()

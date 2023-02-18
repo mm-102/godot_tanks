@@ -5,7 +5,7 @@ onready var wall = $Hitbox.duplicate(true)
 onready var animation_player = $"%AnimationPlayer"
 var visible_to_local_player = false
 var stances: Array
-onready var interpolation_factor = get_node("/root/Main/Game").interpolation_factor
+onready var interpolation_factor = get_node(Dir.GAME).interpolation_factor
 
 
 
@@ -13,7 +13,7 @@ func setup(player_data):
 	name = str(player_data.ID)
 	if player_data.Nick.empty():
 		nick = "Player" + str(player_data.ID)
-	position = player_data.SP
+	position = player_data.P
 	set_display_name(player_data.Nick)
 
 func add_package(stance):

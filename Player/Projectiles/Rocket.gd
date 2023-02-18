@@ -6,8 +6,8 @@ var _target : PhysicsBody2D = null
 var started_targeting = false
 
 func set_params():
-	SPEED = $"/root/Main/Settings".SETTINGS.ROCKET_SPEED
-	FOLLOW_SPEED = $"/root/Main/Settings".SETTINGS.ROCKET_FOLLOW_SPEED
+	SPEED = $"/root/Master/Settings".SETTINGS.ROCKET_SPEED
+	FOLLOW_SPEED = $"/root/Master/Settings".SETTINGS.ROCKET_FOLLOW_SPEED
 
 func _on_StartTargeting_timeout():
 	started_targeting = true

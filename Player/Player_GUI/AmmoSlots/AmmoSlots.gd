@@ -2,22 +2,22 @@ extends HBoxContainer
 
 const SLOT_BASE_TSCN = preload("res://Player/Player_GUI/AmmoSlots/Slot.tscn")
 const P_SLOT = "p_slot_"
+const BASE_SLOT = 0
 var event_funcs = {
 	"shoot": funcref(self, "shoot_event"),
 	"pick_up": funcref(self, "pick_up_event"),
 }
-const BASE_SLOT = 0
 var MAX_AMMO_TYPES = 0
 var current_selection = BASE_SLOT
 
 
 
 func _ready():
-	$"/root/Main/Settings".connect("apply_changes", self, "apply_settings")
+	$"/root/Master/Settings".connect("apply_changes", self, "apply_settings")
 	apply_settings()
 
 func apply_settings():
-	var settings = $"/root/Main/Settings".SETTINGS
+	var settings = $"/root/Master/Settings".SETTINGS
 	MAX_AMMO_TYPES = settings.PLAYER_MAX_AMMO_TYPES
 
 func _input(event):

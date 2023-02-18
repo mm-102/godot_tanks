@@ -9,11 +9,11 @@ var following = false
 
 
 func _ready():
-	$"/root/Main/Settings".connect("apply_changes", self, "apply_settings")
+	$"/root/Master/Settings".connect("apply_changes", self, "apply_settings")
 	apply_settings()
 
 func apply_settings():
-	var settings = $"/root/Main/Settings".SETTINGS
+	var settings = $"/root/Master/Settings".SETTINGS
 	ZOOM_SPEED = settings.SPECTATOR_CAMERA_ZOOM_SPEED
 	MOVE_SPEED = settings.SPECTATOR_CAMERA_MOVE_SPEED
 	MAX_ZOOM_IN = settings.SPECTATOR_CAMERA_MAX_ZOOM_IN

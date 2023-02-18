@@ -20,9 +20,9 @@ _global_script_classes=[ {
 "path": "res://Global/DefaultSettings.gd"
 }, {
 "base": "Reference",
-"class": "Paths",
+"class": "Dir",
 "language": "GDScript",
-"path": "res://Global/Paths.gd"
+"path": "res://Global/Dir.gd"
 }, {
 "base": "RigidBody2D",
 "class": "Projectile",
@@ -32,15 +32,19 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Ammunition": "",
 "DefaultSettings": "",
-"Paths": "",
+"Dir": "",
 "Projectile": ""
 }
 
 [application]
 
 config/name="Godot Tanks"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://GameModeMaster.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Transfer="*res://Singletons/Transfer.tscn"
 
 [display]
 

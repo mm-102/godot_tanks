@@ -40,13 +40,13 @@ func _on_RefreshTimer_timeout():
 
 
 func _on_Tank_ready():
-	if !get_node("/root/Main").is_multiplayer:
+	if !get_node(Dir.MASTER).is_multiplayer:
 		queue_free()
 		return
-	tank = get_node("/root/Main/Game/Players/" + str(get_node("/root/Main/Game").local_player_id))
-	$"/root/Main/Settings".connect("apply_changes", self, "apply_settings")
+	tank = get_node("/root/Master/Main/Game/Players/" + str(get_node("/root/Master/Main/Game").local_player_id))
+	$"/root/Master/Settings".connect("apply_changes", self, "apply_settings")
 	apply_settings()
 	$RefreshTimer.start()
 
 func apply_settings():
-	max_indicators = $"/root/Main/Settings".SETTINGS.MAX_INDICATOR_COUNT
+	max_indicators = $"/root/Master/Settings".SETTINGS.MAX_INDICATOR_COUNT

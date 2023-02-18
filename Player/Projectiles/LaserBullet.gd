@@ -10,9 +10,9 @@ func _ready():
 	set_params()
 
 func set_params():
-	SPEED = $"/root/Main/Settings".SETTINGS.LASER_BULLET_SPEED
-	BULLET_LENGTH = $"/root/Main/Settings".SETTINGS.LASER_BULLET_LENGTH
-	MAX_BOUNCES = $"/root/Main/Settings".SETTINGS.LASER_BULLET_LASER_MAX_BOUNCES
+	SPEED = $"/root/Master/Settings".SETTINGS.LASER_BULLET_SPEED
+	BULLET_LENGTH = $"/root/Master/Settings".SETTINGS.LASER_BULLET_LENGTH
+	MAX_BOUNCES = $"/root/Master/Settings".SETTINGS.LASER_BULLET_LASER_MAX_BOUNCES
 
 func _integrate_forces(state):
 	var length_left = BULLET_LENGTH

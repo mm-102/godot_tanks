@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://GUI/Menu.tres" type="Theme" id=1]
+[ext_resource path="res://Interface/Menu.tres" type="Theme" id=1]
 [ext_resource path="res://Player/Player_GUI/BattleTime.gd" type="Script" id=2]
 [ext_resource path="res://textures/text/Bosk.ttf" type="DynamicFontData" id=3]
 

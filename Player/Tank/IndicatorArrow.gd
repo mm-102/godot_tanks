@@ -7,11 +7,11 @@ var player = null
 var texture_size = max(texture.get_size().x, texture.get_size().y) * scale.x
 
 func _ready():
-	$"/root/Main/Settings".connect("apply_changes", self, "apply_settings")
+	$"/root/Master/Settings".connect("apply_changes", self, "apply_settings")
 	apply_settings()
 
 func apply_settings():
-	margin = $"/root/Main/Settings".SETTINGS.INDICATOR_ARROW_MARGIN
+	margin = $"/root/Master/Settings".SETTINGS.INDICATOR_ARROW_MARGIN
 
 func _process(delta):
 	if target_player == null or !is_instance_valid(target_player):

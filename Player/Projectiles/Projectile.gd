@@ -9,10 +9,10 @@ var bullet_state_queue: Array
 
 
 func set_params():
-	SPEED = $"/root/Main/Settings".SETTINGS.BULLET_SPEED
+	SPEED = $"/root/Master/Settings".SETTINGS.BULLET_SPEED
 	
 func _ready():
-	if !$"/root/Main".is_multiplayer and player_path != NodePath(""):
+	if !$"/root/Master".is_multiplayer and player_path != NodePath(""):
 		set_params()
 		linear_velocity *= SPEED
 

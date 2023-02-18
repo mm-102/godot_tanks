@@ -5,11 +5,11 @@ var MAX_ZOOM_IN
 var MAX_ZOOM_OUT
 
 func _ready():
-	$"/root/Main/Settings".connect("apply_changes", self, "apply_settings")
+	$"/root/Master/Settings".connect("apply_changes", self, "apply_settings")
 	apply_settings()
 
 func apply_settings():
-	var settings = $"/root/Main/Settings".SETTINGS
+	var settings = $"/root/Master/Settings".SETTINGS
 	ZOOM_SPEED = settings.PLAYER_CAMERA_ZOOM_SPEED
 	MAX_ZOOM_IN = settings.PLAYER_CAMERA_MAX_ZOOM_IN
 	MAX_ZOOM_OUT = settings.PLAYER_CAMERA_MAX_ZOOM_OUT

@@ -1,14 +1,17 @@
 extends Node
 
 var ammo_box_tscn = preload("res://Objects/AmmoBox.tscn")
+
 onready var tilemap_n = $"%TileMap"
 onready var ammo_boxes_n = $"%AmmoBoxes"
 
+
+
 func set_map_data(map_data):
-	$"%TileMap".scale = map_data.Scale
+	tilemap_n.scale = map_data.Scale
 	set_mapset(map_data.MapSet)
 	set_ammo_boxes(map_data.AB)
-	$"%TileMap".build_collision()
+	tilemap_n.build_collision()
 
 func set_mapset(tiles_pos):
 	for tile_pos in tiles_pos:
@@ -23,7 +26,7 @@ func set_ammo_boxes(ab_many_data):
 		ammo_boxes_n.add_child(ab_inst)
 
 func get_map_boundaries():
-	var multiplier = $TileMap.get_cell_size() * $"%TileMap".scale
-	var pos = $TileMap.get_used_rect().position * multiplier
-	var end = $TileMap.get_used_rect().end * multiplier
+	var multiplier = tilemap_n.get_cell_size() * tilemap_n.scale
+	var pos = tilemap_n.get_used_rect().position * multiplier
+	var end = tilemap_n.get_used_rect().end * multiplier
 	return {"Pos": pos, "End": end}
