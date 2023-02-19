@@ -4,8 +4,9 @@ var nick: String = ""
 onready var wall = $Hitbox.duplicate(true)
 onready var animation_player = $"%AnimationPlayer"
 var visible_to_local_player = false
-var stances: Array
-onready var interpolation_factor = get_node(Dir.GAME).interpolation_factor
+onready var stances = get_node(Dir.GAME).current_world_stances
+onready var player_id = int(name)
+onready var interpolation_factor = get_node(Dir.GAME).interpolation_factor()
 
 
 
@@ -16,20 +17,17 @@ func setup(player_data):
 	position = player_data.P
 	set_display_name(player_data.Nick)
 
-func add_package(stance):
-	if stances.size() > 2:
-		stances.remove(0)
-	if stance != null:
-		stances.append(stance)
-
 func _physics_process(delta):
 	if stances.size() > 1:
-		interpolation() #render_time > world_stance_buffer[1].T
+		interpolation()
 
 func interpolation():
+	var previous_stance = stances[-2].PlayersStance[player_id]
+	var next_stance = stances[-1].PlayersStance[player_id]
+	var interpolation_factor = interpolation_factor
 	template_stance(\
-			stances[-2], \
-			stances[-1], \
+			previous_stance, \
+			next_stance, \
 			interpolation_factor)
 
 func set_display_name(text):

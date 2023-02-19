@@ -23,7 +23,7 @@ func setup(player : RigidBody2D):
 	set_linear_velocity(Vector2.UP.rotated(point.global_rotation))
 
 func setup_multiplayer(bullet_data : Dictionary):
-	set_name(bullet_data.Name)
+	set_name(bullet_data.ID)
 	position = bullet_data.SP
 	set_linear_velocity(bullet_data.V)
 

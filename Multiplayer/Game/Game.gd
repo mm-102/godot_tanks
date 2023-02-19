@@ -6,7 +6,14 @@ var tank = preload("res://Player/Tank/Tank.tscn")
 var tank_template = preload("res://Player/Tank/TankTemplate.tscn")
 var empty_gd = preload("res://Empty.gd")
 
-var time_of_last_stance = -INF
+var comming_world_stance = null
+var time_stamp = {
+	"Old": -INF,
+	"New": -INF,
+	"Latest": -INF,
+}
+var current_world_stances: Array 
+
 var world_stance_buffer: Array
 var local_player_id = 0
 var interpolation_factor = 0
@@ -17,14 +24,12 @@ onready var objects_n = $"%Objects"
 onready var map_n = $"Map"
 onready var main_n = get_node(Dir.MAIN)
 onready var clock_n = get_node(Dir.T_CLOCK)
-onready var transfer_n = Transfer
+
 
 
 func set_corspses_data(corspes_data):
 	for corpse_data in corspes_data:
 		create_corpse(corpse_data)
-
-
 
 
 func self_initiation(player_data):
@@ -96,6 +101,9 @@ func create_corpse(corpse_data):
 
 func spawn_bullet(player_id, bullet_data, spawn_time):
 	var bullet_inst = Ammunition.get_tscn(bullet_data.AT).instance()
+	var gd = Ammunition.get_gd_multi(bullet_data.AT)
+	if gd != null:
+		bullet_inst.set_script(gd)
 	var client_clock = clock_n.client_clock
 	yield(get_tree().create_timer((spawn_time - client_clock)*0.001), "timeout")
 	bullet_inst.setup_multiplayer(bullet_data)
@@ -113,39 +121,32 @@ func update_bounce_bullet(bulletS_state, time):
 			return
 		bullet_n.append_new_state(bullet_state, time - clock_n.get_time())
 
-func add_world_stance(time, world_stance):
-	if time_of_last_stance >= time:
-		return
-	time_of_last_stance = time
-	world_stance_buffer.append({"T": time, "WS": world_stance})
-	if world_stance_buffer.size() <= 1:
-		give_package_to_templates(world_stance.PlayersStance)
 
-func interpolation_factor(render_time):
-	interpolation_factor = \
-			float(render_time - world_stance_buffer[-2].T) \
-			/ float(world_stance_buffer[-1].T - world_stance_buffer[-2].T)
+func interpolation_factor() -> float:
+	var actual_time = Transfer.get_time()
+	var interpolation_factor = \
+			float(actual_time - time_stamp.Old) \
+			/ float(time_stamp.New - time_stamp.Old)
+	return interpolation_factor
+
+
+func add_world_stance(time, world_stance):
+	if time_stamp.Latest >= time:
+		return
+	time_stamp.Latest = time
+	if current_world_stances.size() == 3:
+		comming_world_stance = world_stance
+	else:
+		time_stamp.Old = time_stamp.New 
+		time_stamp.New = time
+		current_world_stances.append(world_stance)
 
 func _physics_process(_delta: float) -> void:
-	clock_n = get_node(Dir.T_CLOCK)
-	var render_time = clock_n.get_time()
-	if world_stance_buffer.size() > 1:
-		interpolation_factor(render_time)
-	while world_stance_buffer.size() > 2 and render_time > world_stance_buffer[2].T:
-		world_stance_buffer.remove(0)
-		if world_stance_buffer.size() > 3:
-			give_package_to_templates(world_stance_buffer[2].WS.PlayersStance)
-		else:
-			give_empty_package_to_templates()
-
-func give_package_to_templates(players_stance):
-	for player_node in get_tree().get_nodes_in_group("Template"):
-		var player_id = int(player_node.name)
-		if players_stance.has(player_id):
-			player_node.add_package(players_stance[player_id])
-		else:
-			print("[Game]: Template don't recived package. Impossible!")
-
-func give_empty_package_to_templates():
-	for player_node in get_tree().get_nodes_in_group("Template"):
-		player_node.add_package(null)
+	var render_time = Transfer.get_time()
+	while current_world_stances.size() > 2 and render_time > time_stamp.New:
+		time_stamp.Old = time_stamp.New 
+		current_world_stances.remove(0)
+		if comming_world_stance != null:
+			time_stamp.New = time_stamp.Latest
+			current_world_stances.append(comming_world_stance)
+			comming_world_stance = null

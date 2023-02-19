@@ -13,6 +13,10 @@ const _ammo_tscn = {
 	TYPES.FIREBALL: preload("res://Player/Projectiles/Fireball.tscn")
 }
 
+const _ammo_gd_multi = {
+	TYPES.ROCKET: preload("res://Player/Projectiles/RocketMulti.gd"),
+}
+
 const _ammo_box_texture = {
 	TYPES.BULLET: preload("res://textures/bullet.png"),
 	TYPES.ROCKET: preload("res://textures/rocket.png"),
@@ -25,6 +29,11 @@ const _ammo_box_texture = {
 
 static func get_tscn(name):
 	return _ammo_tscn[name]
+
+static func get_gd_multi(name):
+	if _ammo_gd_multi.has(name):
+		return _ammo_gd_multi[name]
+	return null
 
 static func get_box_texture(name):
 	return _ammo_box_texture[name]

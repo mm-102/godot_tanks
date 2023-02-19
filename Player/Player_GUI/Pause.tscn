@@ -8,6 +8,7 @@
 [sub_resource type="StyleBoxEmpty" id=1]
 
 [node name="Pause" type="PanelContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = SubResource( 1 )
@@ -17,7 +18,6 @@ __meta__ = {
 }
 
 [node name="PauseWindow" type="TextureRect" parent="."]
-visible = false
 margin_left = 363.0
 margin_top = 182.0
 margin_right = 661.0

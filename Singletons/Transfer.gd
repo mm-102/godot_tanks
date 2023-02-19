@@ -4,17 +4,34 @@ extends Node
 const PORT = 42521
 var ip = null
 var my_id = null
-var main_n 
 
 onready var time_diff_timer_node = $"%TimeDiffTimer"
 onready var clock_node = $"%Clock"
 onready var master_n = get_node(Dir.MASTER)
+onready var main_n 
+onready var time 
 
 var network : NetworkedMultiplayerENet = null
 
 
+func get_time():
+	return clock_node.get_time()
+
+
+
+static func interpolation_factor() -> float:
+	var actual_time = Transfer.get_time()
+	var previous_time = Transfer.time[-2].T
+	var next_time = Transfer.time[-1].T
+	var interpolation_factor = \
+			float(actual_time - previous_time) \
+			/ float(next_time - previous_time)
+	print(interpolation_factor)
+	return interpolation_factor
+
 #---------- SERVER CREATION ----------
 func _connect_to_server():
+	time = get_node(Dir.GAME).current_world_stances
 	main_n = get_node(Dir.MAIN)
 	network = NetworkedMultiplayerENet.new()
 	var _err = network.connect("connection_failed", self, "_on_connection_failed")
@@ -78,6 +95,8 @@ remote func recive_player_destroyed(corpse_data, slayer_id, projectile_name):
 
 func fetch_stance(player_stance: Dictionary):
 	rpc_unreliable_id(1, "recive_stance", player_stance)
+
+
 
 remote func recive_world_stance(time, playerS_stance):
 	if !get_tree().get_rpc_sender_id() == 1:
