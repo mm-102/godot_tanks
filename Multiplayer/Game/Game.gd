@@ -83,7 +83,8 @@ func local_player_destroyed(projectile_name):
 		"ID" : "Tank",
 		"Pos" : local_player.position,
 		"Rot" : local_player.rotation,
-		"LT" : local_player.CORPSE_LIFE_TIME
+		"LT" : local_player.CORPSE_LIFE_TIME,
+		"Color": local_player.color
 	}
 	local_player.die()
 	create_corpse(corpse_data)
@@ -94,6 +95,7 @@ func create_corpse(corpse_data):
 	wreck.set_position(corpse_data.Pos)
 	wreck.rotation = corpse_data.Rot
 	wreck.lifeTime = CORPSE_LIFE_TIME
+	wreck.color = corpse_data.Color
 	if corpse_data.has("LT"):
 		wreck.lifeTime = corpse_data.LT
 		

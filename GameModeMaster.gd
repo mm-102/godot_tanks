@@ -8,7 +8,7 @@ const MODE_DICT = {
 }
 var is_multiplayer = false 
 
-
+var rng = RandomNumberGenerator.new()
 
 func _ready():
 	Transfer._ready()
@@ -20,6 +20,8 @@ func game_mode(sel_mode: int, adress, player_nick):
 		get_node("/root/Main/PlayerGUILayer").set_visible(true)
 	if sel_mode == GAME_MODE.MULTI:
 		mode_inst.local_player_name = player_nick
+		rng.randomize()
+		mode_inst.local_player_color = Color.from_hsv(rng.randf(), 1.0, 1.0) # temp
 		is_multiplayer = true
 		Transfer.ip = adress
 	add_child(mode_inst)

@@ -20,8 +20,10 @@ var special_ammo = [
 # Defined in code
 var player_stance: Dictionary 
 var nick = "You"
+var color = Color.blue
 var laser_path = NodePath("")
 
+onready var main_n = get_node(Dir.MAIN)
 onready var transfer_n = get_node(Dir.TRANSFER)
 onready var players_n = get_node(Dir.PLAYERS)
 onready var projectiles_n = get_node(Dir.PROJECTILES)
@@ -56,6 +58,8 @@ func _ready():
 	apply_settings()
 	gun_ray_cast_node.cast_to = bullet_point_node.position
 	gun_ray_cast_node.add_exception(self)
+	modulate = main_n.local_player_color
+	color = main_n.local_player_color
 
 
 func pick_up_ammo_box(type):

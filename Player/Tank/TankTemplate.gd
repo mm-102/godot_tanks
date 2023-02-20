@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 var nick: String = ""
+var color: Color = Color.blue
 var visible_to_local_player = false
 onready var stances = get_node(Dir.GAME).current_world_stances
 onready var player_id = int(name)
@@ -14,6 +15,8 @@ func setup(player_data):
 		nick = "Player" + str(player_data.ID)
 	position = player_data.P
 	set_display_name(player_data.Nick)
+	color = player_data.Color
+	$"Hitbox/Sprite".modulate = player_data.Color
 
 func _physics_process(delta):
 	if stances[-1].PlayersStance.has(name) and stances[-2].PlayersStance.has(name):

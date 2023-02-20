@@ -64,7 +64,7 @@ func close_connection():
 
 #---- INIT DATA ----
 func fetch_init_data():
-	rpc_id(1, "recive_init_data", main_n.local_player_name)
+	rpc_id(1, "recive_init_data", main_n.local_player_name, main_n.local_player_color)
 
 #[info] Init data only allow to spectate mode
 remote func recive_data_during_game(init_data):

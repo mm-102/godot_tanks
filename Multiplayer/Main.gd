@@ -4,6 +4,7 @@ const GAME_TSCN = preload("res://Multiplayer/Game/Game.tscn")
 const GUI_TSCN = preload("res://Player/Player_GUI/GUI.tscn")
 
 var local_player_name = ""
+var local_player_color = Color.blue
 
 onready var game_n = get_node(Dir.GAME)
 onready var map_n = get_node(Dir.MAP)
