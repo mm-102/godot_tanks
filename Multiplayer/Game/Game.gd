@@ -1,9 +1,8 @@
 extends Node2D
 
-const CORPSE_LIFE_TIME = 20
-
 var tank = preload("res://Player/Tank/Tank.tscn")
 var tank_template = preload("res://Player/Tank/TankTemplate.tscn")
+var tank_wreck = preload("res://Player/Tank/TankWreck.tscn")
 var empty_gd = preload("res://Empty.gd")
 
 var comming_world_stance = null
@@ -17,6 +16,7 @@ var current_world_stances: Array
 var world_stance_buffer: Array
 var local_player_id = 0
 var interpolation_factor = 0
+var CORPSE_LIFE_TIME
 
 onready var players_n = $"%Players"
 onready var projectiles_n = $"%Projectiles"
@@ -25,6 +25,14 @@ onready var map_n = $"Map"
 onready var main_n = get_node(Dir.MAIN)
 onready var clock_n = get_node(Dir.T_CLOCK)
 
+
+func apply_settings():
+	var settings = $"/root/Master/Settings".SETTINGS
+	CORPSE_LIFE_TIME = settings.CORPSE_LIFE_TIME
+
+func _ready():
+	$"/root/Master/Settings".connect("apply_changes", self, "apply_settings")
+	apply_settings()
 
 
 func set_corspses_data(corspes_data):
@@ -70,33 +78,26 @@ func player_destroyed(corpse_data, projectile_name):
 func local_player_destroyed(projectile_name):
 	var projectile = projectiles_n.get_node_or_null(projectile_name)
 	if projectile != null:	projectile.die()
-	get_node("Tank").die()
+	var local_player = get_node("Tank")
+	var corpse_data = {
+		"ID" : "Tank",
+		"Pos" : local_player.position,
+		"Rot" : local_player.rotation,
+		"LT" : local_player.CORPSE_LIFE_TIME
+	}
+	local_player.die()
+	create_corpse(corpse_data)
 
 func create_corpse(corpse_data):
-	var static_body2d = StaticBody2D.new()
-	var wall_inst = tank_template.instance()
-	wall_inst.remove_from_group("Players")
-	wall_inst.remove_from_group("Template")
-	wall_inst.add_to_group("Corpse")
-	static_body2d.name = str(corpse_data.ID)
-	static_body2d.set_collision_layer(4)
-	static_body2d.set_collision_mask(3)
-	static_body2d.set_position(corpse_data.Pos)
-	static_body2d.rotation = corpse_data.Rot
-	wall_inst.replace_by(static_body2d, true)
-	static_body2d.get_node("%Sprite").set_frame(4)
-	static_body2d.get_node("%Turret").queue_free()
-	static_body2d.get_node("%RemoteTransform2D").queue_free()
-	static_body2d.get_node("%CanvasLayer").queue_free()
-	static_body2d.get_node("%VisibilityNotifier2D").queue_free()
-	
-	var lifeTime = Timer.new()
-	lifeTime.wait_time = CORPSE_LIFE_TIME
-	lifeTime.autostart = true
-	static_body2d.add_child(lifeTime)
-	lifeTime.connect("timeout",static_body2d,"queue_free")
-	
-	objects_n.add_child(static_body2d)
+	var wreck = tank_wreck.instance()
+	wreck.name = str(corpse_data.ID)
+	wreck.set_position(corpse_data.Pos)
+	wreck.rotation = corpse_data.Rot
+	wreck.lifeTime = CORPSE_LIFE_TIME
+	if corpse_data.has("LT"):
+		wreck.lifeTime = corpse_data.LT
+		
+	$Objects.add_child(wreck)
 
 
 func spawn_bullet(player_id, bullet_data, spawn_time):
@@ -124,7 +125,9 @@ func update_bounce_bullet(bulletS_state, time):
 
 func interpolation_factor() -> float:
 	var actual_time = Transfer.get_time()
-	var interpolation_factor = \
+	if time_stamp.New == time_stamp.Old:
+		return 0.0
+	var interpolation_factor : float = \
 			float(actual_time - time_stamp.Old) \
 			/ float(time_stamp.New - time_stamp.Old)
 	return interpolation_factor
