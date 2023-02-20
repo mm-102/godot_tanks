@@ -1,8 +1,6 @@
 extends KinematicBody2D
 
 var nick: String = ""
-onready var wall = $Hitbox.duplicate(true)
-onready var animation_player = $"%AnimationPlayer"
 var visible_to_local_player = false
 onready var stances = get_node(Dir.GAME).current_world_stances
 onready var player_id = int(name)
@@ -42,19 +40,9 @@ func template_stance(previous_stance, next_stance, interpolation_factor):
 	$Hitbox.set_rotation(_rotation)
 	$Turret.set_rotation(_turret_rotation)
 
-func get_hitbox():
-	return wall
 
 func die():
-	$Hitbox.set_disabled(true)
-	animation_player.play("explode")
-	remove_from_group("Players")
-	add_to_group("Corpse")
-
-
-func _on_AnimationPlayer_animation_finished(anim_name):
-	if anim_name == "explode":
-		queue_free()
+	queue_free()
 
 
 func _on_screen_entered():
