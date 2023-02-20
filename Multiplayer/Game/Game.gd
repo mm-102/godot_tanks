@@ -144,9 +144,9 @@ func add_world_stance(time, world_stance):
 func _physics_process(_delta: float) -> void:
 	var render_time = Transfer.get_time()
 	while current_world_stances.size() > 2 and render_time > time_stamp.New:
-		time_stamp.Old = time_stamp.New 
 		current_world_stances.remove(0)
 		if comming_world_stance != null:
+			time_stamp.Old = time_stamp.New 
 			time_stamp.New = time_stamp.Latest
 			current_world_stances.append(comming_world_stance)
 			comming_world_stance = null

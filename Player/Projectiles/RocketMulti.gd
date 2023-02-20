@@ -1,7 +1,5 @@
 extends Projectile
 
-#var past_time = -INF
-#var next_time = -INF
 onready var stances = get_node(Dir.GAME).current_world_stances
 onready var game_n = get_node(Dir.GAME)
 onready var hitbox = $"%CollisionShape2D"
@@ -11,7 +9,7 @@ func _init():
 	set_mode(MODE_KINEMATIC)
 
 func _physics_process(delta):
-	if stances[0].RocketsStance.has(name):
+	if stances[-1].RocketsStance.has(name) and stances[-2].RocketsStance.has(name):
 		interpolation()
 
 func interpolation():

@@ -6,7 +6,7 @@ onready var animation_player = $"%AnimationPlayer"
 var visible_to_local_player = false
 onready var stances = get_node(Dir.GAME).current_world_stances
 onready var player_id = int(name)
-onready var interpolation_factor = get_node(Dir.GAME).interpolation_factor()
+onready var game_n = get_node(Dir.GAME)
 
 
 
@@ -18,13 +18,13 @@ func setup(player_data):
 	set_display_name(player_data.Nick)
 
 func _physics_process(delta):
-	if stances.size() > 1:
+	if stances[-1].PlayersStance.has(name) and stances[-2].PlayersStance.has(name):
 		interpolation()
 
 func interpolation():
 	var previous_stance = stances[-2].PlayersStance[player_id]
 	var next_stance = stances[-1].PlayersStance[player_id]
-	var interpolation_factor = interpolation_factor
+	var interpolation_factor = game_n.interpolation_factor()
 	template_stance(\
 			previous_stance, \
 			next_stance, \
