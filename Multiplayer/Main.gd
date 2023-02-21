@@ -32,6 +32,7 @@ func init_data(init_data):
 			continue
 		game_n.create_template(player)
 	game_n.set_corspses_data(init_data.PlayerSCorpses)
+	game_n.set_bullets_data(init_data.BulletsStances)
 	if init_data.has("TimeLeft"):
 		gui_timer_n.battle_time(init_data.TimeLeft)
 	if init_data.has("TimeToStartNewGame"):

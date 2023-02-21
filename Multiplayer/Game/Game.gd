@@ -39,6 +39,9 @@ func set_corspses_data(corspes_data):
 	for corpse_data in corspes_data:
 		create_corpse(corpse_data)
 
+func set_bullets_data(bullets_data):
+	for bullet in bullets_data:
+		spawn_bullet(bullet.PlayerID, bullet, 0)
 
 func self_initiation(player_data):
 	var player_id :int = player_data.ID

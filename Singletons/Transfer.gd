@@ -18,17 +18,6 @@ func get_time():
 	return clock_node.get_time()
 
 
-
-static func interpolation_factor() -> float:
-	var actual_time = Transfer.get_time()
-	var previous_time = Transfer.time[-2].T
-	var next_time = Transfer.time[-1].T
-	var interpolation_factor = \
-			float(actual_time - previous_time) \
-			/ float(next_time - previous_time)
-	print(interpolation_factor)
-	return interpolation_factor
-
 #---------- SERVER CREATION ----------
 func _connect_to_server():
 	time = get_node(Dir.GAME).current_world_stances

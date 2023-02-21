@@ -8,7 +8,6 @@ onready var player_id = int(name)
 onready var game_n = get_node(Dir.GAME)
 
 
-
 func setup(player_data):
 	name = str(player_data.ID)
 	if player_data.Nick.empty():
@@ -19,7 +18,7 @@ func setup(player_data):
 	$"Hitbox/Sprite".modulate = player_data.Color
 
 func _physics_process(delta):
-	if stances[-1].PlayersStance.has(name) and stances[-2].PlayersStance.has(name):
+	if stances.size() >= 2 and stances[-1].PlayersStance.has(player_id) and stances[-2].PlayersStance.has(player_id):
 		interpolation()
 
 func interpolation():

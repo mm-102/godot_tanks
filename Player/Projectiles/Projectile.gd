@@ -5,12 +5,19 @@ var SPEED = null
 
 var player_path = NodePath("")
 var bullet_state_queue: Array
+onready var append_timer_n = $AppendTimer
 
 
 
 func set_params():
 	SPEED = $"/root/Master/Settings".SETTINGS.BULLET_SPEED
-	
+
+func _init():
+	var append_timer = Timer.new()
+	append_timer.name = "AppendTimer"
+	append_timer.one_shot = true
+	add_child(append_timer)
+
 func _ready():
 	if !$"/root/Master".is_multiplayer and player_path != NodePath(""):
 		set_params()
@@ -39,7 +46,8 @@ func _integrate_forces(state):
 	state.set_transform(taransform)
 
 func append_new_state(bullet_state, time_diff):
-	yield(get_tree().create_timer(time_diff * 0.001), "timeout")
+	append_timer_n.start(time_diff * 0.001)
+	yield(append_timer_n, "timeout")
 	bullet_state_queue.append(bullet_state)
 
 
