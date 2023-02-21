@@ -16,6 +16,7 @@ func setup(player_data):
 	set_display_name(player_data.Nick)
 	color = player_data.Color
 	$"Hitbox/Sprite".modulate = player_data.Color
+	$Turret.modulate = player_data.Color
 
 func _physics_process(delta):
 	if stances.size() >= 2 and stances[-1].PlayersStance.has(player_id) and stances[-2].PlayersStance.has(player_id):

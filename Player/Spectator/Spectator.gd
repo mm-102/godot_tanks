@@ -1,5 +1,7 @@
 extends Camera2D
 
+signal zoom_change(new_zoom)
+
 var ZOOM_SPEED
 var MOVE_SPEED
 var MAX_ZOOM_IN
@@ -9,6 +11,7 @@ var following = false
 
 
 func _ready():
+	connect("zoom_change", get_node(Dir.MAIN + "/Background"), "zoom_change")
 	$"/root/Master/Settings".connect("apply_changes", self, "apply_settings")
 	apply_settings()
 
@@ -29,6 +32,7 @@ func zoom_point(zoom_diff, mouse_position):
 	else:
 		zoom = zoom + zoom_diff
 	position += ((viewport_size * 0.5) - mouse_position) * (zoom - previous_zoom)
+	emit_signal("zoom_change", zoom)
 
 func _unhandled_input(event):
 	if event.is_action_released("p_zoom_in"):
