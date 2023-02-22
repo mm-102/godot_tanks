@@ -4,7 +4,9 @@
 [ext_resource path="res://textures/GUI/Button.png" type="Texture" id=2]
 
 [sub_resource type="DynamicFont" id=6]
-size = 20
+size = 21
+use_mipmaps = true
+use_filter = true
 font_data = ExtResource( 1 )
 
 [sub_resource type="StyleBoxTexture" id=1]

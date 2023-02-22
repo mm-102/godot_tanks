@@ -15,6 +15,10 @@ func set_params():
 	FRAG_LIFETIME_MULTIPLIER = $"/root/Master/Settings".SETTINGS.FRAG_LIFETIME_MULTIPLIER
 	FRAG_TYPE = $"/root/Master/Settings".SETTINGS.FRAG_TYPE
 
+func _ready():
+	set_params()
+
+
 func spawn_frag(rotation):
 	var frag_inst = load("res://Global/Ammunition.gd").get_tscn(FRAG_TYPE).instance()
 

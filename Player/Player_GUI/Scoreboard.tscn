@@ -24,7 +24,7 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="NinePatchRect" parent="."]
-modulate = Color( 1, 1, 1, 0.294118 )
+modulate = Color( 1, 1, 1, 0.576471 )
 margin_right = 342.0
 margin_bottom = 260.0
 texture = ExtResource( 1 )

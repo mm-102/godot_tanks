@@ -76,14 +76,6 @@ unique_name_in_owner = true
 wait_time = 5.0
 one_shot = true
 
-[node name="PublicIPButton" type="Button" parent="Background"]
-unique_name_in_owner = true
-margin_left = 165.0
-margin_top = 187.0
-margin_right = 274.0
-margin_bottom = 220.0
-text = "Check ip"
-
 [node name="PlayerNickInput" type="LineEdit" parent="Background"]
 unique_name_in_owner = true
 anchor_left = 0.5
@@ -104,9 +96,6 @@ margin_bottom = 104.0
 rect_scale = Vector2( 0.5, 0.5 )
 text = "Nick:"
 
-[node name="HTTPRequest" type="HTTPRequest" parent="."]
-
 [connection signal="pressed" from="Background/SingleplayerButton" to="." method="_on_SingleplayerButton_pressed"]
 [connection signal="pressed" from="Background/MultiplayerButton" to="." method="_on_MultiplayerButton_pressed"]
 [connection signal="timeout" from="Background/MultiplayerButton/MultiplayerRefresh" to="." method="_on_MultiplayerRefresh_timeout"]
-[connection signal="pressed" from="Background/PublicIPButton" to="." method="_on_PublicIPButton_pressed"]

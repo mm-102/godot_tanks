@@ -16,7 +16,7 @@ func set_is_selected(value: bool):
 
 func setup(type, amount_left):
 	name = type
-	get_node("Background/Icon").set_texture(Ammunition._ammo_box_texture[int(type)])
+	get_node("Background/Icon").set_texture(Ammunition.get_box_texture(int(type)))
 	get_node("Background/Number").text = str(amount_left)
 
 func set_left_ammo(amount_left):
