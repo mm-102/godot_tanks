@@ -21,14 +21,10 @@ func game_mode(sel_mode: int, adress, player_nick):
 	rng.randomize()
 	mode_inst.local_player_color = Color.from_hsv(rng.randf(), 1.0, 1.0) # temp
 	if sel_mode == GAME_MODE.MULTI:
+		Transfer._ready()
 		is_multiplayer = true
 		Transfer.ip = adress
 	add_child(mode_inst)
-#		if get_node_or_null("/root/Transfer") != null:
-#			get_node("/root/Transfer").request_ready()
-#			return
-#		var transfer_inst = transfe_pck.instance()
-#		get_node("/root").add_child(transfer_inst)
 
 func queue_free_menu():
 	$Menu.queue_free()

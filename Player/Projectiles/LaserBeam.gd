@@ -62,7 +62,9 @@ func cast_laser():
 		
 		add_point(to_local(ray.get_collision_point()))
 		
-		if collider.is_in_group("Players") or collider.is_in_group("Corpse"):
+		if collider.is_in_group("Players"):
+			if !collider.is_in_group("Corpse") and !$"/root/Master".is_multiplayer:
+				collider.die()
 			break
 		
 		if collision_normal == Vector2.ZERO:
