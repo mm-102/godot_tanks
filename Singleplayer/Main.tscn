@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Player/Player_GUI/AmmoSlots/AmmoSlots.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Player/Player_GUI/Pause.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Objects/Background.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Global/MapTileSet.tres" type="TileSet" id=4]
+[ext_resource path="res://Singleplayer/Game/Map/CreateMapCollision.gd" type="Script" id=5]
+[ext_resource path="res://Player/Tank/Tank.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Singleplayer/Main.gd" type="Script" id=7]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[node name="Main" type="Node"]
+script = ExtResource( 7 )
+
+[node name="Game" type="Node2D" parent="."]
+
+[node name="Map" type="Node" parent="Game"]
+
+[node name="TileMap" type="TileMap" parent="Game/Map"]
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 96, 96 )
+format = 1
+tile_data = PoolIntArray( 0, 0, 131076, 1, 0, 196609, 2, 0, 196609, 3, 0, 196609, 4, 0, 196609, 5, 0, 196609, 6, 0, 196609, 7, 0, 196609, 8, 0, 196609, 9, 0, 196609, 10, 0, 196609, 11, 0, 196609, 12, 0, 196609, 13, 0, 196609, 14, 0, 196609, 15, 0, 196609, 16, 0, 196609, 17, 0, 196609, 18, 0, 196609, 19, 0, 196609, 20, 0, 196609, 21, 0, 196609, 22, 0, 196609, 23, 0, 196609, 24, 0, 196609, 25, 0, 196609, 26, 0, 196609, 27, 0, 196609, 28, 0, 196609, 29, 0, 196609, 30, 0, 196609, 31, 0, 196609, 32, 0, 196609, 33, 0, 196609, 34, 0, 196609, 35, 0, 196609, 36, 0, 196609, 37, 0, 196609, 38, 0, 196609, 39, 0, 196609, 40, 0, 131077, 65536, 0, 65539, 65576, 0, 65539, 131072, 0, 65539, 131112, 0, 65539, 196608, 0, 65539, 196648, 0, 65539, 262144, 0, 65539, 262184, 0, 65539, 327680, 0, 65539, 327720, 0, 65539, 393216, 0, 65539, 393256, 0, 65539, 458752, 0, 65539, 458792, 0, 65539, 524288, 0, 65539, 524328, 0, 65539, 589824, 0, 65539, 589864, 0, 65539, 655360, 0, 65539, 655400, 0, 65539, 720896, 0, 65539, 720936, 0, 65539, 786432, 0, 65539, 786449, 0, 131076, 786450, 0, 196610, 786454, 0, 196608, 786455, 0, 131077, 786472, 0, 65539, 851968, 0, 65539, 851985, 0, 131075, 851991, 0, 131075, 852008, 0, 65539, 917504, 0, 65539, 917544, 0, 65539, 983040, 0, 65539, 983080, 0, 65539, 1048576, 0, 65539, 1048616, 0, 65539, 1114112, 0, 65539, 1114129, 0, 3, 1114135, 0, 3, 1114152, 0, 65539, 1179648, 0, 65539, 1179665, 0, 196612, 1179666, 0, 196610, 1179670, 0, 196608, 1179671, 0, 196613, 1179688, 0, 65539, 1245184, 0, 65539, 1245224, 0, 65539, 1310720, 0, 65539, 1310760, 0, 65539, 1376256, 0, 65539, 1376296, 0, 65539, 1441792, 0, 65539, 1441832, 0, 65539, 1507328, 0, 65539, 1507368, 0, 65539, 1572864, 0, 65539, 1572904, 0, 65539, 1638400, 0, 65539, 1638440, 0, 65539, 1703936, 0, 65539, 1703976, 0, 65539, 1769472, 0, 65539, 1769512, 0, 65539, 1835008, 0, 65539, 1835048, 0, 65539, 1900544, 0, 65539, 1900584, 0, 65539, 1966080, 0, 196612, 1966081, 0, 196609, 1966082, 0, 196609, 1966083, 0, 196609, 1966084, 0, 196609, 1966085, 0, 196609, 1966086, 0, 196609, 1966087, 0, 196609, 1966088, 0, 196609, 1966089, 0, 196609, 1966090, 0, 196609, 1966091, 0, 196609, 1966092, 0, 196609, 1966093, 0, 196609, 1966094, 0, 196609, 1966095, 0, 196609, 1966096, 0, 196609, 1966097, 0, 196609, 1966098, 0, 196609, 1966099, 0, 196609, 1966100, 0, 196609, 1966101, 0, 196609, 1966102, 0, 196609, 1966103, 0, 196609, 1966104, 0, 196609, 1966105, 0, 196609, 1966106, 0, 196609, 1966107, 0, 196609, 1966108, 0, 196609, 1966109, 0, 196609, 1966110, 0, 196609, 1966111, 0, 196609, 1966112, 0, 196609, 1966113, 0, 196609, 1966114, 0, 196609, 1966115, 0, 196609, 1966116, 0, 196609, 1966117, 0, 196609, 1966118, 0, 196609, 1966119, 0, 196609, 1966120, 0, 196613 )
+script = ExtResource( 5 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Game/Map/TileMap"]
+
+[node name="AmmoBoxes" type="Node" parent="Game/Map"]
+unique_name_in_owner = true
+
+[node name="Objects" type="Node" parent="Game"]
+unique_name_in_owner = true
+
+[node name="Projectiles" type="Node" parent="Game"]
+unique_name_in_owner = true
+
+[node name="Players" type="Node" parent="Game"]
+unique_name_in_owner = true
+
+[node name="Tank" parent="Game" instance=ExtResource( 6 )]
+position = Vector2( 1968, 1488 )
+
+[node name="GUILayer" type="CanvasLayer" parent="."]
+
+[node name="GUI" type="PanelContainer" parent="GUILayer"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_styles/panel = SubResource( 1 )
+
+[node name="Ammunition" parent="GUILayer/GUI" instance=ExtResource( 1 )]
+mouse_filter = 2
+
+[node name="Pause" parent="GUILayer/GUI" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="Background" parent="." instance=ExtResource( 3 )]

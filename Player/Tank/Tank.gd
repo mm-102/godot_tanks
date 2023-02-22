@@ -1,5 +1,7 @@
 extends RigidBody2D
 
+var tank_wreck = preload("res://Player/Tank/TankWreck.tscn")
+
 export(Ammunition.TYPES) var ammo_type
 var ammo_slot = 0
 var SPEED
@@ -145,29 +147,19 @@ func _shoot():
 	if special_ammo[ammo_slot].amount <= 0:
 		special_ammo.pop_at(ammo_slot)
 		ammo_slot = 0
-
-
-func _on_base_body_entered(body):
-	if !body.is_in_group("Projectiles") or is_multiplayer:
-		return
-	body.die()
-	die()
 	
 
 func die():
 	queue_free()
-#	remove_from_group("Players")
-#	add_to_group("Corpse")
-#	$AudioStreamPlayer2D.play()
-#	animation_player.play("explode")
-#	set_deferred("mode", RigidBody2D.MODE_STATIC)
-#	set_angular_velocity(0)
-#	set_linear_velocity(Vector2.ZERO)
-#
-#	var timer = Timer.new()
-#	timer.connect("timeout", self, "_on_timer_timeout")
-#	add_child(timer)
-#	timer.start(CORPSE_LIFE_TIME)
+	
+	if !is_multiplayer:
+		var wreck = tank_wreck.instance()
+		wreck.name = "Tank"
+		wreck.position = position
+		wreck.rotation = rotation
+		wreck.color = color
+		wreck.lifeTime = CORPSE_LIFE_TIME
+		get_node(Dir.GAME + "/Objects").call_deferred("add_child", wreck)
 	
 	var spectator_camera : Camera2D = load("res://Player/Spectator/Spectator.tscn").instance()
 	spectator_camera.global_position = global_position

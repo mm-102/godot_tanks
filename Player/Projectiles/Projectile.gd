@@ -22,6 +22,7 @@ func _ready():
 	if !$"/root/Master".is_multiplayer and player_path != NodePath(""):
 		set_params()
 		linear_velocity *= SPEED
+		connect("body_entered", self, "kill_on_singleplayer")
 
 func setup(player : RigidBody2D):
 	player_path = player.get_path()
@@ -59,3 +60,8 @@ func die():
 	if !(player == null):
 		player.ammo_left += 1
 	queue_free()
+
+func kill_on_singleplayer(body):
+	if !body.is_in_group("Players"):	return
+	body.die()
+	die()
