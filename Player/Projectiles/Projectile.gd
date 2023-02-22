@@ -19,9 +19,10 @@ func _init():
 	add_child(append_timer)
 
 func _ready():
-	if !$"/root/Master".is_multiplayer and player_path != NodePath(""):
-		set_params()
-		linear_velocity *= SPEED
+	if !$"/root/Master".is_multiplayer:
+		if player_path != NodePath(""):
+			set_params()
+			linear_velocity *= SPEED
 		connect("body_entered", self, "kill_on_singleplayer")
 
 func setup(player : RigidBody2D):
