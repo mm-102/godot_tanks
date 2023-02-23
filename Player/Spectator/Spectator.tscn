@@ -4,6 +4,7 @@
 
 [node name="Spectator" type="Camera2D"]
 pause_mode = 2
+position = Vector2( 518, 306 )
 script = ExtResource( 1 )
 
 [node name="Tween" type="Tween" parent="."]

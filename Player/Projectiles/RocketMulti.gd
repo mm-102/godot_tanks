@@ -9,7 +9,7 @@ func _init():
 	$StartTargeting.free()
 	set_mode(MODE_KINEMATIC)
 
-func _physics_process(delta):
+func _process(_delta):
 	if stances.size() >= 2 and stances[-1].RocketsStance.has(name) and stances[-2].RocketsStance.has(name):
 		interpolation()
 

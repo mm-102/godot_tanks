@@ -9,7 +9,6 @@ onready var time_diff_timer_node = $"%TimeDiffTimer"
 onready var clock_node = $"%Clock"
 onready var master_n = get_node(Dir.MASTER)
 onready var main_n 
-onready var time 
 
 var network : NetworkedMultiplayerENet = null
 
@@ -20,8 +19,6 @@ func get_time():
 
 #---------- SERVER CREATION ----------
 func _connect_to_server():
-	time = get_node(Dir.GAME).current_world_stances
-	main_n = get_node(Dir.MAIN)
 	network = NetworkedMultiplayerENet.new()
 	var _err = network.connect("connection_failed", self, "_on_connection_failed")
 	_err = network.connect("connection_succeeded", self, "_on_connection_succeeded")
@@ -38,13 +35,11 @@ func _on_connection_failed():
 	print("[Transfer]: Faild to connect")
 
 func _on_connection_succeeded():
-	print("[Transfer]: Succesfully connected")
+	print("[Transfer]: Succesfully connected. Waiting for authorisation...")
+	master_n.game_mode(1)
+	main_n = get_node(Dir.MAIN)
 	my_id = network.get_unique_id()
-	main_n.connection_succeeded()
 	fetch_init_data()
-	clock_node.determine_begining_time_diff()
-	time_diff_timer_node.start()
-	master_n.queue_free_menu()
 
 func close_connection():
 	time_diff_timer_node.stop()
@@ -53,12 +48,26 @@ func close_connection():
 
 #---- INIT DATA ----
 func fetch_init_data():
-	rpc_id(1, "recive_init_data", main_n.local_player_name, main_n.local_player_color)
+	rpc_id(1, "recive_init_data", master_n.nick, master_n.player_color, Functions.get_version())
+
+remote func recive_old_version_info(available_versions):
+	if !get_tree().get_rpc_sender_id() == 1:
+		return
+	print("[Transfer]: Connection droped: Old version.")
+	master_n.old_version_info()
+	master_n.get_node("Main").queue_free()
+	close_connection()
 
 #[info] Init data only allow to spectate mode
 remote func recive_data_during_game(init_data):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
+	master_n.get_node("Main").show()
+	main_n.connection_succeeded()
+	clock_node.determine_begining_time_diff()
+	time_diff_timer_node.start()
+	master_n.queue_free_menu()
+	
 	main_n.init_data(init_data)
 	var spectator_camera : Camera2D = load("res://Player/Spectator/Spectator.tscn").instance()
 	spectator_camera.current = true
@@ -87,10 +96,10 @@ func fetch_stance(player_stance: Dictionary):
 
 
 
-remote func recive_world_stance(time, playerS_stance):
+remote func recive_world_stance(_time, playerS_stance):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	main_n.add_world_stance(time, playerS_stance)
+	main_n.add_world_stance(_time, playerS_stance)
 
 func fetch_shoot(player_stance, shoot_slot):
 	rpc_unreliable_id(1, "recive_shoot", player_stance, shoot_slot)
@@ -100,7 +109,7 @@ remote func recive_shoot(player_id, bullet_data, spawn_time):
 		return
 	main_n.spawn_bullet(player_id, bullet_data, spawn_time)
 
-remote func recive_shoot_bounce_state(bulletS_state, time):
+remote func recive_shoot_bounce_state(bulletS_state, _time):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	main_n.update_bounce_bullet(bulletS_state, time)
+	main_n.update_bounce_bullet(bulletS_state, _time)

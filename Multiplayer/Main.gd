@@ -14,9 +14,6 @@ onready var gui_timer_n = get_node(Dir.GUI_TIMER)
 
 
 
-func _enter_tree():
-	Transfer._connect_to_server()
-
 func _exit_tree():
 	Transfer.close_connection()
 
@@ -61,3 +58,9 @@ func update_bounce_bullet(bulletS_state, time):
 func player_destroyed(corpse_data, slayer_id, projectile_name):
 	game_n.player_destroyed(corpse_data, projectile_name)
 	gui_scoreboard_n.player_destroyed(corpse_data.ID, slayer_id)
+
+func hide():
+	$Background.hide()
+
+func show():
+	$Background.show()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://textures/GUI/MiniMenu.png" type="Texture" id=1]
 [ext_resource path="res://Interface/Menu.tres" type="Theme" id=2]
@@ -8,6 +8,10 @@
 [sub_resource type="DynamicFont" id=9]
 resource_local_to_scene = true
 size = 19
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 20
 font_data = ExtResource( 3 )
 
 [node name="Menu" type="Control"]
@@ -95,6 +99,25 @@ margin_right = 110.0
 margin_bottom = 104.0
 rect_scale = Vector2( 0.5, 0.5 )
 text = "Nick:"
+
+[node name="Version" type="Label" parent="Background"]
+unique_name_in_owner = true
+margin_left = 22.0
+margin_top = 205.0
+margin_right = 111.0
+margin_bottom = 225.0
+custom_fonts/font = SubResource( 10 )
+text = "xxx"
+
+[node name="OldVersionInfo" type="Label" parent="."]
+visible = false
+margin_left = -243.0
+margin_top = 147.0
+margin_right = 267.0
+margin_bottom = 210.0
+text = "Info: Your client is not update.
+Please download newest version."
+align = 1
 
 [connection signal="pressed" from="Background/SingleplayerButton" to="." method="_on_SingleplayerButton_pressed"]
 [connection signal="pressed" from="Background/MultiplayerButton" to="." method="_on_MultiplayerButton_pressed"]

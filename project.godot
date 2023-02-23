@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Global/Dir.gd"
 }, {
+"base": "Reference",
+"class": "Functions",
+"language": "GDScript",
+"path": "res://Global/Functions.gd"
+}, {
 "base": "RigidBody2D",
 "class": "Projectile",
 "language": "GDScript",
@@ -33,6 +38,7 @@ _global_script_class_icons={
 "Ammunition": "",
 "DefaultSettings": "",
 "Dir": "",
+"Functions": "",
 "Projectile": ""
 }
 
@@ -40,7 +46,8 @@ _global_script_class_icons={
 
 config/name="Godot Tanks"
 run/main_scene="res://GameModeMaster.tscn"
-config/icon="res://icon.png"
+boot_splash/bg_color=Color( 0.141176, 0.141176, 0.141176, 1 )
+config/version="0.1.0"
 
 [autoload]
 
