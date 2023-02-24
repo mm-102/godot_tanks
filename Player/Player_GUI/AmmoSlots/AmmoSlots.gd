@@ -15,6 +15,9 @@ var current_selection = BASE_SLOT
 func _ready():
 	$"/root/Master/Settings".connect("apply_changes", self, "apply_settings")
 	apply_settings()
+	
+	pick_up_event(str($"/root/Master/Settings".SETTINGS.PLAYER_BASE_AMMO_TYPE), INF)
+	change_selection(current_selection)
 
 func apply_settings():
 	var settings = $"/root/Master/Settings".SETTINGS

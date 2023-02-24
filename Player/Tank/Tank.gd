@@ -2,7 +2,6 @@ extends RigidBody2D
 
 var tank_wreck = preload("res://Player/Tank/TankWreck.tscn")
 
-export(Ammunition.TYPES) var ammo_type
 var ammo_slot = 0
 var SPEED
 var ROTATION_SPEED
@@ -15,9 +14,7 @@ var MAX_AMMO_TYPES
 signal special_ammo_event(type, amount_left)
 
 var ammo_left
-var special_ammo = [
-	 {"type" : ammo_type, "amount" : INF}
-]
+var special_ammo
 
 # Defined in code
 var player_stance: Dictionary 
@@ -41,7 +38,7 @@ onready var camera2d_n = $"%Camera2D"
 func apply_settings():
 	var settings = $"/root/Master/Settings".SETTINGS
 	ammo_left = settings.PLAYER_MAX_AMMO
-	ammo_slot = settings.PLAYER_BASE_AMMO_TYPE
+#	ammo_slot = settings.PLAYER_BASE_AMMO_TYPE
 	SPEED = settings.PLAYER_SPEED
 	ROTATION_SPEED = settings.PLAYER_ROTATION_SPEED
 	MAX_AMMO = settings.PLAYER_MAX_AMMO
@@ -62,9 +59,16 @@ func _ready():
 	gun_ray_cast_node.add_exception(self)
 	modulate = main_n.local_player_color
 	color = main_n.local_player_color
+	
+	special_ammo = [
+	 {"type" : BASE_AMMO_TYPE, "amount" : INF}
+	]
 
 
 func pick_up_ammo_box(type):
+	if type == BASE_AMMO_TYPE:
+		return false
+	
 	var picked = false
 	var type_slot = {}
 	for slot in special_ammo.size():
@@ -100,17 +104,12 @@ func _integrate_forces(_state):
 	set_linear_velocity(velocity.rotated(rotation) * SPEED)
 
 func _input(event):
-	if event.is_action_pressed("p_slot_0"):
-		ammo_slot = 0
-	if event.is_action_pressed("p_slot_1"):
-		if special_ammo.size() > 1:
-			ammo_slot = 1
-	if event.is_action_pressed("p_slot_2"):
-		if special_ammo.size() > 2:
-			ammo_slot = 2
-	if event.is_action_pressed("p_slot_3"):
-		if special_ammo.size() > 3:
-			ammo_slot = 3
+	for i in range(10):
+		if i >= special_ammo.size():
+			break
+		if event.is_action_pressed("p_slot_"+str(i)):
+			ammo_slot = i
+			break
 
 func _unhandled_input(event):	#prevent shooting while clicking on gui		maybe all player input should go here?
 	if event.is_action_pressed("p_shoot"):
