@@ -2,7 +2,7 @@ extends Control
 
 const ADRESS = {
 	0: "127.0.0.1",
-	1: "194.187.72.136",
+	1: "194.187.72.136"
 }
 var config = ConfigFile.new()
 onready var master_n = get_node(Dir.MASTER)
@@ -24,7 +24,8 @@ func set_init_data():
 	var menu_data = config.get_section_keys("Menu")
 	$"%PlayerNickInput".text = config.get_value("Menu", "Nick")
 	$"%OptionButton"._select_int(int(config.get_value("Menu", "SelectInt")))
-	
+	$"%CustomIP".text = config.get_value("Menu", "CustomIP")
+	_on_OptionButton_item_selected($"%OptionButton".get_selected())
 
 func set_version(version):
 	if version == null:
@@ -53,20 +54,29 @@ func _on_MultiplayerButton_pressed():
 	master_n.nick = $"%PlayerNickInput".text
 	rng.randomize()
 	master_n.player_color = Color.from_hsv(rng.randf(), 1.0, 1.0) # temp
-	Transfer.ip = ADRESS[int($"%OptionButton".get_selected())]
+	var selected = $"%OptionButton".get_selected()
+	if selected < 2:
+		Transfer.ip = ADRESS[int(selected)]
+	else:
+		Transfer.ip = $"%CustomIP".text
 	Transfer._connect_to_server()
-	save_data($"%PlayerNickInput".text, $"%OptionButton".get_selected())
+	save_data($"%PlayerNickInput".text, selected, $"%CustomIP".text)
 	multiplayer_button.set_disabled(true)
 	multiplayer_refresh.start()
 
 func _on_MultiplayerRefresh_timeout():
 	multiplayer_button.set_disabled(false)
 
-func save_data(nick, select_int):
+func save_data(nick, select_int, custom_ip=""):
 	# Store some values.
 	config.set_value("Menu", "Nick", nick)
 	config.set_value("Menu", "SelectInt", select_int)
+	config.set_value("Menu", "CustomIP", custom_ip)
 
 	# Save it to a file (overwrite if already exists).
 	config.save("user://initial_data.cfg")
 	
+
+
+func _on_OptionButton_item_selected(index):
+	$"%CustomIP".visible = index == 2 # custom ip is selected
