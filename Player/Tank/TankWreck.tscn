@@ -26,8 +26,8 @@ scale_random = 1.0
 color_initial_ramp = SubResource( 5 )
 
 [node name="TankWreck" type="StaticBody2D" groups=["Corpse"]]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 2
+collision_mask = 0
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
