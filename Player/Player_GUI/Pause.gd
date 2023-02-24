@@ -15,4 +15,4 @@ func _on_PauseButton_toggled(button_pressed):
 	var is_multiplayer = master_n.is_multiplayer
 	if !(is_multiplayer):
 		get_tree().paused = button_pressed
-	set_visible(button_pressed)
+	$PauseWindow.set_visible(button_pressed)

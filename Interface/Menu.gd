@@ -42,6 +42,8 @@ func old_version_info():
 
 func _on_SingleplayerButton_pressed():
 	master_n.nick = $"%PlayerNickInput".text
+	rng.randomize()
+	master_n.player_color = Color.from_hsv(rng.randf(), 1.0, 1.0) # temp
 	master_n.game_mode(0)
 	save_data($"%PlayerNickInput".text, $"%OptionButton".get_selected())
 	queue_free()
