@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Player/Player_GUI/AmmoSlots/AmmoSlots.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Player_GUI/Pause.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Singleplayer/Main.gd" type="Script" id=7]
 [ext_resource path="res://textures/ammo_box.png" type="Texture" id=8]
 [ext_resource path="res://Singleplayer/Game/Map/AmmoBoxesMap.gd" type="Script" id=9]
+[ext_resource path="res://Singleplayer/Game/Game.gd" type="Script" id=10]
 
 [sub_resource type="TileSet" id=2]
 0/name = "ammo_box.png 0"
@@ -32,6 +33,7 @@
 script = ExtResource( 7 )
 
 [node name="Game" type="Node2D" parent="."]
+script = ExtResource( 10 )
 
 [node name="Map" type="Node" parent="Game"]
 
