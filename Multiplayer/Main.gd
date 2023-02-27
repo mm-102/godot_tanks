@@ -56,13 +56,17 @@ func spawn_bullet(player_id, bullet_data, spawn_time):
 func update_bounce_bullet(bulletS_state, time):
 	game_n.update_bounce_bullet(bulletS_state, time)
 
-func player_destroyed(corpse_data, slayer_id, projectile_name):
-	var killer = get_node_or_null(Dir.PLAYERS + "/" + str(slayer_id))
-	var killed = get_node_or_null(Dir.PLAYERS + "/" + str(corpse_data.ID))
-	if killer != null and killed != null:
-		gui_events_n.on_kill_event(killer.nick, killed.nick, Ammunition.TYPES.BULLET)	
-	game_n.player_destroyed(corpse_data, projectile_name)
-	gui_scoreboard_n.player_destroyed(corpse_data.ID, slayer_id)
+func player_destroyed(corpse_data, kill_event_data):
+	var killer = get_node_or_null(Dir.PLAYERS + "/" + kill_event_data.KillerID)
+	var killed = get_node_or_null(Dir.PLAYERS + "/" + kill_event_data.KilledID)
+	if killer != null and killed != null and !kill_event_data.KillerID.empty() and !kill_event_data.KilledID.empty():
+		gui_events_n.on_kill_event(killer.nick, killed.nick, kill_event_data.AT)
+	else:
+		killed = get_node_or_null(Dir.PLAYERS + "/" + str(corpse_data.ID))
+		if killed != null:
+			gui_events_n.on_kill_event("", killed.nick, NAN)
+	gui_scoreboard_n.player_destroyed(corpse_data.ID, kill_event_data.KillerID)
+	game_n.player_destroyed(corpse_data, kill_event_data.PName)
 
 func hide():
 	$Background.hide()

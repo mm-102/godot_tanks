@@ -33,7 +33,7 @@ func setup(player : RigidBody2D):
 
 func setup_multiplayer(bullet_data : Dictionary):
 	set_name(bullet_data.ID)
-	position = bullet_data.SP
+	position = bullet_data.P
 	set_linear_velocity(bullet_data.V)
 
 

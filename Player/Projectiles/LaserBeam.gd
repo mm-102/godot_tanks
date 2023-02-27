@@ -21,7 +21,7 @@ func setup(player : RigidBody2D):
 	player_path = player.get_path()
 	
 func setup_multiplayer(bullet_data : Dictionary):
-	point = bullet_data.SP
+	point = bullet_data.P
 	point_rotation = bullet_data.R
 	
 func _on_Tween_tween_all_completed():

@@ -135,7 +135,7 @@ func _shoot():
 		"TR": turret_node.global_rotation,
 	}
 	if is_multiplayer:
-		transfer_n.fetch_shoot(player_stance, ammo_slot)
+		transfer_n.fetch_shoot(player_stance, special_ammo[ammo_slot].type)
 		
 	else:
 		var bullet_inst = Ammunition.get_tscn(special_ammo[ammo_slot].type).instance()

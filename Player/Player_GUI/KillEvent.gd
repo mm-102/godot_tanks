@@ -6,6 +6,11 @@ var icon_type = Ammunition.TYPES.BULLET
 
 
 func _ready():
+	if killer.empty():
+		$Killer.text = killed
+		$Killed.text = "died"
+		$Icon.texture = null
+		return
 	$Killer.text = killer
 	$Killed.text = killed
 	$Icon.texture = Ammunition.get_box_texture(icon_type)

@@ -86,10 +86,10 @@ remote func recive_new_battle(init_data):
 remote func recive_new_battle_time(left_sec):
 	main_n.battle_time(left_sec)
 
-remote func recive_player_destroyed(corpse_data, slayer_id, projectile_name):
+remote func recive_player_destroyed(corpse_data, kill_event_data):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	main_n.player_destroyed(corpse_data, slayer_id, projectile_name)
+	main_n.player_destroyed(corpse_data, kill_event_data)
 
 func fetch_stance(player_stance: Dictionary):
 	rpc_unreliable_id(1, "recive_stance", player_stance)

@@ -27,7 +27,7 @@ func add_scoreboard_player(player_id, data):
 
 func player_destroyed(destroyed_id, slayer_id):
 	cross_player_nick(destroyed_id)
-	if destroyed_id != slayer_id:
+	if destroyed_id != int(slayer_id):
 		add_kill_point(slayer_id)
 
 func cross_player_nick(destroyed_id):
