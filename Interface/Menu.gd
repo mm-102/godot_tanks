@@ -14,6 +14,8 @@ var rng = RandomNumberGenerator.new()
 
 
 func _ready():
+	#test
+	Transfer.ip = "A"
 	set_init_data()
 	set_version(Functions.get_version())
 
@@ -22,6 +24,8 @@ func set_init_data():
 	if err != OK:
 		return
 	var menu_data = config.get_section_keys("Menu")
+	if !menu_data.has("CustomIP"):
+		return
 	$"%PlayerNickInput".text = config.get_value("Menu", "Nick")
 	$"%OptionButton"._select_int(int(config.get_value("Menu", "SelectInt")))
 	$"%CustomIP".text = config.get_value("Menu", "CustomIP")

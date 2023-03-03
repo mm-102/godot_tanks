@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Player/Player_GUI/AmmoSlots/AmmoSlots.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Player_GUI/BattleTime.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Interface/Menu.tres" type="Theme" id=3]
+[ext_resource path="res://Player/Player_GUI/UpgradeSelector.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Player/Player_GUI/Scoreboard.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Player/Player_GUI/Pause.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Player/Player_GUI/EventLog.gd" type="Script" id=8]
@@ -49,6 +50,13 @@ margin_bottom = 600.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="UpgradeSelector" parent="." instance=ExtResource( 4 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1024.0
+margin_bottom = 600.0
 
 [node name="EventLog" type="VBoxContainer" parent="."]
 margin_left = 624.0

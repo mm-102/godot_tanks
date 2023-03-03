@@ -1,5 +1,7 @@
 extends Node
 
+signal recive_player_possible_upgrades(given_upgrades, points, self_destroyed)
+signal recive_battle_over_time(time_to_end)
 
 const PORT = 42521
 var ip = null
@@ -39,7 +41,7 @@ func _on_connection_failed():
 
 func _on_connection_succeeded():
 	print("[Transfer]: Succesfully connected. Waiting for authorisation...")
-	master_n = get_node(Dir.MASTER)
+	_ready()
 	master_n.game_mode(1)
 	main_n = get_node(Dir.MAIN)
 	my_id = network.get_unique_id()
@@ -89,7 +91,16 @@ remote func recive_new_battle(init_data):
 #---------- CORE GAME MECHANIC ---------
 
 remote func recive_new_battle_time(left_sec):
+	if !get_tree().get_rpc_sender_id() == 1:
+		return
 	main_n.battle_time(left_sec)
+
+remote func recive_battle_over_time(time_to_end):
+	if !get_tree().get_rpc_sender_id() == 1:
+		return
+	get_tree().set_pause(true)
+	emit_signal("recive_battle_over_time", time_to_end)
+	
 
 remote func recive_player_destroyed(corpse_data, kill_event_data):
 	if !get_tree().get_rpc_sender_id() == 1:
@@ -109,7 +120,7 @@ remote func recive_world_stance(_time, playerS_stance):
 	main_n.add_world_stance(_time, playerS_stance)
 
 func fetch_shoot(player_stance, shoot_slot):
-	rpc_unreliable_id(1, "recive_shoot", player_stance, shoot_slot)
+	rpc_id(1, "recive_shoot", player_stance, shoot_slot)
 
 remote func recive_shoot(player_id, bullet_data, spawn_time):
 	if !get_tree().get_rpc_sender_id() == 1:
@@ -120,3 +131,12 @@ remote func recive_shoot_bounce_state(bulletS_state, _time):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
 	main_n.update_bounce_bullet(bulletS_state, _time)
+
+#------------Upgrades-------------
+remote func recive_player_possible_upgrades(given_upgrades, points, self_destroyed):
+	if !get_tree().get_rpc_sender_id() == 1:
+		return
+	emit_signal("recive_player_possible_upgrades", given_upgrades, points, self_destroyed)
+
+func fetch_player_possible_upgrades(player_choosen_upgrades):
+	rpc_id(1, "recive_upgrade", player_choosen_upgrades)

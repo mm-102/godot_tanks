@@ -1,0 +1,73 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Interface/Menu.tres" type="Theme" id=1]
+[ext_resource path="res://Player/Player_GUI/UpgradeSelector.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[node name="UpgradeSelector" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource( 1 )
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_horizontal = 5
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 261.0
+mouse_filter = 2
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer"]
+margin_top = 265.0
+margin_right = 1024.0
+margin_bottom = 517.0
+rect_min_size = Vector2( 100, 0 )
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.96
+color = Color( 0, 0.482353, 1, 0.337255 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ColorRect"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -100.5
+margin_right = 100.5
+margin_bottom = 30.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LabelPoints" type="Label" parent="VBoxContainer/ColorRect/HBoxContainer"]
+margin_right = 182.0
+margin_bottom = 30.0
+size_flags_horizontal = 6
+text = "Points Left: "
+
+[node name="PointsLeft" type="Label" parent="VBoxContainer/ColorRect/HBoxContainer"]
+unique_name_in_owner = true
+margin_left = 186.0
+margin_right = 243.0
+margin_bottom = 30.0
+text = "000"
+
+[node name="UpgradeContainer" type="HBoxContainer" parent="VBoxContainer/ColorRect"]
+unique_name_in_owner = true
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+margin_top = 521.0
+margin_right = 1024.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3

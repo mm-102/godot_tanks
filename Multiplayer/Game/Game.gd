@@ -18,6 +18,10 @@ var local_player_id = 0
 var interpolation_factor = 0
 var CORPSE_LIFE_TIME
 
+const VALUE_PER_POINT = GameSettings.PERCENTAGE_OF_BASE_VALUE_PER_POINT
+var settings = GameSettings.get_duplicate_settings()
+var orginal_settings = GameSettings.get_settings()
+
 onready var players_n = $"%Players"
 onready var projectiles_n = $"%Projectiles"
 onready var objects_n = $"%Objects"
@@ -34,6 +38,22 @@ func _ready():
 	$"/root/Master/Settings".connect("apply_changes", self, "apply_settings")
 	apply_settings()
 
+
+func add_upgrades_to_settings(players_data):
+	for player_data in players_data:
+		for upgrade_path in player_data.Upgrades:
+			var temp_dict = settings
+			var temp_orginal_dict = orginal_settings
+			var i = 0
+			for path_step in upgrade_path:
+				i += 1
+				if i == upgrade_path.size():
+					temp_dict[path_step] += player_data.Upgrades[upgrade_path] * \
+							temp_orginal_dict[path_step] * \
+							VALUE_PER_POINT
+					break
+				temp_dict = temp_dict[path_step]
+				temp_orginal_dict = temp_orginal_dict[path_step]
 
 func set_corspses_data(corspes_data):
 	for corpse_data in corspes_data:

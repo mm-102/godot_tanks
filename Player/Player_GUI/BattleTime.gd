@@ -11,6 +11,7 @@ onready var t_clock_n = get_node(Dir.T_CLOCK)
 
 
 func _ready():
+	Transfer.connect("recive_battle_over_time", self, "_on_battle_over_time")
 	start_round_background.hide()
 	set_process(false)
 
@@ -23,7 +24,12 @@ func start_battle_time(ms_to_new_game):
 	set_process(true)
 	start_round_background.show()
 
-func battle_time(left_sec):
+func _on_battle_over_time(time_to_end):
+	end_round_label.set_modulate(Color.aqua)
+	battle_time(time_to_end)
+
+func battle_time(ms_to_new_game):
+	var left_sec = (ms_to_new_game - t_clock_n.get_time())*0.001
 	end_round_label.show()
 	time_left = left_sec
 	clock.start()
@@ -48,4 +54,5 @@ func _on_TimeLeftClock_timeout():
 func _on_BattleStartTimer_timeout():
 	start_round_background.hide()
 	set_process(false)
+	#test
 	get_tree().set_pause(false)
