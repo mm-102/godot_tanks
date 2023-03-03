@@ -10,6 +10,8 @@ var CORPSE_LIFE_TIME
 var BASE_AMMO_TYPE
 var MAX_AMMO_TYPES
 
+var RNG = RandomNumberGenerator.new()
+var old_sound=4
 
 signal special_ammo_event(type, amount_left)
 
@@ -102,7 +104,23 @@ func _integrate_forces(_state):
 		transfer_n.fetch_stance(player_stance)
 	set_angular_velocity(direction * ROTATION_SPEED)
 	set_linear_velocity(velocity.rotated(rotation) * SPEED)
-
+	if velocity.y or direction !=0:
+		if $ruch1.playing == false and $ruch2.playing== false and $ruch3.playing == false and $ruch4.playing == false:
+			RNG.randomize()
+			var sound = RNG.randi_range(1,4)
+			while old_sound == sound:
+				RNG.randomize()
+				sound = RNG.randi_range(1,4)
+			old_sound=sound
+			if sound==1:
+				$ruch1.play()
+			if sound==2:
+				$ruch2.play()
+			if sound==3:
+				$ruch3.play()
+			else:
+				$ruch4.play()
+				
 func _input(event):
 	for i in range(10):
 		if i >= special_ammo.size():

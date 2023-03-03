@@ -4,7 +4,7 @@
 [ext_resource path="res://Player/Tank/Tank.gd" type="Script" id=2]
 [ext_resource path="res://textures/tank_turret.png" type="Texture" id=3]
 [ext_resource path="res://Player/Tank/Turret.gd" type="Script" id=4]
-[ext_resource path="res://Sound/wybuch1.wav" type="AudioStream" id=5]
+[ext_resource path="res://Sound/ruch.wav" type="AudioStream" id=5]
 [ext_resource path="res://Player/Tank/IndicatorManager.gd" type="Script" id=6]
 [ext_resource path="res://Player/Tank/Camera.gd" type="Script" id=7]
 
@@ -134,8 +134,24 @@ script = ExtResource( 6 )
 [node name="RefreshTimer" type="Timer" parent="CanvasLayer/CenterPosition/PlayerIndicators"]
 wait_time = 0.2
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="ruch1" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 5 )
+pitch_scale = 0.2
+max_distance = 600.0
+
+[node name="ruch2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+pitch_scale = 0.25
+max_distance = 600.0
+
+[node name="ruch3" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+pitch_scale = 0.3
+max_distance = 600.0
+
+[node name="ruch4" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+pitch_scale = 0.35
 max_distance = 600.0
 
 [connection signal="ready" from="." to="CanvasLayer/CenterPosition/PlayerIndicators" method="_on_Tank_ready"]
