@@ -14,6 +14,8 @@ onready var gui_timer_n = get_node(Dir.GUI_TIMER)
 onready var gui_events_n = get_node(Dir.GUI_EVENT_LOG)
 
 
+func _ready():
+	pass
 
 func _exit_tree():
 	Transfer.close_connection()

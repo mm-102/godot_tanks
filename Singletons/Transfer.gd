@@ -10,8 +10,11 @@ onready var clock_node = $"%Clock"
 onready var master_n = get_node(Dir.MASTER)
 onready var main_n 
 
-var network : NetworkedMultiplayerENet = null
+#var network : NetworkedMultiplayerENet = null
+var network : WebSocketClient = null
 
+func _ready():
+	pass
 
 func get_time():
 	return clock_node.get_time()
@@ -19,11 +22,11 @@ func get_time():
 
 #---------- SERVER CREATION ----------
 func _connect_to_server():
-	network = NetworkedMultiplayerENet.new()
+	network = WebSocketClient.new()
 	var _err = network.connect("connection_failed", self, "_on_connection_failed")
 	_err = network.connect("connection_succeeded", self, "_on_connection_succeeded")
 	_err = network.connect("server_disconnected", self, "_server_disconnected")
-	_err = network.create_client(ip, PORT)
+	_err = network.connect_to_url("ws://"+ip+":"+str(PORT), PoolStringArray(), true)
 	get_tree().set_network_peer(network)
 	print("[Transfer]: Connecting to server...")
 
@@ -36,6 +39,7 @@ func _on_connection_failed():
 
 func _on_connection_succeeded():
 	print("[Transfer]: Succesfully connected. Waiting for authorisation...")
+	master_n = get_node(Dir.MASTER)
 	master_n.game_mode(1)
 	main_n = get_node(Dir.MAIN)
 	my_id = network.get_unique_id()
@@ -43,7 +47,8 @@ func _on_connection_succeeded():
 
 func close_connection():
 	time_diff_timer_node.stop()
-	network.close_connection()
+#	network.close_connection()
+	network.disconnect_from_host()
 	print("[Transfer]: Disconnected")
 
 #---- INIT DATA ----
