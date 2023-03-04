@@ -55,7 +55,7 @@ func close_connection():
 
 #---- INIT DATA ----
 func fetch_init_data():
-	rpc_id(1, "recive_init_data", master_n.nick, master_n.player_color, Functions.get_version())
+	rpc_id(1, "recive_init_data", master_n.nick, master_n.player_color, Functions.get_version(), OS.get_ticks_msec())
 
 remote func recive_old_version_info(available_versions):
 	if !get_tree().get_rpc_sender_id() == 1:
@@ -71,10 +71,8 @@ remote func recive_data_during_game(init_data):
 		return
 	master_n.get_node("Main").show()
 	main_n.connection_succeeded()
-	clock_node.determine_begining_time_diff()
 	time_diff_timer_node.start()
 	master_n.queue_free_menu()
-	
 	main_n.init_data(init_data)
 	var spectator_camera : Camera2D = load("res://Player/Spectator/Spectator.tscn").instance()
 	spectator_camera.current = true

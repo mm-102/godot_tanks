@@ -7,21 +7,18 @@ var latency_arr: Array
 var time_difference: int
 
 
-
 func get_time():
 	return client_clock
 
 func _physics_process(_delta: float) -> void:
 	client_clock = OS.get_ticks_msec() + time_difference - INTERPOLATION_OFFSET
 
-func determine_begining_time_diff():
-	rpc_id(1, "rec_determine_begining_time_diff", OS.get_ticks_msec())
-
 remote func return_begining_time_diff(server_time, client_time):
 	if get_tree().get_rpc_sender_id() != 1:
 		return
 	latency = (OS.get_ticks_msec() - client_time) * 0.5
 	time_difference = server_time - OS.get_ticks_msec() + latency
+	client_clock = OS.get_ticks_msec() + time_difference - INTERPOLATION_OFFSET
 
 func _on_TimeDiffTimer_timeout():
 	rpc_id(1, "rec_determine_time_diff", OS.get_ticks_msec())

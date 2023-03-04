@@ -29,6 +29,7 @@ func _on_battle_over_time(time_to_end):
 	battle_time(time_to_end)
 
 func battle_time(ms_to_new_game):
+	print(t_clock_n.get_time(), "     NEW GAME: ", ms_to_new_game)
 	var left_sec = (ms_to_new_game - t_clock_n.get_time())*0.001
 	end_round_label.show()
 	time_left = left_sec
