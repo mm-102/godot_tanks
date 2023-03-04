@@ -1,6 +1,7 @@
 extends RigidBody2D
 class_name Projectile
 
+var s:Dictionary
 var SPEED = null
 
 var player_path = NodePath("")
@@ -9,8 +10,19 @@ onready var append_timer_n = $AppendTimer
 
 
 
-func set_params():
-	SPEED = $"/root/Master/Settings".SETTINGS.BULLET_SPEED
+
+func setup(player : RigidBody2D):
+	player_path = player.get_path()
+	var point = player.get_node("%BulletPoint")
+	position = point.global_position
+	set_linear_velocity(Vector2.UP.rotated(point.global_rotation))
+
+func setup_multi(bullet_data : Dictionary, _settings):
+	s = _settings
+	set_name(bullet_data.ID)
+	position = bullet_data.P
+	set_linear_velocity(bullet_data.V)
+
 
 func _init():
 	var append_timer = Timer.new()
@@ -21,20 +33,9 @@ func _init():
 func _ready():
 	if !$"/root/Master".is_multiplayer:
 		if player_path != NodePath(""):
-			set_params()
 			linear_velocity *= SPEED
 		connect("body_entered", self, "kill_on_singleplayer")
 
-func setup(player : RigidBody2D):
-	player_path = player.get_path()
-	var point = player.get_node("%BulletPoint")
-	position = point.global_position
-	set_linear_velocity(Vector2.UP.rotated(point.global_rotation))
-
-func setup_multiplayer(bullet_data : Dictionary):
-	set_name(bullet_data.ID)
-	position = bullet_data.P
-	set_linear_velocity(bullet_data.V)
 
 
 func _integrate_forces(state):

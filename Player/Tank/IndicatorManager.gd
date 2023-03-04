@@ -1,6 +1,6 @@
 extends Node2D
 
-var max_indicators
+const S = GameSettings.INDICATORS
 var tank = null
 var ind_list = []
 
@@ -24,7 +24,7 @@ func _on_RefreshTimer_timeout():
 	current_distance_list.sort_custom(self, "compare_distance")
 	
 	var new_ind_list = []
-	for i in range(max_indicators):
+	for i in range(S.MAX_COUNT):
 		if i >= current_distance_list.size():	break
 		new_ind_list.push_back(current_distance_list[i][0].name)
 		if current_distance_list[i][0].name in ind_list:
@@ -44,9 +44,4 @@ func _on_Tank_ready():
 		queue_free()
 		return
 	tank = get_node("/root/Master/Main/Game/Players/" + str(get_node("/root/Master/Main/Game").local_player_id))
-	$"/root/Master/Settings".connect("apply_changes", self, "apply_settings")
-	apply_settings()
 	$RefreshTimer.start()
-
-func apply_settings():
-	max_indicators = $"/root/Master/Settings".SETTINGS.MAX_INDICATOR_COUNT

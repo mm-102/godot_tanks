@@ -1,21 +1,12 @@
 extends Projectile
 
-var BULLET_LENGTH
-var MAX_BOUNCES
-
 onready var ray = $RayCast2D
 onready var line = $Line2D
 
-func _ready():
-	set_params()
 
-func set_params():
-	SPEED = $"/root/Master/Settings".SETTINGS.LASER_BULLET_SPEED
-	BULLET_LENGTH = $"/root/Master/Settings".SETTINGS.LASER_BULLET_LENGTH
-	MAX_BOUNCES = $"/root/Master/Settings".SETTINGS.LASER_BULLET_LASER_MAX_BOUNCES
 
 func _integrate_forces(state):
-	var length_left = BULLET_LENGTH
+	var length_left = s.Length
 	rotation = 0
 	
 	line.clear_points()
@@ -25,7 +16,7 @@ func _integrate_forces(state):
 	ray.cast_to = -state.linear_velocity.normalized() * length_left
 	ray.force_raycast_update()
 	
-	for i in range(MAX_BOUNCES):
+	for i in range(s.MaxBounces):
 		if !ray.is_colliding():
 			line.add_point(ray.cast_to + ray.position)
 			break

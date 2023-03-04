@@ -1,18 +1,13 @@
 extends Line2D
 
-var LASER_LENGTH
-var MAX_BOUNCES
 
-onready var ray = $RayCast2D
-onready var tween = $Tween
-
+var s #= GameSettings.AMMUNITION[Ammunition.TYPES.LASER]
 var player_path = NodePath("")
 var point : Vector2 = Vector2.ZERO
 var point_rotation = 0
 
-func set_params():
-	LASER_LENGTH = $"/root/Master/Settings".SETTINGS.LASER_BEAM_LENGTH
-	MAX_BOUNCES = $"/root/Master/Settings".SETTINGS.LASER_BEAM_MAX_BOUNCES
+onready var ray = $RayCast2D
+onready var tween = $Tween
 
 func setup(player : RigidBody2D):
 	var laser_point = player.get_node("%LaserPoint")
@@ -31,17 +26,15 @@ func _on_Tween_tween_all_completed():
 	queue_free()
 	
 func _ready():
-	set_params()
-	var MAX_WIDTH = $"/root/Master/Settings".SETTINGS.LASER_BEAM_MAX_WIDTH
-	tween.interpolate_property(self, "width", width, MAX_WIDTH, 0.2)
-	tween.interpolate_property(self, "width", MAX_WIDTH, 0, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, 0.3)
+	tween.interpolate_property(self, "width", width, s.MaxWidth, 0.2)
+	tween.interpolate_property(self, "width", s.MaxWidth, 0, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, 0.3)
 	tween.start()
 	
 	cast_laser()
 
 func cast_laser():
 	global_position = point
-	var length_left = LASER_LENGTH
+	var length_left = s.Length
 	
 	clear_points()
 	add_point(Vector2.ZERO)
@@ -50,7 +43,7 @@ func cast_laser():
 	ray.cast_to = Vector2.UP.rotated(point_rotation) * length_left
 	ray.force_raycast_update()
 	
-	for _i in range(MAX_BOUNCES):	# limit bounces
+	for _i in range(s.MaxBounces):	# limit bounces
 		
 		if !ray.is_colliding():
 			add_point(ray.cast_to + ray.position)

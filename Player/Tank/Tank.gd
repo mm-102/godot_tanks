@@ -1,21 +1,16 @@
 extends RigidBody2D
 
-var tank_wreck = preload("res://Player/Tank/TankWreck.tscn")
+signal special_ammo_event(type, amount_left)
+
+const tank_wreck = preload("res://Player/Tank/TankWreck.tscn")
 
 var ammo_slot = 0
-var SPEED
-var ROTATION_SPEED
-var MAX_AMMO
-var CORPSE_LIFE_TIME
-var BASE_AMMO_TYPE
-var MAX_AMMO_TYPES
 
 var RNG = RandomNumberGenerator.new()
 var old_sound=4
 
-signal special_ammo_event(type, amount_left)
 
-var ammo_left
+var ammo_left = GameSettings.TANK.MaxAmmo
 var special_ammo
 
 # Defined in code
@@ -23,6 +18,8 @@ var player_stance: Dictionary
 var nick = "You"
 var color = Color.blue
 var laser_path = NodePath("")
+
+var s = GameSettings.TANK
 
 onready var main_n = get_node(Dir.MAIN)
 onready var transfer_n = get_node(Dir.TRANSFER)
@@ -37,16 +34,6 @@ onready var laset_point_node = $"%LaserPoint"
 onready var gun_ray_cast_node = $"%GunRayCast"
 onready var camera2d_n = $"%Camera2D"
 
-func apply_settings():
-	var settings = $"/root/Master/Settings".SETTINGS
-	ammo_left = settings.PLAYER_MAX_AMMO
-#	ammo_slot = settings.PLAYER_BASE_AMMO_TYPE
-	SPEED = settings.PLAYER_SPEED
-	ROTATION_SPEED = settings.PLAYER_ROTATION_SPEED
-	MAX_AMMO = settings.PLAYER_MAX_AMMO
-	CORPSE_LIFE_TIME = settings.CORPSE_LIFE_TIME
-	BASE_AMMO_TYPE = settings.PLAYER_BASE_AMMO_TYPE
-	MAX_AMMO_TYPES = settings.PLAYER_MAX_AMMO_TYPES
 
 func set_display_name(text):
 	nick = text
@@ -55,20 +42,29 @@ func set_display_name(text):
 func _ready():
 	#warning-ignore:return_value_discarded
 	connect("special_ammo_event",get_node(Dir.GUI_AMMUNITION),"on_special_ammo_event")
-	$"/root/Master/Settings".connect("apply_changes", self, "apply_settings")
-	apply_settings()
 	gun_ray_cast_node.cast_to = bullet_point_node.position
 	gun_ray_cast_node.add_exception(self)
 	modulate = main_n.local_player_color
 	color = main_n.local_player_color
-	
+	emit_signal("special_ammo_event", "pick_up" , s.BaseAmmoType, INF)
 	special_ammo = [
-	 {"type" : BASE_AMMO_TYPE, "amount" : INF}
+	 {"type" : s.BaseAmmoType, "amount" : INF}
 	]
 
 
+func setup_multi(player_data, _settings, local_player_name):
+	s = _settings
+	ammo_left = _settings.MaxAmmo
+	set_name(str(player_data.ID))
+	set_position(player_data.P)
+	if local_player_name.empty():
+		local_player_name = "You"
+	set_display_name(local_player_name)
+	
+
+
 func pick_up_ammo_box(type):
-	if type == BASE_AMMO_TYPE:
+	if type == s.BaseAmmoType:
 		return false
 	
 	var picked = false
@@ -78,7 +74,7 @@ func pick_up_ammo_box(type):
 	if type_slot.has(type):
 		special_ammo[type_slot[type]].amount += 1
 		picked = true
-	elif special_ammo.size() < MAX_AMMO_TYPES:
+	elif special_ammo.size() < s.MaxAmmoTypes:
 		special_ammo.push_back({"type" : int(type), "amount" : 1})
 		type_slot[special_ammo[-1].type] = -1
 		picked = true
@@ -102,8 +98,8 @@ func _integrate_forces(_state):
 	}
 	if is_multiplayer:
 		transfer_n.fetch_stance(player_stance)
-	set_angular_velocity(direction * ROTATION_SPEED)
-	set_linear_velocity(velocity.rotated(rotation) * SPEED)
+	set_angular_velocity(direction * s.RotationSpeed)
+	set_linear_velocity(velocity.rotated(rotation) * s.Speed)
 	if velocity.y or direction !=0:
 		if $ruch1.playing == false and $ruch2.playing== false and $ruch3.playing == false and $ruch4.playing == false:
 			RNG.randomize()
@@ -175,7 +171,7 @@ func die():
 		wreck.position = position
 		wreck.rotation = rotation
 		wreck.color = color
-		wreck.lifeTime = CORPSE_LIFE_TIME
+		wreck.lifeTime = INF # [info] <----- From tank instance
 		get_node(Dir.GAME + "/Objects").call_deferred("add_child", wreck)
 	
 	var spectator_camera : Camera2D = load("res://Player/Spectator/Spectator.tscn").instance()

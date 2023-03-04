@@ -1,6 +1,6 @@
 extends Node
 
-signal recive_player_possible_upgrades(given_upgrades, points, self_destroyed)
+signal recive_player_possible_upgrades(data)
 signal recive_battle_over_time(time_to_end)
 
 const PORT = 42521
@@ -131,10 +131,10 @@ remote func recive_shoot_bounce_state(bulletS_state, _time):
 	main_n.update_bounce_bullet(bulletS_state, _time)
 
 #------------Upgrades-------------
-remote func recive_player_possible_upgrades(given_upgrades, points, self_destroyed):
+remote func recive_player_possible_upgrades(data):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	emit_signal("recive_player_possible_upgrades", given_upgrades, points, self_destroyed)
+	emit_signal("recive_player_possible_upgrades", data)
 
 func fetch_player_possible_upgrades(player_choosen_upgrades):
 	rpc_id(1, "recive_upgrade", player_choosen_upgrades)

@@ -30,14 +30,6 @@ onready var main_n = get_node(Dir.MAIN)
 onready var clock_n = get_node(Dir.T_CLOCK)
 
 
-func apply_settings():
-	var settings = $"/root/Master/Settings".SETTINGS
-	CORPSE_LIFE_TIME = settings.CORPSE_LIFE_TIME
-
-func _ready():
-	$"/root/Master/Settings".connect("apply_changes", self, "apply_settings")
-	apply_settings()
-
 
 func add_upgrades_to_settings(players_data):
 	for player_data in players_data:
@@ -64,25 +56,18 @@ func set_bullets_data(bullets_data):
 		spawn_bullet(bullet.PlayerID, bullet, 0)
 
 func self_initiation(player_data):
-	var player_id :int = player_data.ID
-#	var nick :String = player_data.Nick
-	var spawn_point = player_data.P
+	local_player_id = player_data.ID
 	var tank_inst = tank.instance()
-	local_player_id = player_id
-	tank_inst.name = str(player_id)
-	tank_inst.position = spawn_point
 	var local_player_name = get_node(Dir.MAIN).local_player_name
-	if local_player_name.empty():
-		local_player_name = "You"
-	tank_inst.set_display_name(local_player_name)
+	tank_inst.setup_multi(player_data, settings.Tank, local_player_name)
 	players_n.add_child(tank_inst, true)
 	players_n.move_child(tank_inst, 0)
 
-func create_template(player_data):
-	if !player_data.has("P"):
+func create_template(template_data):
+	if !template_data.has("P"):
 		return
 	var tank_inst = tank_template.instance()
-	tank_inst.setup(player_data)
+	tank_inst.setup(template_data)
 	players_n.add_child(tank_inst, true)
 #	if local_player_id:
 #		get_node("/root/Main/Game/Players/" + str(local_player_id))\
@@ -118,16 +103,9 @@ func ammobox_destroyed(name):
 		obj.queue_free()
 
 func create_corpse(corpse_data):
-	var wreck = tank_wreck.instance()
-	wreck.name = str(corpse_data.ID)
-	wreck.set_position(corpse_data.Pos)
-	wreck.rotation = corpse_data.Rot
-	wreck.lifeTime = CORPSE_LIFE_TIME
-	wreck.color = corpse_data.Color
-	if corpse_data.has("LT"):
-		wreck.lifeTime = corpse_data.LT
-		
-	$Objects.add_child(wreck)
+	var wreck_inst = tank_wreck.instance()
+	wreck_inst.setup_multi(corpse_data, settings.Wreck)
+	$Objects.add_child(wreck_inst)
 
 
 func spawn_bullet(player_id, bullet_data, spawn_time):
@@ -137,7 +115,7 @@ func spawn_bullet(player_id, bullet_data, spawn_time):
 		bullet_inst.set_script(gd)
 	var client_clock = clock_n.client_clock
 	yield(get_tree().create_timer((spawn_time - client_clock)*0.001), "timeout")
-	bullet_inst.setup_multiplayer(bullet_data)
+	bullet_inst.setup_multi(bullet_data, settings.Ammunition[bullet_data.AT])
 	if player_id == get_tree().get_network_unique_id():
 		bullet_inst.player_path = NodePath(Dir.PLAYERS + "/" + str(local_player_id))
 	projectiles_n.add_child(bullet_inst, true)

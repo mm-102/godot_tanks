@@ -7,27 +7,18 @@ var event_funcs = {
 	"shoot": funcref(self, "shoot_event"),
 	"pick_up": funcref(self, "pick_up_event"),
 }
-var MAX_AMMO_TYPES = 0
 var current_selection = BASE_SLOT
 
 
 
-func _ready():
-	$"/root/Master/Settings".connect("apply_changes", self, "apply_settings")
-	apply_settings()
-	
-	pick_up_event(str($"/root/Master/Settings".SETTINGS.PLAYER_BASE_AMMO_TYPE), INF)
-	change_selection(current_selection)
-
-func apply_settings():
-	var settings = $"/root/Master/Settings".SETTINGS
-	MAX_AMMO_TYPES = settings.PLAYER_MAX_AMMO_TYPES
+#func _ready():
+	#change_selection(current_selection)
 
 func _input(event):
 	choose_slot(event)
 
 func choose_slot(event: InputEvent):
-	for slot_num in range(MAX_AMMO_TYPES):
+	for slot_num in range(10):
 		if event.is_action_pressed(P_SLOT + str(slot_num)) && \
 				get_child_count() > slot_num:
 			change_selection(slot_num)
@@ -49,6 +40,8 @@ func pick_up_event(type, amount_left):
 		var new_slot = SLOT_BASE_TSCN.instance()
 		new_slot.setup(type, amount_left)
 		add_child(new_slot)
+	if get_child_count() == 1:
+		change_selection(0)
 	elif amount_left != INF:
 		get_node(type).set_left_ammo(amount_left)
 

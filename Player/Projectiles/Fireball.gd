@@ -5,8 +5,6 @@ const explosion_particles_tsnc = preload("res://Player/Projectiles/FireballExplo
 onready var is_multiplayer = get_node(Dir.MASTER).is_multiplayer
 
 
-func set_params():
-	SPEED = $"/root/Master/Settings".SETTINGS.FIREBALL_SPEED
 
 func die():
 	explode()
