@@ -25,7 +25,7 @@ func connection_succeeded():
 
 func init_data(init_data):
 	map_n.set_map_data(init_data.MapData)
-	game_n.add_upgrades_to_settings(init_data.PlayerSData)
+	GameSettings.set_dynamic_settings(init_data.PlayerSData)
 	for player in init_data.PlayerSData:
 		gui_scoreboard_n.add_scoreboard_player(player.ID, player)
 		if player.ID == Transfer.my_id:

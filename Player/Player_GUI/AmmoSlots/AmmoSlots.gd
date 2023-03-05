@@ -12,7 +12,7 @@ var current_selection = BASE_SLOT
 
 
 #func _ready():
-	#change_selection(current_selection)
+#	test_all()
 
 func _input(event):
 	choose_slot(event)

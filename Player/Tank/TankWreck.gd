@@ -1,12 +1,12 @@
 extends StaticBody2D
 
-var life_time = GameSettings.WRECK.LifeTime
+var life_time = GameSettings.Dynamic.Wreck.LifeTime
 var color
-var s = GameSettings.WRECK
+var s = GameSettings.Dynamic.Wreck
 
 
-func setup_multi(corpse_data, _settings):
-	life_time = _settings.LifeTime
+func setup_multi(corpse_data):
+	life_time = s.LifeTime
 	name = str(corpse_data.ID)
 	set_position(corpse_data.Pos)
 	rotation = corpse_data.Rot

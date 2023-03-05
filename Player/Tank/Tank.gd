@@ -10,7 +10,7 @@ var RNG = RandomNumberGenerator.new()
 var old_sound=4
 
 
-var ammo_left = GameSettings.TANK.MaxAmmo
+var ammo_left = GameSettings.Dynamic.Tank.MaxAmmo
 var special_ammo
 
 # Defined in code
@@ -19,7 +19,7 @@ var nick = "You"
 var color = Color.blue
 var laser_path = NodePath("")
 
-var s = GameSettings.TANK
+var s = GameSettings.Dynamic.Tank
 
 onready var main_n = get_node(Dir.MAIN)
 onready var transfer_n = get_node(Dir.TRANSFER)
@@ -52,9 +52,8 @@ func _ready():
 	]
 
 
-func setup_multi(player_data, _settings, local_player_name):
-	s = _settings
-	ammo_left = _settings.MaxAmmo
+func setup_multi(player_data, local_player_name):
+	ammo_left = s.MaxAmmo
 	set_name(str(player_data.ID))
 	set_position(player_data.P)
 	if local_player_name.empty():

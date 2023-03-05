@@ -3,6 +3,10 @@ extends Projectile
 var _target : PhysicsBody2D = null
 var started_targeting = false
 
+#var ammo_type = Ammunition.TYPES.ROCKET
+#
+func _init():
+	s = GameSettings.Dynamic.Ammunition[1]
 
 func _on_StartTargeting_timeout():
 	started_targeting = true

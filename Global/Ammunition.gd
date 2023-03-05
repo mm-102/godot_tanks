@@ -4,13 +4,13 @@ class_name Ammunition
 enum TYPES{BULLET, ROCKET, FRAG_BOMB, LASER, LASER_BULLET, FIREBALL}
 
 
-const _ammo_tscn = {
-	TYPES.BULLET: preload("res://Player/Projectiles/Bullet.tscn"),
-	TYPES.ROCKET: preload("res://Player/Projectiles/Rocket.tscn"),
-	TYPES.FRAG_BOMB: preload("res://Player/Projectiles/FragBomb.tscn"),
-	TYPES.LASER: preload("res://Player/Projectiles/LaserBeam.tscn"),
-	TYPES.LASER_BULLET: preload("res://Player/Projectiles/LaserBullet.tscn"),
-	TYPES.FIREBALL: preload("res://Player/Projectiles/Fireball.tscn")
+const _ammo_tscn_path = {
+	TYPES.BULLET: "res://Player/Projectiles/Bullet.tscn",
+	TYPES.ROCKET: "res://Player/Projectiles/Rocket.tscn",
+	TYPES.FRAG_BOMB: "res://Player/Projectiles/FragBomb.tscn",
+	TYPES.LASER: "res://Player/Projectiles/LaserBeam.tscn",
+	TYPES.LASER_BULLET: "res://Player/Projectiles/LaserBullet.tscn",
+	TYPES.FIREBALL: "res://Player/Projectiles/Fireball.tscn"
 }
 
 const _ammo_gd_multi = {
@@ -28,7 +28,7 @@ const _ammo_box_texture = {
 
 
 static func get_tscn(name):
-	return _ammo_tscn[name]
+	return load(_ammo_tscn_path[name])
 
 static func get_gd_multi(name):
 	if _ammo_gd_multi.has(name):

@@ -1,10 +1,11 @@
 extends Projectile
 
 const explosion_particles_tsnc = preload("res://Player/Projectiles/FireballExplosionParticles.tscn")
-
 onready var is_multiplayer = get_node(Dir.MASTER).is_multiplayer
-
-
+#const ammo_type = Ammunition.TYPES.FIREBALL
+#
+func _init():
+	s = GameSettings.Dynamic.Ammunition[5]
 
 func die():
 	explode()

@@ -17,8 +17,7 @@ func setup(player : RigidBody2D):
 	position = point.global_position
 	set_linear_velocity(Vector2.UP.rotated(point.global_rotation))
 
-func setup_multi(bullet_data : Dictionary, _settings):
-	s = _settings
+func setup_multi(bullet_data : Dictionary):
 	set_name(bullet_data.ID)
 	position = bullet_data.P
 	set_linear_velocity(bullet_data.V)

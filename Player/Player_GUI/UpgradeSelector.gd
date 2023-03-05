@@ -7,10 +7,7 @@ onready var points_left = $"%PointsLeft"
 onready var label_self_destroyed = $"%LabelSelfDestroyed"
 onready var background = $"%Background"
 
-
 func _ready():
-
-	
 	Transfer.connect("recive_player_possible_upgrades", self, "show_upgrades")
 
 

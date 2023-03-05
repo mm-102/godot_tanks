@@ -1,5 +1,9 @@
 extends Projectile
 
+#var ammo_type = Ammunition.TYPES.FRAG_BOMB
+#
+func _init():
+	s = GameSettings.Dynamic.Ammunition[2]
 
 
 func spawn_frag(rotation):

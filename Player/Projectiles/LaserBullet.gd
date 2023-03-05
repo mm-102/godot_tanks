@@ -2,8 +2,10 @@ extends Projectile
 
 onready var ray = $RayCast2D
 onready var line = $Line2D
-
-
+#var ammo_type = Ammunition.TYPES.LASER_BULLET
+#
+func _init():
+	s = GameSettings.Dynamic.Ammunition[4]
 
 func _integrate_forces(state):
 	var length_left = s.Length

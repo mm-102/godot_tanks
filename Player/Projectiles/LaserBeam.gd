@@ -1,7 +1,7 @@
 extends Line2D
 
 
-var s #= GameSettings.AMMUNITION[Ammunition.TYPES.LASER]
+var s = GameSettings.Dynamic.Ammunition[3]
 var player_path = NodePath("")
 var point : Vector2 = Vector2.ZERO
 var point_rotation = 0
@@ -15,7 +15,7 @@ func setup(player : RigidBody2D):
 	point_rotation = laser_point.global_rotation
 	player_path = player.get_path()
 	
-func setup_multiplayer(bullet_data : Dictionary):
+func setup_multi(bullet_data : Dictionary):
 	point = bullet_data.P
 	point_rotation = bullet_data.R
 	

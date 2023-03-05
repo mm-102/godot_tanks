@@ -17,6 +17,8 @@ func set_is_selected(value: bool):
 func setup(type, amount_left):
 	name = type
 	get_node("Background/Icon").set_texture(Ammunition.get_box_texture(int(type)))
+	if int(type) == Ammunition.TYPES.BULLET:
+		get_node("Background/Icon").set_custom_minimum_size(Vector2(7, 7))
 	if amount_left >= INF:
 		get_node("Background/Number").text = ""
 	else:
