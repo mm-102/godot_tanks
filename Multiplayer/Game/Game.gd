@@ -91,6 +91,11 @@ func local_player_destroyed(projectile_name):
 	}
 	local_player.die()
 	create_corpse(corpse_data)
+	
+func ammobox_destroyed(name):
+	var obj = get_node_or_null(Dir.MAP+"/AmmoBoxes/"+name)
+	if obj != null:
+		obj.queue_free()
 
 func create_corpse(corpse_data):
 	var wreck = tank_wreck.instance()

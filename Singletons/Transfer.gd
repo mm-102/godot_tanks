@@ -95,10 +95,12 @@ remote func recive_player_destroyed(corpse_data, kill_event_data):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
 	main_n.player_destroyed(corpse_data, kill_event_data)
+	
+remote func recive_ammobox_destroyed(name):
+	get_node(Dir.GAME).ammobox_destroyed(name)
 
 func fetch_stance(player_stance: Dictionary):
 	rpc_unreliable_id(1, "recive_stance", player_stance)
-
 
 
 remote func recive_world_stance(_time, playerS_stance):

@@ -22,6 +22,7 @@ func set_ammo_boxes(ab_many_data):
 	for ab_data in ab_many_data:
 		var ab_inst = ammo_box_tscn.instance()
 		ab_inst.type = ab_data.Type
+		ab_inst.name = ab_data.Name
 		ab_inst.set_position(ab_data.P)
 		ammo_boxes_n.add_child(ab_inst)
 
