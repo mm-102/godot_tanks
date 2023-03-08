@@ -170,7 +170,7 @@ func die():
 		wreck.position = position
 		wreck.rotation = rotation
 		wreck.color = color
-		wreck.lifeTime = INF # [info] <----- From tank instance
+		wreck.life_time = INF # [info] <----- From tank instance
 		get_node(Dir.GAME + "/Objects").call_deferred("add_child", wreck)
 	
 	var spectator_camera : Camera2D = load("res://Player/Spectator/Spectator.tscn").instance()

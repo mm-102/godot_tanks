@@ -9,17 +9,25 @@ onready var background = $"%Background"
 
 func _ready():
 	Transfer.connect("recive_player_possible_upgrades", self, "show_upgrades")
+	#show_upgrades({"State": "SelfDestroyed", "Points": 2, "Upgrades": [["Tank", "Speed"]]})
 
 
 func show_upgrades(data):
+	if data.State == null:
+		points_left.text = str(int(points_left.get_text()) + data.AdditionalPoint)
+		show()
+		if !label_self_destroyed.is_visible():
+			return
+		disable_buttons(false)
+		return
 	points_left.text = str(data.Points)
 	match data.State:
 		"Normal":
 			background.get_stylebox("panel").set_bg_color(Color(0,0.2,1,0.3))
 			pass
 		"SelfDestroyed":
-			background.get_stylebox("panel").set_bg_color(Color(0.1,0.1,0.1,0.5))
-			points_left.text = points_left.text + " (Self-destroyed. No points)"
+			background.get_stylebox("panel").set_bg_color(Color(0.1,0.1,0.1,0.8))
+			label_self_destroyed.show()
 			disable_buttons(true)
 		"Winner":
 			background.get_stylebox("panel").set_bg_color(Color(0.5,0.2,0.8,0.3))

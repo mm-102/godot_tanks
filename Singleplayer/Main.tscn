@@ -177,6 +177,12 @@ text = "Settings"
 align = 1
 valign = 1
 
+[node name="UpgradeContainer" type="VBoxContainer" parent="GUILayer/GUI/SettingsWindow"]
+margin_left = 84.0
+margin_top = 101.0
+margin_right = 508.0
+margin_bottom = 425.0
+
 [node name="Background" parent="." instance=ExtResource( 3 )]
 
 [connection signal="toggled" from="GUILayer/GUI/TopRightButtons/SettingsButton" to="GUILayer/GUI/TopRightButtons" method="_on_button_toggled" binds= [ "SettingsButton" ]]

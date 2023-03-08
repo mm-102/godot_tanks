@@ -19,6 +19,10 @@ func _ready():
 	label_name.text = name
 
 func disable(value):
+	if value == true:
+		label_name.set_modulate(Color(1,1,1,0.3))
+	else:
+		label_name.set_modulate(Color(1,1,1,1))
 	button.set_disabled(value)
 
 func _on_TextureRect_pressed():
