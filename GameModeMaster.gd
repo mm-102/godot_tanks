@@ -11,6 +11,10 @@ var player_color = ""
 var is_multiplayer = false 
 
 
+func _ready():
+
+	get_tree().paused = false
+
 
 func game_mode(sel_mode: int):
 	#[info] Transfer node have to be after main

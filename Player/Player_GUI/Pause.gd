@@ -8,7 +8,7 @@ func _input(event : InputEvent):
 		$PauseButton.set_pressed(!$PauseButton.is_pressed())
 
 func _on_ExitToMenuButton_pressed():
-	get_tree().paused = false
+	get_tree().paused = true
 	master_n.exit_to_menu()
 
 func _on_PauseButton_toggled(button_pressed):
