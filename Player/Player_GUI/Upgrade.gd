@@ -6,11 +6,18 @@ onready var label_name = $Name
 onready var button = $Button
 
 
-
 func init(_upgrade_path):
 	upgrade_path = _upgrade_path
 	var _name = ""
 	for pice in _upgrade_path:
+		if typeof(pice) == TYPE_INT or typeof(pice) == TYPE_REAL:
+			match pice:
+				0: pice = "Bullet"
+				1: pice = "Rocket"
+				2: pice = "Frag Bomb"
+				3: pice = "Laser Beam"
+				4: pice = "Laser Bullet"
+				5: pice =  "Fire Ball"
 		_name += str(pice) + " "
 	_name[-1] = ""
 	set_name(_name)

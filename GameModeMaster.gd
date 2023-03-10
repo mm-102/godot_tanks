@@ -12,7 +12,6 @@ var is_multiplayer = false
 
 
 func _ready():
-
 	get_tree().paused = false
 
 
