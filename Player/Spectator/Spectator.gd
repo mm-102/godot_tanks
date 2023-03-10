@@ -6,7 +6,8 @@ const S = GameSettings.SPECATOR.CAMERA
 
 var following = false
 
-
+func _ready():
+	connect("zoom_change", get_node(Dir.MAIN + "/Background"), "zoom_change")
 
 func zoom_point(zoom_diff, mouse_position):
 	var viewport_size = get_viewport().size

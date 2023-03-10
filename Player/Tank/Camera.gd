@@ -4,6 +4,8 @@ signal zoom_change(new_zoom)
 
 const S = GameSettings.CAMERA
 
+func _ready():
+	connect("zoom_change", get_node(Dir.MAIN + "/Background"), "zoom_change")
 
 func _unhandled_input(event):
 	if event.is_action_released("p_zoom_in"):
