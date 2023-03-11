@@ -1,6 +1,6 @@
 extends Sprite
 
-const S = GameSettings.INDICATORS
+const S = GameSettings.STATIC.INDICATORS
 
 
 var target_player = null

@@ -31,7 +31,6 @@ func show_upgrades(data):
 		label_points.set_text("Rounds: ")
 		background.get_stylebox("panel").set_bg_color(Color(0.5,0.2,0.8,0.3))
 	for upgrade_info in data.Upgrades:
-		print(data.Upgrades)
 		var inst = upgrade_tscn.instance()
 		inst.connect("upgrade_selected", self, "_on_upgrade_selected")
 		var data1 = upgrade_info.duplicate()

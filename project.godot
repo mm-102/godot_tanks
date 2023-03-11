@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Global/GameSettings.gd"
 }, {
+"base": "Reference",
+"class": "GameSettingsOLD",
+"language": "GDScript",
+"path": "res://Global/GameSettings_OLD.gd"
+}, {
 "base": "RigidBody2D",
 "class": "Projectile",
 "language": "GDScript",
@@ -45,6 +50,7 @@ _global_script_class_icons={
 "Dir": "",
 "Functions": "",
 "GameSettings": "",
+"GameSettingsOLD": "",
 "Projectile": ""
 }
 

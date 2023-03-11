@@ -2,7 +2,7 @@ extends Camera2D
 
 signal zoom_change(new_zoom)
 
-const S = GameSettings.SPECATOR.CAMERA
+const S = GameSettings.STATIC.CAMERA.SPECTATOR
 
 var following = false
 

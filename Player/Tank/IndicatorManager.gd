@@ -1,6 +1,6 @@
 extends Node2D
 
-const S = GameSettings.INDICATORS
+const S = GameSettings.STATIC.INDICATORS
 var tank = null
 var ind_list = []
 

@@ -2,7 +2,7 @@ extends Camera2D
 
 signal zoom_change(new_zoom)
 
-const S = GameSettings.CAMERA
+const S = GameSettings.STATIC.CAMERA.INGAME
 
 func _ready():
 	connect("zoom_change", get_node(Dir.MAIN + "/Background"), "zoom_change")
