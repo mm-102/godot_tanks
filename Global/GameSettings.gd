@@ -12,7 +12,7 @@ static func get_all_players_upgrades(players_data):
 		upgrades.append(player_data.Upgrades)
 	return upgrades
 
-static func set_dynamic_settings(players_data):
+static func set_dynamic_settings(players_data, current_special_upgrades):
 	for path in DEFAULT:
 		set_base_value(path, DEFAULT[path])
 	for path in SPECIAL_DEFAULT:
@@ -21,11 +21,11 @@ static func set_dynamic_settings(players_data):
 	for players_upgrades in all_upgrades:
 		for path in players_upgrades:
 			var value = players_upgrades[path] 
-			if SPECIAL_DEFAULT.has(path):
-				set_base_value(path, value)
-			else:
-				value *= DEFAULT[path] * VALUE_PER_POINT
-				add_value(path, value)
+			value *= DEFAULT[path] * VALUE_PER_POINT
+			add_value(path, value)
+	for path in current_special_upgrades:
+		var value = current_special_upgrades[path].Val
+		set_base_value(path, value)
 
 static func set_base_value(path, value):
 	var last = path.pop_back()
