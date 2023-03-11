@@ -14,23 +14,36 @@ onready var main_n
 
 #var network : NetworkedMultiplayerENet = null
 var network : WebSocketClient = null
-
-func _ready():
-	pass
+var is_connected = false
 
 func get_time():
 	return clock_node.get_time()
 
+func _process(_delta):
+	if network != null:
+		network.poll()
 
 #---------- SERVER CREATION ----------
 func _connect_to_server():
 	network = WebSocketClient.new()
 	var _err = network.connect("connection_failed", self, "_on_connection_failed")
 	_err = network.connect("connection_succeeded", self, "_on_connection_succeeded")
+	_err = network.connect("server_close_request", self, "_on_connection_succeeded")
 	_err = network.connect("server_disconnected", self, "_server_disconnected")
+	_err = network.connect("connection_closed", self, "_connection_closed")
+	_err = network.connect("connection_error", self, "_connection_error")
 	_err = network.connect_to_url("ws://"+ip+":"+str(PORT), PoolStringArray(), true)
 	get_tree().set_network_peer(network)
+	set_process(true)
 	print("[Transfer]: Connecting to server...")
+
+func _connection_error():
+	print("[Transfer]: Connection lost")
+	master_n.exit_to_menu()
+
+func _connection_closed(_is_clean):
+	print("[Transfer]: Connection lost")
+	master_n.exit_to_menu()
 
 func _server_disconnected():
 	print("[Transfer]: Connection lost")
@@ -38,9 +51,14 @@ func _server_disconnected():
 
 func _on_connection_failed():
 	print("[Transfer]: Faild to connect")
+	if is_connected:
+		print("[Transfer]: ... Connection lost")
+		master_n.exit_to_menu()
+
 
 func _on_connection_succeeded():
-	print("[Transfer]: Succesfully connected. Waiting for authorisation...")
+	print("[Transfer]: Succesfully connected.")
+	is_connected = true
 	_ready()
 	master_n.game_mode(1)
 	main_n = get_node(Dir.MAIN)
