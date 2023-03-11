@@ -44,21 +44,34 @@ theme = SubResource( 3 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Background"]
 margin_right = 1024.0
-margin_bottom = 34.0
+margin_bottom = 80.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Background/VBoxContainer"]
+[node name="Title" type="Label" parent="VBoxContainer/Background/VBoxContainer"]
+unique_name_in_owner = true
 margin_right = 1024.0
-margin_bottom = 30.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+theme = ExtResource( 1 )
+text = "What do you want to intensify in game?"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Background/VBoxContainer"]
+margin_top = 44.0
+margin_right = 1024.0
+margin_bottom = 76.0
 size_flags_horizontal = 3
 size_flags_vertical = 2
 
 [node name="LabelPoints" type="Label" parent="VBoxContainer/Background/VBoxContainer/HBoxContainer"]
-margin_left = 421.0
-margin_right = 603.0
-margin_bottom = 30.0
+unique_name_in_owner = true
+margin_left = 439.0
+margin_right = 584.0
+margin_bottom = 32.0
 size_flags_horizontal = 6
+theme = ExtResource( 1 )
+theme_type_variation = "LabelSubtitle"
 text = "Points Left: "
 
 [node name="PointsLeft" type="Label" parent="VBoxContainer/Background/VBoxContainer/HBoxContainer/LabelPoints"]
@@ -71,6 +84,7 @@ margin_right = 56.0
 margin_bottom = 31.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
+theme_type_variation = "LabelSubtitle"
 text = "000"
 
 [node name="LabelSelfDestroyed" type="Label" parent="VBoxContainer/Background/VBoxContainer"]
@@ -86,9 +100,9 @@ text = "(Self-destroyed)"
 
 [node name="UpgradeContainer" type="HBoxContainer" parent="VBoxContainer/Background/VBoxContainer"]
 unique_name_in_owner = true
-margin_top = 34.0
+margin_top = 80.0
 margin_right = 1024.0
-margin_bottom = 34.0
+margin_bottom = 80.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
