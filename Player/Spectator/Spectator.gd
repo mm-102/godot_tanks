@@ -7,7 +7,7 @@ const S = GameSettings.STATIC.CAMERA.SPECTATOR
 var following = false
 
 func _ready():
-	connect("zoom_change", get_node(Dir.MAIN + "/Background"), "zoom_change")
+	var _err = connect("zoom_change", get_node(Dir.MAIN + "/Background"), "zoom_change")
 
 func zoom_point(zoom_diff, mouse_position):
 	var viewport_size = get_viewport().size
@@ -21,12 +21,12 @@ func zoom_point(zoom_diff, mouse_position):
 	position += ((viewport_size * 0.5) - mouse_position) * (zoom - previous_zoom)
 	emit_signal("zoom_change", zoom)
 
-func _unhandled_input(event):
+func _input(event):
 	if event.is_action_released("p_zoom_in"):
-		zoom_point(Vector2.ONE * -S.ZOOM_SPEED, event.position)
+		zoom_point(Vector2.ONE * -S.ZOOM_SPEED, event.global_position)
 		
 	if event.is_action_released("p_zoom_out"):
-		zoom_point(Vector2.ONE * S.ZOOM_SPEED, event.position)
+		zoom_point(Vector2.ONE * S.ZOOM_SPEED, event.global_position)
 		
 	if event.is_action_pressed("p_shoot"):
 		following = true

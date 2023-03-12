@@ -8,15 +8,14 @@ func _init():
 
 func spawn_frag(rotation):
 	var frag_inst = load("res://Global/Ammunition.gd").get_tscn(s.Frag.Type).instance()
-
+	
+	var gd = Ammunition.get_gd_multi(s.Frag.Type)
+	if gd != null:
+		frag_inst.set_script(gd)
+	
 	var frag_timer : Timer = frag_inst.get_node("LifeTime")
 	frag_timer.wait_time *= s.Frag.LifetimeMultiplayer
-	
-	var frag_sprite : Sprite = frag_inst.get_node("Sprite")
-	frag_sprite.set_scale(frag_sprite.scale * s.Frag.Scale)
-	
-	var frag_col_shape : CollisionShape2D = frag_inst.get_node("CollisionShape2D")
-	frag_col_shape.set_scale(frag_col_shape.scale * s.Frag.Scale)
+	frag_inst.set_scale(frag_inst.scale * s.Frag.Scale)
 	
 	var velocity = Vector2.UP.rotated(rotation)
 	frag_inst.position = position + 1 * velocity # separate frags from each other

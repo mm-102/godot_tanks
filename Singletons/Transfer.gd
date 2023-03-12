@@ -28,7 +28,7 @@ func _connect_to_server():
 	network = WebSocketClient.new()
 	var _err = network.connect("connection_failed", self, "_on_connection_failed")
 	_err = network.connect("connection_succeeded", self, "_on_connection_succeeded")
-	_err = network.connect("server_close_request", self, "_on_connection_succeeded")
+	_err = network.connect("server_close_request", self, "_server_close_request")
 	_err = network.connect("server_disconnected", self, "_server_disconnected")
 	_err = network.connect("connection_closed", self, "_connection_closed")
 	_err = network.connect("connection_error", self, "_connection_error")
@@ -41,7 +41,7 @@ func _connection_error():
 	print("[Transfer]: Connection lost")
 	master_n.exit_to_menu()
 
-func _connection_closed(_is_clean):
+func _server_close_request(_is_clean, smth):
 	print("[Transfer]: Connection lost")
 	master_n.exit_to_menu()
 
@@ -51,7 +51,7 @@ func _server_disconnected():
 
 func _on_connection_failed():
 	print("[Transfer]: Faild to connect")
-	if is_connected:
+	if is_connected and is_instance_valid(master_n):
 		print("[Transfer]: ... Connection lost")
 		master_n.exit_to_menu()
 

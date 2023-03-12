@@ -5,7 +5,9 @@ var s:Dictionary
 
 var player_path = NodePath("")
 var bullet_state_queue: Array
+var left_time = 0
 onready var append_timer_n = $AppendTimer
+onready var life_timer = $LifeTime
 
 
 
@@ -20,6 +22,8 @@ func setup_multi(bullet_data : Dictionary):
 	set_name(bullet_data.ID)
 	position = bullet_data.P
 	set_linear_velocity(bullet_data.V)
+	#print(bullet_data.DT)
+	left_time = (bullet_data.DT - Transfer.get_time()) * 0.001
 
 
 func _init():
@@ -29,6 +33,7 @@ func _init():
 	add_child(append_timer)
 
 func _ready():
+	life_timer.start(left_time)
 	if !$"/root/Master".is_multiplayer:
 #		if player_path != NodePath(""):
 #			linear_velocity *= SPEED

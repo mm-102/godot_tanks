@@ -26,10 +26,6 @@ func show_upgrades(data):
 		return
 	state = data.State
 	points_left.text = str(data.Points)
-	if data.State == "Winner":
-		title.set_text("Choose a special upgrade for")
-		label_points.set_text("Rounds: ")
-		background.get_stylebox("panel").set_bg_color(Color(0.5,0.2,0.8,0.3))
 	for upgrade_info in data.Upgrades:
 		var inst = upgrade_tscn.instance()
 		inst.connect("upgrade_selected", self, "_on_upgrade_selected")
@@ -48,7 +44,7 @@ func show_upgrades(data):
 			disable_buttons(true)
 		"Winner":
 			title.set_text("Choose a special upgrade for")
-			label_points.set_text("Rounds: ")
+			label_points.set_text("Duration of upgrade (rounds): ")
 			background.get_stylebox("panel").set_bg_color(Color(0.5,0.2,0.8,0.3))
 	if data.Points == 0:
 		disable_buttons(true)

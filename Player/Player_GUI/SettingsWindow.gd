@@ -9,7 +9,7 @@ func _ready():
 	load_upgrades()
 
 func load_upgrades():
-	var all_upgrades = GameSettings.STATIC
+	var all_upgrades = GameSettings.DEFAULT
 	for upgrade_path in all_upgrades:
 		var upgrade_inst = upgrade_tscn.instance()
 		var value = get_value_asterix(upgrade_path)
