@@ -38,6 +38,9 @@ onready var camera2d_n = $"%Camera2D"
 func set_display_name(text):
 	nick = text
 	$"%NickLabel".text = text
+	
+func set_turret_type(type):
+	$Turret.frame = type
 
 func _ready():
 	#warning-ignore:return_value_discarded
@@ -122,6 +125,7 @@ func _input(event):
 			break
 		if event.is_action_pressed("p_slot_"+str(i)):
 			ammo_slot = i
+			set_turret_type(special_ammo[ammo_slot].type)
 			break
 
 func _unhandled_input(event):	#prevent shooting while clicking on gui		maybe all player input should go here?
@@ -134,7 +138,6 @@ func _shoot():
 	gun_ray_cast_node.enabled = true
 	gun_ray_cast_node.force_raycast_update()
 	if gun_ray_cast_node.is_colliding() and !gun_ray_cast_node.get_collider().is_in_group("Players"):
-		print(gun_ray_cast_node.get_collider())
 		gun_ray_cast_node.enabled = false
 		return
 	gun_ray_cast_node.enabled = false
@@ -159,6 +162,7 @@ func _shoot():
 	if special_ammo[ammo_slot].amount <= 0:
 		special_ammo.pop_at(ammo_slot)
 		ammo_slot = 0
+		set_turret_type(special_ammo[0].type)
 	
 
 func die():
