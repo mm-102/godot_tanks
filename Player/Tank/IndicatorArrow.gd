@@ -23,7 +23,7 @@ func _process(delta):
 	var disance = to_target.length()
 	var direction = to_target.normalized()
 	var angle = direction.angle()
-	var viewport_size = get_viewport().size
+	var viewport_size = get_viewport().get_visible_rect().size
 	
 	if direction.y > 0:
 		$Label.rect_rotation = 180
