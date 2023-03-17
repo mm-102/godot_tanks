@@ -84,10 +84,6 @@ script = ExtResource( 4 )
 unique_name_in_owner = true
 position = Vector2( 0, -52 )
 
-[node name="LaserPoint" type="Position2D" parent="Turret"]
-unique_name_in_owner = true
-position = Vector2( 0, -52 )
-
 [node name="GunRayCast" type="RayCast2D" parent="Turret"]
 unique_name_in_owner = true
 cast_to = Vector2( 0, -100 )

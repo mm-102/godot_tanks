@@ -56,6 +56,12 @@ func battle_time(left_sec):
 func spawn_bullet(player_id, bullet_data, spawn_time):
 	game_n.spawn_bullet(player_id, bullet_data, spawn_time)
 
+func player_shot_failed(player_id):
+	game_n.player_shot_failed(player_id)
+
+func player_charge(player_id, ammo_type):
+	game_n.player_charge(player_id, ammo_type)
+
 func update_bounce_bullet(bulletS_state, time):
 	game_n.update_bounce_bullet(bulletS_state, time)
 

@@ -3,6 +3,7 @@ extends RigidBody2D
 signal special_ammo_event(type, amount_left)
 
 const tank_wreck = preload("res://Player/Tank/TankWreck.tscn")
+const laser_charge_tscn = preload("res://Player/Particles/ChargeLaserBeamParticles.tscn")
 
 var ammo_slot = 0
 
@@ -19,6 +20,9 @@ var nick = "You"
 var color = Color.blue
 var laser_path = NodePath("")
 
+var slot_locked = false # used to lock slot changing
+var shooting_locked =  false # used to lock shooting
+
 var s = GameSettings.Dynamic.Tank
 
 onready var main_n = get_node(Dir.MAIN)
@@ -30,7 +34,6 @@ onready var is_multiplayer = $"/root/Master".is_multiplayer
 onready var animation_player = $"%AnimationPlayer"
 onready var turret_node =  $"%Turret"
 onready var bullet_point_node = $"%BulletPoint"
-onready var laset_point_node = $"%LaserPoint"
 onready var gun_ray_cast_node = $"%GunRayCast"
 onready var camera2d_n = $"%Camera2D"
 
@@ -47,9 +50,10 @@ func _ready():
 	connect("special_ammo_event",get_node(Dir.GUI_AMMUNITION),"on_special_ammo_event")
 	gun_ray_cast_node.cast_to = bullet_point_node.position
 	gun_ray_cast_node.add_exception(self)
-	modulate = main_n.local_player_color
+	$Turret.self_modulate = main_n.local_player_color
+	$Sprite.self_modulate = main_n.local_player_color
 	color = main_n.local_player_color
-	emit_signal("special_ammo_event", "pick_up" , s.BaseAmmoType, INF)
+	emit_signal("special_ammo_event", "pick_up" , [s.BaseAmmoType, INF])
 	special_ammo = [
 	 {"type" : s.BaseAmmoType, "amount" : INF}
 	]
@@ -83,7 +87,7 @@ func pick_up_ammo_box(type):
 	get_method_list()
 	if picked:
 		# [improve] This event 'pick_up' var may be done by constant ".PICK_UP with enum in global file
-		emit_signal("special_ammo_event", "pick_up" , type, special_ammo[type_slot[type]].amount)
+		emit_signal("special_ammo_event", "pick_up" , [type, special_ammo[type_slot[type]].amount])
 	return picked
 
 func _integrate_forces(_state):
@@ -92,13 +96,13 @@ func _integrate_forces(_state):
 	var direction = int(Input.is_action_pressed("p_right")) - int(Input.is_action_pressed("p_left"))
 	if velocity.y > 0:
 		direction = -direction
-	player_stance = {
-		"T": OS.get_ticks_msec(),
-		"P": position,
-		"R": rotation,
-		"TR": turret_node.global_rotation,
-	}
 	if is_multiplayer:
+		player_stance = {
+			"T": OS.get_ticks_msec(),
+			"P": position,
+			"R": rotation,
+			"TR": turret_node.global_rotation,
+		}
 		transfer_n.fetch_stance(player_stance)
 	set_angular_velocity(direction * s.RotationSpeed)
 	set_linear_velocity(velocity.rotated(rotation) * s.Speed)
@@ -120,50 +124,105 @@ func _integrate_forces(_state):
 				$ruch4.play()
 				
 func _input(event):
+	if slot_locked:
+		return
 	for i in range(10):
 		if i >= special_ammo.size():
 			break
 		if event.is_action_pressed("p_slot_"+str(i)):
 			ammo_slot = i
 			set_turret_type(special_ammo[ammo_slot].type)
+			emit_signal("special_ammo_event", "change_selection", [ammo_slot])
 			break
 
 func _unhandled_input(event):	#prevent shooting while clicking on gui		maybe all player input should go here?
-	if event.is_action_pressed("p_shoot"):
-		call_deferred("_shoot")
-
-func _shoot():
-	if ammo_left <= 0:
+	if shooting_locked:
 		return
+	if event.is_action_pressed("p_shoot"):
+		if special_ammo[ammo_slot].type == Ammunition.TYPES.LASER:
+			call_deferred("_charge_shoot")
+			return
+		call_deferred("_shoot")
+		
+func _gun_instde_wall() -> bool:
 	gun_ray_cast_node.enabled = true
 	gun_ray_cast_node.force_raycast_update()
 	if gun_ray_cast_node.is_colliding() and !gun_ray_cast_node.get_collider().is_in_group("Players"):
 		gun_ray_cast_node.enabled = false
-		return
+		return true
 	gun_ray_cast_node.enabled = false
-		
-	special_ammo[ammo_slot].amount -= 1
-	ammo_left -= 1
-	player_stance = {
-		"T": OS.get_ticks_msec(),
-		"P": position,
-		"R": rotation,
-		"TR": turret_node.global_rotation,
-	}
+	return false
+	
+func _update_slots_after_shoot():
+	emit_signal("special_ammo_event", "shoot", [special_ammo[ammo_slot].type, special_ammo[ammo_slot].amount])
+	if special_ammo[ammo_slot].amount <= 0:
+		special_ammo.pop_at(ammo_slot)
+		ammo_slot = 0
+		set_turret_type(special_ammo[0].type)
+
+# multiplayer only
+func charge(ammo_type): # make universal when more types will need charging
+	if ammo_type == Ammunition.TYPES.LASER:
+		var particles = laser_charge_tscn.instance()
+		bullet_point_node.add_child(particles)
+		particles.start(1.5) # make a setting for that
+
+func _charge_shoot(): # make universal when more types will need charging
+	if ammo_left <= 0:
+		return
+	slot_locked = true
+	shooting_locked = true
+	
 	if is_multiplayer:
+		transfer_n.fetch_charge_shoot(special_ammo[ammo_slot].type)
+		return
+		
+	var particles = laser_charge_tscn.instance()
+	bullet_point_node.add_child(particles)
+	particles.start(1.5) # make a setting for that
+	var timer = Timer.new()
+	timer.one_shot = true
+	timer.connect("timeout", self, "_shoot")
+	add_child(timer)
+	timer.start(1.5)
+
+func _shoot():
+	if ammo_left <= 0:
+		return
+		
+	# ---- ray cast prevent shooting into wall ----
+	if _gun_instde_wall():
+		return
+	
+	# ---- main shooting ----
+	shooting_locked = true
+	slot_locked = true
+	if is_multiplayer:
+		player_stance = {
+			"T": OS.get_ticks_msec(),
+			"P": position,
+			"R": rotation,
+			"TR": turret_node.global_rotation,
+		}
 		transfer_n.fetch_shoot(player_stance, special_ammo[ammo_slot].type)
 		
 	else:
 		var bullet_inst = Ammunition.get_tscn(special_ammo[ammo_slot].type).instance()
 		bullet_inst.setup(self)
 		projectiles_n.add_child(bullet_inst)
+		shot_successful()
 	
-	emit_signal("special_ammo_event", "shoot", special_ammo[ammo_slot].type, special_ammo[ammo_slot].amount)
-	if special_ammo[ammo_slot].amount <= 0:
-		special_ammo.pop_at(ammo_slot)
-		ammo_slot = 0
-		set_turret_type(special_ammo[0].type)
-	
+
+func shot_successful():
+	special_ammo[ammo_slot].amount -= 1
+	ammo_left -= 1
+	_update_slots_after_shoot()
+	slot_locked = false
+	shooting_locked = false
+
+func shot_failed():
+	slot_locked = false
+	shooting_locked = false
 
 func die():
 	queue_free()

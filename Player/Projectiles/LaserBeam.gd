@@ -10,7 +10,7 @@ onready var ray = $RayCast2D
 onready var tween = $Tween
 
 func setup(player : RigidBody2D):
-	var laser_point = player.get_node("%LaserPoint")
+	var laser_point = player.get_node("%BulletPoint")
 	point = laser_point.global_position
 	point_rotation = laser_point.global_rotation
 	player_path = player.get_path()
