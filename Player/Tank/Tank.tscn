@@ -153,5 +153,9 @@ stream = ExtResource( 5 )
 pitch_scale = 0.35
 max_distance = 600.0
 
+[node name="ReloadTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="ready" from="." to="CanvasLayer/CenterPosition/PlayerIndicators" method="_on_Tank_ready"]
 [connection signal="timeout" from="CanvasLayer/CenterPosition/PlayerIndicators/RefreshTimer" to="CanvasLayer/CenterPosition/PlayerIndicators" method="_on_RefreshTimer_timeout"]
+[connection signal="timeout" from="ReloadTimer" to="." method="reload_complete"]

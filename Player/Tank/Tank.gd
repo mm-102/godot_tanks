@@ -3,7 +3,7 @@ extends RigidBody2D
 signal special_ammo_event(type, amount_left)
 
 const tank_wreck = preload("res://Player/Tank/TankWreck.tscn")
-const laser_charge_tscn = preload("res://Player/Particles/ChargeLaserBeamParticles.tscn")
+#const laser_charge_tscn = preload("res://Player/Particles/ChargeLaserBeamParticles.tscn")
 
 var ammo_slot = 0
 
@@ -36,6 +36,7 @@ onready var turret_node =  $"%Turret"
 onready var bullet_point_node = $"%BulletPoint"
 onready var gun_ray_cast_node = $"%GunRayCast"
 onready var camera2d_n = $"%Camera2D"
+onready var reload_timer_n = $ReloadTimer
 
 
 func set_display_name(text):
@@ -130,16 +131,24 @@ func _input(event):
 		if i >= special_ammo.size():
 			break
 		if event.is_action_pressed("p_slot_"+str(i)):
+			if ammo_slot == i:
+				return
+			var reload_time = GameSettings.Dynamic.Ammunition[special_ammo[i].type].Reload
+			var reload_of_prev_ammo = GameSettings.Dynamic.Ammunition[special_ammo[ammo_slot].type].Reload
 			ammo_slot = i
+			if !shooting_locked:
+				reload_time = max(0.5, reload_time - (reload_of_prev_ammo / 2))
+			emit_signal("special_ammo_event", "change_selection", [ammo_slot, reload_time])
+			reload_timer_n.start(reload_time)
+			shooting_locked = true
 			set_turret_type(special_ammo[ammo_slot].type)
-			emit_signal("special_ammo_event", "change_selection", [ammo_slot])
 			break
 
 func _unhandled_input(event):	#prevent shooting while clicking on gui		maybe all player input should go here?
 	if shooting_locked:
 		return
 	if event.is_action_pressed("p_shoot"):
-		if special_ammo[ammo_slot].type == Ammunition.TYPES.LASER:
+		if GameSettings.Dynamic.Ammunition[special_ammo[ammo_slot].type].has("ChargeTime"):
 			call_deferred("_charge_shoot")
 			return
 		call_deferred("_shoot")
@@ -162,29 +171,37 @@ func _update_slots_after_shoot():
 
 # multiplayer only
 func charge(ammo_type): # make universal when more types will need charging
-	if ammo_type == Ammunition.TYPES.LASER:
-		var particles = laser_charge_tscn.instance()
-		bullet_point_node.add_child(particles)
-		particles.start(1.5) # make a setting for that
+	var particles_tscn = Ammunition.get_charge_particles_tscn(ammo_type)
+	if particles_tscn == null:
+		return
+	var particles = particles_tscn.instance()
+	bullet_point_node.add_child(particles)
+	particles.start(GameSettings.Dynamic.Ammunition[ammo_type].ChargeTime)
 
 func _charge_shoot(): # make universal when more types will need charging
 	if ammo_left <= 0:
 		return
 	slot_locked = true
 	shooting_locked = true
+	var type = special_ammo[ammo_slot].type
 	
 	if is_multiplayer:
-		transfer_n.fetch_charge_shoot(special_ammo[ammo_slot].type)
+		transfer_n.fetch_charge_shoot(type)
 		return
 		
-	var particles = laser_charge_tscn.instance()
+	var particles_tscn = Ammunition.get_charge_particles_tscn(type)
+	if particles_tscn == null:
+		shot_failed()
+		return
+	var particles = particles_tscn.instance()
 	bullet_point_node.add_child(particles)
-	particles.start(1.5) # make a setting for that
+	var charge_time = GameSettings.Dynamic.Ammunition[type].ChargeTime
+	particles.start(charge_time)
 	var timer = Timer.new()
 	timer.one_shot = true
 	timer.connect("timeout", self, "_shoot")
 	add_child(timer)
-	timer.start(1.5)
+	timer.start(charge_time)
 
 func _shoot():
 	if ammo_left <= 0:
@@ -218,10 +235,13 @@ func shot_successful():
 	ammo_left -= 1
 	_update_slots_after_shoot()
 	slot_locked = false
-	shooting_locked = false
+	reload_timer_n.start(GameSettings.Dynamic.Ammunition[special_ammo[ammo_slot].type].Reload)
 
 func shot_failed():
 	slot_locked = false
+	shooting_locked = false
+
+func reload_complete():
 	shooting_locked = false
 
 func die():

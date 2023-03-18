@@ -31,7 +31,10 @@ func shoot_event(args : Array):
 	var type = str(args[0])
 	var amount_left = args[1]
 	if amount_left <= 0:
-		change_selection([BASE_SLOT])
+		change_selection([
+			BASE_SLOT,
+			GameSettings.Dynamic.Ammunition[GameSettings.Dynamic.Tank.BaseAmmoType].Reload
+		])
 		get_node(type).queue_free()
 		return
 	if amount_left != INF:
@@ -46,15 +49,16 @@ func pick_up_event(args : Array):
 		new_slot.setup(type, amount_left)
 		add_child(new_slot)
 	if get_child_count() == 1:
-		change_selection([0])
+		change_selection([0, 0])
 	elif amount_left != INF:
 		get_node(type).set_left_ammo(amount_left)
 
 func change_selection(args : Array):
 	var new_selection = args[0]
+	var reload_time = args[1]
 	if get_child_count() >= new_selection:
-		get_child(current_selection).set_is_selected(false)
-	get_child(new_selection).set_is_selected(true)
+		get_child(current_selection).set_is_selected(false, reload_time)
+	get_child(new_selection).set_is_selected(true, reload_time)
 	current_selection = new_selection
 
 

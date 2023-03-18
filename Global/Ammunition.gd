@@ -13,6 +13,10 @@ const _ammo_tscn_path = {
 	TYPES.FIREBALL: "res://Player/Projectiles/Fireball.tscn"
 }
 
+const _ammo_charge_particles_tscn_path = {
+	TYPES.LASER : "res://Player/Particles/ChargeLaserBeamParticles.tscn"
+}
+
 const _ammo_gd_multi = {
 	TYPES.ROCKET: preload("res://Player/Projectiles/RocketMulti.gd"),
 }
@@ -29,6 +33,11 @@ const _ammo_box_texture = {
 
 static func get_tscn(name):
 	return load(_ammo_tscn_path[name])
+
+static func get_charge_particles_tscn(name):
+	if _ammo_charge_particles_tscn_path.has(name):
+		return load(_ammo_charge_particles_tscn_path[name])
+	return null
 
 static func get_gd_multi(name):
 	if _ammo_gd_multi.has(name):

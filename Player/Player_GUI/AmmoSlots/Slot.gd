@@ -1,17 +1,24 @@
 tool
 extends Control
 
-const SELECTION_COLOR = "70ffff"
-const BASE_COLOR = "ffffff"
+const LOADING_COLOR = "70ffff"
+const LOADED_COLOR = "66ff80"
 export var is_selected: bool = false setget set_is_selected
 
 
-func set_is_selected(value: bool):
+func set_is_selected(value : bool, reload_time : float = 0):
 	is_selected = value
 	if is_selected == true:
-		get_node("Background").modulate = SELECTION_COLOR
+		get_node("Background").tint_progress = LOADING_COLOR
+		$Tween.remove_all()
+		$Tween.interpolate_property(get_node("Background"), "value", 0, 100, reload_time, Tween.TRANS_LINEAR)
+		$Tween.start()
 	else:
-		get_node("Background").modulate = BASE_COLOR
+		$Tween.stop_all()
+		get_node("Background").value = 0
+		
+func _on_Tween_tween_all_completed():
+	get_node("Background").tint_progress = LOADED_COLOR
 		
 
 func setup(type, amount_left):
@@ -26,3 +33,6 @@ func setup(type, amount_left):
 
 func set_left_ammo(amount_left):
 	get_node("Background/Number").text = str(amount_left)
+
+
+
