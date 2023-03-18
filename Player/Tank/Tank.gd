@@ -55,6 +55,7 @@ func _ready():
 	$Sprite.self_modulate = main_n.local_player_color
 	color = main_n.local_player_color
 	emit_signal("special_ammo_event", "pick_up" , [s.BaseAmmoType, INF])
+	set_turret_type(s.BaseAmmoType)
 	special_ammo = [
 	 {"type" : s.BaseAmmoType, "amount" : INF}
 	]
@@ -142,6 +143,8 @@ func _input(event):
 			reload_timer_n.start(reload_time)
 			shooting_locked = true
 			set_turret_type(special_ammo[ammo_slot].type)
+			if is_multiplayer:
+				transfer_n.fetch_change_ammo_type(special_ammo[ammo_slot].type)
 			break
 
 func _unhandled_input(event):	#prevent shooting while clicking on gui		maybe all player input should go here?

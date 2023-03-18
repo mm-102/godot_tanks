@@ -118,6 +118,11 @@ func player_charge(player_id, ammo_type):
 	if player != null:
 		player.charge(ammo_type)
 
+func change_player_turret(player_id, ammo_type):
+	var player = players_n.get_node_or_null(str(player_id))
+	if player != null:
+		player.set_turret_type(ammo_type)
+
 func update_bounce_bullet(bulletS_state, time):
 	if time < clock_n.get_time():
 		print("[GAME]: Recived bullet bounce data too old.")

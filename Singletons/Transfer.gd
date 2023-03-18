@@ -156,6 +156,14 @@ remote func recive_player_charge(player_id, ammo_type):
 		return
 	main_n.player_charge(player_id, ammo_type)
 
+func fetch_change_ammo_type(ammo_type):
+	rpc_id(1, "recive_ammo_type_change", ammo_type)
+
+remote func recive_turret_change(player_id, ammo_type):
+	if !get_tree().get_rpc_sender_id() == 1:
+		return
+	main_n.change_player_turret(player_id, ammo_type)
+
 remote func recive_shoot_bounce_state(bulletS_state, _time):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return

@@ -8,8 +8,8 @@ export var is_selected: bool = false setget set_is_selected
 
 func set_is_selected(value : bool, reload_time : float = 0):
 	is_selected = value
+	get_node("Background").tint_progress = LOADING_COLOR
 	if is_selected == true:
-		get_node("Background").tint_progress = LOADING_COLOR
 		$Tween.remove_all()
 		$Tween.interpolate_property(get_node("Background"), "value", 0, 100, reload_time, Tween.TRANS_LINEAR)
 		$Tween.start()

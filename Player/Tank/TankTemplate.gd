@@ -19,6 +19,7 @@ func setup(player_data):
 	color = player_data.Color
 	$"Hitbox/Sprite".self_modulate = player_data.Color
 	$Turret.self_modulate = player_data.Color
+	set_turret_type(GameSettings.Dynamic.Tank.BaseAmmoType)
 
 func charge(ammo_type): # make universal when more types will need charging
 	if ammo_type == Ammunition.TYPES.LASER:
@@ -42,6 +43,9 @@ func interpolation():
 func set_display_name(text):
 	nick = text
 	$"%NickLabel".text = text
+
+func set_turret_type(type):
+	$Turret.frame = type
 
 func template_stance(previous_stance, next_stance, interpolation_factor):
 	var _position = lerp(previous_stance.P, next_stance.P, interpolation_factor)

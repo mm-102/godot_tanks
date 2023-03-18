@@ -65,6 +65,9 @@ func player_charge(player_id, ammo_type):
 func update_bounce_bullet(bulletS_state, time):
 	game_n.update_bounce_bullet(bulletS_state, time)
 
+func change_player_turret(player_id, ammo_type):
+	game_n.change_player_turret(player_id, ammo_type)
+
 func player_destroyed(corpse_data, kill_event_data):
 	var killer = get_node_or_null(Dir.PLAYERS + "/" + kill_event_data.KillerID)
 	var killed = get_node_or_null(Dir.PLAYERS + "/" + kill_event_data.KilledID)

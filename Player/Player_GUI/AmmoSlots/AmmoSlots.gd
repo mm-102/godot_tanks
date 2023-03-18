@@ -10,31 +10,17 @@ var event_funcs = {
 }
 var current_selection = BASE_SLOT
 
-
-
-#func _ready():
-#	test_all()
-
-#func _input(event):
-#	choose_slot(event)
-#
-#func choose_slot(event: InputEvent):
-#	for slot_num in range(10):
-#		if event.is_action_pressed(P_SLOT + str(slot_num)) && \
-#				get_child_count() > slot_num:
-#			change_selection(slot_num)
-
 func on_special_ammo_event(event, args : Array):
 	event_funcs[event].call_func(args)
 
 func shoot_event(args : Array):
 	var type = str(args[0])
 	var amount_left = args[1]
+	change_selection([
+		BASE_SLOT,
+		GameSettings.Dynamic.Ammunition[GameSettings.Dynamic.Tank.BaseAmmoType].Reload
+	])
 	if amount_left <= 0:
-		change_selection([
-			BASE_SLOT,
-			GameSettings.Dynamic.Ammunition[GameSettings.Dynamic.Tank.BaseAmmoType].Reload
-		])
 		get_node(type).queue_free()
 		return
 	if amount_left != INF:
@@ -49,7 +35,7 @@ func pick_up_event(args : Array):
 		new_slot.setup(type, amount_left)
 		add_child(new_slot)
 	if get_child_count() == 1:
-		change_selection([0, 0])
+		change_selection([0, 0.1])
 	elif amount_left != INF:
 		get_node(type).set_left_ammo(amount_left)
 
