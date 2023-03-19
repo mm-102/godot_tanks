@@ -53,8 +53,8 @@ func add_world_stance(time, playerS_stance):
 func battle_time(left_sec):
 	gui_timer_n.battle_time(left_sec)
 
-func spawn_bullet(player_id, bullet_data, spawn_time):
-	game_n.spawn_bullet(player_id, bullet_data, spawn_time)
+func spawn_bullet(player_id, bullet_data):
+	game_n.spawn_bullet(player_id, bullet_data)
 
 func update_bounce_bullet(bulletS_state, time):
 	game_n.update_bounce_bullet(bulletS_state, time)

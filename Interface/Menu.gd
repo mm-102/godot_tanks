@@ -14,8 +14,6 @@ var rng = RandomNumberGenerator.new()
 
 
 func _ready():
-	#test
-	Transfer.ip = "A"
 	set_init_data()
 	set_version(Functions.get_version())
 

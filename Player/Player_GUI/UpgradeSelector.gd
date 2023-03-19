@@ -56,6 +56,7 @@ func _on_upgrade_selected(upgrade):
 		var value = upgrade.pop_back()
 		var dict = {upgrade: value}
 		Transfer.fetch_player_possible_upgrades(dict)
+		_on_Button_pressed()
 		return
 	points_left.text = str(int(points_left.text) - 1)
 	if !choosen_upgrades.has(upgrade):
@@ -65,8 +66,13 @@ func _on_upgrade_selected(upgrade):
 	if points_left.text == "0":
 		disable_buttons(true)
 		Transfer.fetch_player_possible_upgrades(choosen_upgrades)
+		_on_Button_pressed()
 
 func disable_buttons(value):
 	for upgrade in upgrade_container.get_children():
 		upgrade.disable(value)
+	
+
+func _on_Button_pressed():
+	self.hide()
 	

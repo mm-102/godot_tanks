@@ -44,16 +44,15 @@ func _ready():
 func _integrate_forces(state):
 	if bullet_state_queue.empty() == true:
 		return
+	if bullet_state_queue[0].ST > Transfer.get_time():
+		return
 	var bullet_state = bullet_state_queue.pop_front()
 	var taransform = state.get_transform()
 	taransform.origin = bullet_state.Pos
 	set_linear_velocity(bullet_state.LV)
-	bullet_state_queue.clear()
 	state.set_transform(taransform)
 
-func append_new_state(bullet_state, time_diff):
-	append_timer_n.start(time_diff * 0.001)
-	yield(append_timer_n, "timeout")
+func append_new_state(bullet_state):
 	bullet_state_queue.append(bullet_state)
 
 

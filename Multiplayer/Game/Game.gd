@@ -34,7 +34,8 @@ func set_corspses_data(corspes_data):
 
 func set_bullets_data(bullets_data):
 	for bullet in bullets_data:
-		spawn_bullet(bullet.PlayerID, bullet, 0)
+		bullet.ST = 0
+		spawn_bullet(bullet.PlayerID, bullet)
 
 func self_initiation(player_data):
 	local_player_id = player_data.ID
@@ -89,16 +90,20 @@ func create_corpse(corpse_data):
 	$Objects.add_child(wreck_inst)
 
 
-func spawn_bullet(player_id, bullet_data, spawn_time):
+func spawn_bullet(player_id, bullet_data):
 	var bullet_inst = Ammunition.get_tscn(bullet_data.AT).instance()
 	var gd = Ammunition.get_gd_multi(bullet_data.AT)
 	if gd != null:
 		bullet_inst.set_script(gd)
 	var client_clock = clock_n.client_clock
-	yield(get_tree().create_timer((spawn_time - client_clock)*0.001), "timeout")
 	bullet_inst.setup_multi(bullet_data)
 	if player_id == get_tree().get_network_unique_id():
 		bullet_inst.player_path = NodePath(Dir.PLAYERS + "/" + str(local_player_id))
+	yield(get_tree().create_timer((bullet_data.ST - Transfer.get_time())*0.001), "timeout")
+	while bullet_data.ST - Transfer.get_time() > 0:
+		yield(get_tree(),"idle_frame")
+		#print("WAAAAAAAAAAAA")
+	#print("SpawnTime: ", bullet_data.ST - Transfer.get_time() )
 	projectiles_n.add_child(bullet_inst, true)
 
 func update_bounce_bullet(bulletS_state, time):
@@ -109,7 +114,8 @@ func update_bounce_bullet(bulletS_state, time):
 		var bullet_n = projectiles_n.get_node_or_null(bullet_state.Name)
 		if bullet_n == null:
 			return
-		bullet_n.append_new_state(bullet_state, time - clock_n.get_time())
+		bullet_state["ST"] = time
+		bullet_n.append_new_state(bullet_state)
 
 
 func interpolation_factor() -> float:

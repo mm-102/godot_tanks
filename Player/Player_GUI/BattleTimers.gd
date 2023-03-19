@@ -54,5 +54,4 @@ func _on_TimeLeftClock_timeout():
 func _on_BattleStartTimer_timeout():
 	start_round_background.hide()
 	set_process(false)
-	#test
 	get_tree().set_pause(false)

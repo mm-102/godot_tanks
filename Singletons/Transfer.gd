@@ -138,10 +138,10 @@ remote func recive_world_stance(_time, playerS_stance):
 func fetch_shoot(player_stance, shoot_slot):
 	rpc_id(1, "recive_shoot", player_stance, shoot_slot)
 
-remote func recive_shoot(player_id, bullet_data, spawn_time):
+remote func recive_shoot(player_id, bullet_data):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	main_n.spawn_bullet(player_id, bullet_data, spawn_time)
+	main_n.spawn_bullet(player_id, bullet_data)
 
 remote func recive_shoot_bounce_state(bulletS_state, _time):
 	if !get_tree().get_rpc_sender_id() == 1:
