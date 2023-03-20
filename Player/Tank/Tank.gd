@@ -37,6 +37,7 @@ onready var bullet_point_node = $"%BulletPoint"
 onready var gun_ray_cast_node = $"%GunRayCast"
 onready var camera2d_n = $"%Camera2D"
 onready var reload_timer_n = $ReloadTimer
+onready var autoload_timer_n = $BaseTypeAutoloadTimer
 
 
 func set_display_name(text):
@@ -54,11 +55,12 @@ func _ready():
 	$Turret.self_modulate = main_n.local_player_color
 	$Sprite.self_modulate = main_n.local_player_color
 	color = main_n.local_player_color
-	emit_signal("special_ammo_event", "pick_up" , [s.BaseAmmoType, INF])
+	emit_signal("special_ammo_event", "pick_up" , [s.BaseAmmoType, 0])
 	set_turret_type(s.BaseAmmoType)
 	special_ammo = [
-	 {"type" : s.BaseAmmoType, "amount" : INF}
+	 {"type" : s.BaseAmmoType, "amount" : 0}
 	]
+	reset_autoload_timer()
 
 
 func setup_multi(player_data, local_player_name):
@@ -68,8 +70,21 @@ func setup_multi(player_data, local_player_name):
 	if local_player_name.empty():
 		local_player_name = "You"
 	set_display_name(local_player_name)
-	
 
+func reset_autoload_timer():
+	var load_time = GameSettings.Dynamic.Ammunition[s.BaseAmmoType].Reload * 2
+	autoload_timer_n.start(load_time)
+	emit_signal("special_ammo_event", "reset_autoload", [load_time])
+	
+func _on_BaseTypeAutoload():
+	if special_ammo[0].amount < s.BaseAmmoClipSize - 1:
+		reset_autoload_timer()
+	if special_ammo[0].amount < s.BaseAmmoClipSize:
+		special_ammo[0].amount += 1
+		emit_signal("special_ammo_event", "pick_up" , [s.BaseAmmoType, special_ammo[0].amount])
+		if ammo_slot == 0 and special_ammo[0].amount == 1:
+			emit_signal("special_ammo_event", "change_selection" , [\
+				s.BaseAmmoType, GameSettings.Dynamic.Ammunition[s.BaseAmmoType].Reload])
 
 func pick_up_ammo_box(type):
 	if type == s.BaseAmmoType:
@@ -167,7 +182,8 @@ func _gun_instde_wall() -> bool:
 	
 func _update_slots_after_shoot():
 	emit_signal("special_ammo_event", "shoot", [special_ammo[ammo_slot].type, special_ammo[ammo_slot].amount])
-	if special_ammo[ammo_slot].amount <= 0:
+	if special_ammo[ammo_slot].amount <= 0\
+	 and special_ammo[ammo_slot].type != s.BaseAmmoType:
 		special_ammo.pop_at(ammo_slot)
 		ammo_slot = 0
 		set_turret_type(special_ammo[0].type)
@@ -182,7 +198,7 @@ func charge(ammo_type): # make universal when more types will need charging
 	particles.start(GameSettings.Dynamic.Ammunition[ammo_type].ChargeTime)
 
 func _charge_shoot(): # make universal when more types will need charging
-	if ammo_left <= 0:
+	if special_ammo[ammo_slot].amount <= 0:
 		return
 	slot_locked = true
 	shooting_locked = true
@@ -207,7 +223,7 @@ func _charge_shoot(): # make universal when more types will need charging
 	timer.start(charge_time)
 
 func _shoot():
-	if ammo_left <= 0:
+	if special_ammo[ammo_slot].amount <= 0:
 		return
 		
 	# ---- ray cast prevent shooting into wall ----
@@ -238,7 +254,11 @@ func shot_successful():
 	ammo_left -= 1
 	_update_slots_after_shoot()
 	slot_locked = false
-	reload_timer_n.start(GameSettings.Dynamic.Ammunition[special_ammo[ammo_slot].type].Reload)
+	reset_autoload_timer()
+	if ammo_slot == 0 and special_ammo[0].amount == 0:
+		reload_timer_n.start(autoload_timer_n.time_left)
+	else:
+		reload_timer_n.start(GameSettings.Dynamic.Ammunition[special_ammo[ammo_slot].type].Reload)
 
 func shot_failed():
 	slot_locked = false
@@ -266,3 +286,6 @@ func die():
 
 func _on_timer_timeout():
 	queue_free()
+
+
+

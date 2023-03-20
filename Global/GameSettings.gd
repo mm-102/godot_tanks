@@ -56,11 +56,12 @@ const DEFAULT = {
 	["Tank", "RotationSpeed"]: 2.0,
 	["Tank", "MaxAmmo"]: 5,
 	["Tank", "MaxAmmoTypes"]: 3,
+	["Tank", "BaseAmmoClipSize"]: 4,
 	
 	["Wreck", "LifeTime"]: 20,
 	
 	["Ammunition", AT.BULLET, "Speed"]: 200,
-	["Ammunition", AT.BULLET, "Reload"]: 0.5,
+	["Ammunition", AT.BULLET, "Reload"]: 1,
 	
 	["Ammunition", AT.ROCKET, "Speed"]: 200,
 	["Ammunition", AT.ROCKET, "FollowSpeed"]: 150,
@@ -102,6 +103,7 @@ const Dynamic = {
 		"MaxAmmo" : null,
 		"BaseAmmoType" : null,
 		"MaxAmmoTypes" : null, # including default bullet
+		"BaseAmmoClipSize" : null,
 	},
 	"Wreck": {
 		"LifeTime" : null,

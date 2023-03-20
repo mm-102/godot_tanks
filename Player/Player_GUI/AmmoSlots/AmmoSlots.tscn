@@ -2,12 +2,15 @@
 
 [ext_resource path="res://Player/Player_GUI/AmmoSlots/AmmoSlots.gd" type="Script" id=3]
 
-[node name="Ammunition" type="HBoxContainer"]
+[node name="Ammunition" type="VBoxContainer"]
 margin_top = 560.0
 margin_right = 150.0
 margin_bottom = 600.0
 grow_vertical = 0
-rect_min_size = Vector2( 150, 40 )
+rect_min_size = Vector2( 150, 90 )
 size_flags_horizontal = 0
 size_flags_vertical = 8
 script = ExtResource( 3 )
+
+[node name="AmmoSlots" type="HBoxContainer" parent="."]
+margin_right = 150.0
