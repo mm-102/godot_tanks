@@ -20,9 +20,9 @@ func setup_multi(bullet_data : Dictionary):
 	point_rotation = bullet_data.R
 	
 func _on_Tween_tween_all_completed():
-	var player = get_node_or_null(player_path)
-	if !(player == null):
-		player.ammo_left += 1
+#	var player = get_node_or_null(player_path)
+#	if !(player == null):
+#		player.ammo_left += 1
 	queue_free()
 	
 func _ready():

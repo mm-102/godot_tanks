@@ -10,8 +10,6 @@ var ammo_slot = 0
 var RNG = RandomNumberGenerator.new()
 var old_sound=4
 
-
-var ammo_left = GameSettings.Dynamic.Tank.MaxAmmo
 var special_ammo
 
 # Defined in code
@@ -64,7 +62,6 @@ func _ready():
 
 
 func setup_multi(player_data, local_player_name):
-	ammo_left = s.MaxAmmo
 	set_name(str(player_data.ID))
 	set_position(player_data.P)
 	if local_player_name.empty():
@@ -72,7 +69,8 @@ func setup_multi(player_data, local_player_name):
 	set_display_name(local_player_name)
 
 func reset_autoload_timer():
-	var load_time = GameSettings.Dynamic.Ammunition[s.BaseAmmoType].Reload * 2
+	var load_time = GameSettings.Dynamic.Ammunition[s.BaseAmmoType].Reload\
+	* s.AutoloadTimeMultiplier
 	autoload_timer_n.start(load_time)
 	emit_signal("special_ammo_event", "reset_autoload", [load_time])
 	
@@ -82,9 +80,6 @@ func _on_BaseTypeAutoload():
 	if special_ammo[0].amount < s.BaseAmmoClipSize:
 		special_ammo[0].amount += 1
 		emit_signal("special_ammo_event", "pick_up" , [s.BaseAmmoType, special_ammo[0].amount])
-		if ammo_slot == 0 and special_ammo[0].amount == 1:
-			emit_signal("special_ammo_event", "change_selection" , [\
-				s.BaseAmmoType, GameSettings.Dynamic.Ammunition[s.BaseAmmoType].Reload])
 
 func pick_up_ammo_box(type):
 	if type == s.BaseAmmoType:
@@ -251,10 +246,10 @@ func _shoot():
 
 func shot_successful():
 	special_ammo[ammo_slot].amount -= 1
-	ammo_left -= 1
 	_update_slots_after_shoot()
 	slot_locked = false
-	reset_autoload_timer()
+	if ammo_slot == 0:
+		reset_autoload_timer()
 	if ammo_slot == 0 and special_ammo[0].amount == 0:
 		reload_timer_n.start(autoload_timer_n.time_left)
 	else:
