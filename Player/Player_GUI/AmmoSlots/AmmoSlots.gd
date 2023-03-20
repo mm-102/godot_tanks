@@ -19,6 +19,10 @@ func shoot_event(args : Array):
 	var amount_left = args[1]
 	if amount_left <= 0 and int(type) != GameSettings.Dynamic.Tank.BaseAmmoType:
 		$AmmoSlots.get_node(type).queue_free()
+		change_selection([
+			BASE_SLOT,
+			GameSettings.Dynamic.Ammunition[GameSettings.Dynamic.Tank.BaseAmmoType].Reload
+		])
 		return
 	if amount_left > 0:
 		change_selection([
@@ -42,7 +46,7 @@ func pick_up_event(args : Array):
 		var new_slot = SLOT_BASE_TSCN.instance()
 		new_slot.setup(type, amount_left)
 		$AmmoSlots.add_child(new_slot)
-		if get_child_count() == 1:
+		if $AmmoSlots.get_child_count() == 1:
 			change_selection([0, GameSettings.Dynamic.Ammunition[GameSettings.Dynamic.Tank.BaseAmmoType].Reload \
 			* GameSettings.Dynamic.Tank.AutoloadTimeMultiplier])
 			var autoload_slot = SLOT_BASE_TSCN.instance()
