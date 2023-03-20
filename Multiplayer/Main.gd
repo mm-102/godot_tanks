@@ -56,8 +56,17 @@ func battle_time(left_sec):
 func spawn_bullet(player_id, bullet_data):
 	game_n.spawn_bullet(player_id, bullet_data)
 
+func player_shot_failed(player_id):
+	game_n.player_shot_failed(player_id)
+
+func player_charge(player_id, ammo_type):
+	game_n.player_charge(player_id, ammo_type)
+
 func update_bounce_bullet(bulletS_state, time):
 	game_n.update_bounce_bullet(bulletS_state, time)
+
+func change_player_turret(player_id, ammo_type):
+	game_n.change_player_turret(player_id, ammo_type)
 
 func player_destroyed(corpse_data, kill_event_data):
 	var killer = get_node_or_null(Dir.PLAYERS + "/" + kill_event_data.KillerID)

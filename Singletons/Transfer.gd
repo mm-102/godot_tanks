@@ -135,13 +135,34 @@ remote func recive_world_stance(_time, playerS_stance):
 		return
 	main_n.add_world_stance(_time, playerS_stance)
 
-func fetch_shoot(player_stance, shoot_slot):
-	rpc_id(1, "recive_shoot", player_stance, shoot_slot)
+func fetch_shoot(player_stance, ammo_type):
+	rpc_id(1, "recive_shoot", player_stance, ammo_type)
+
+func fetch_charge_shoot(ammo_type):
+	rpc_id(1, "recive_charge_shoot", ammo_type)
 
 remote func recive_shoot(player_id, bullet_data):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
 	main_n.spawn_bullet(player_id, bullet_data)
+
+remote func recive_shoot_fail(player_id):
+	if !get_tree().get_rpc_sender_id() == 1:
+		return
+	main_n.player_shot_failed(player_id)
+
+remote func recive_player_charge(player_id, ammo_type):
+	if !get_tree().get_rpc_sender_id() == 1:
+		return
+	main_n.player_charge(player_id, ammo_type)
+
+func fetch_change_ammo_type(ammo_type):
+	rpc_id(1, "recive_ammo_type_change", ammo_type)
+
+remote func recive_turret_change(player_id, ammo_type):
+	if !get_tree().get_rpc_sender_id() == 1:
+		return
+	main_n.change_player_turret(player_id, ammo_type)
 
 remote func recive_shoot_bounce_state(bulletS_state, _time):
 	if !get_tree().get_rpc_sender_id() == 1:

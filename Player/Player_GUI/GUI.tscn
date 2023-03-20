@@ -11,7 +11,6 @@
 [sub_resource type="StyleBoxEmpty" id=1]
 
 [node name="GUI" type="PanelContainer"]
-pause_mode = 2
 process_priority = 1
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -19,8 +18,10 @@ mouse_filter = 2
 custom_styles/panel = SubResource( 1 )
 
 [node name="Ammunition" parent="." instance=ExtResource( 1 )]
+margin_top = 510.0
 
 [node name="Scoreboard" parent="." instance=ExtResource( 6 )]
+pause_mode = 2
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -32,12 +33,14 @@ size_flags_horizontal = 6
 size_flags_vertical = 6
 
 [node name="BattleTimers" parent="." instance=ExtResource( 2 )]
+pause_mode = 2
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 1024.0
 margin_bottom = 600.0
 
 [node name="UpgradeSelector" parent="." instance=ExtResource( 4 )]
+pause_mode = 2
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -45,6 +48,7 @@ margin_right = 1024.0
 margin_bottom = 600.0
 
 [node name="EventLog" type="VBoxContainer" parent="."]
+pause_mode = 2
 margin_left = 624.0
 margin_top = 100.0
 margin_right = 1024.0

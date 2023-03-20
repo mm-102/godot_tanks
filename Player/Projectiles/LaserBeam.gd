@@ -10,7 +10,7 @@ onready var ray = $RayCast2D
 onready var tween = $Tween
 
 func setup(player : RigidBody2D):
-	var laser_point = player.get_node("%LaserPoint")
+	var laser_point = player.get_node("%BulletPoint")
 	point = laser_point.global_position
 	point_rotation = laser_point.global_rotation
 	player_path = player.get_path()
@@ -20,9 +20,9 @@ func setup_multi(bullet_data : Dictionary):
 	point_rotation = bullet_data.R
 	
 func _on_Tween_tween_all_completed():
-	var player = get_node_or_null(player_path)
-	if !(player == null):
-		player.ammo_left += 1
+#	var player = get_node_or_null(player_path)
+#	if !(player == null):
+#		player.ammo_left += 1
 	queue_free()
 	
 func _ready():

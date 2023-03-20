@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+const laser_charge_tscn = preload("res://Player/Particles/ChargeLaserBeamParticles.tscn")
+
 var nick: String = ""
 var color: Color = Color.blue
 var visible_to_local_player = false
@@ -15,8 +17,15 @@ func setup(player_data):
 	position = player_data.P
 	set_display_name(player_data.Nick)
 	color = player_data.Color
-	$"Hitbox/Sprite".modulate = player_data.Color
-	$Turret.modulate = player_data.Color
+	$"Hitbox/Sprite".self_modulate = player_data.Color
+	$Turret.self_modulate = player_data.Color
+	set_turret_type(GameSettings.Dynamic.Tank.BaseAmmoType)
+
+func charge(ammo_type): # make universal when more types will need charging
+	if ammo_type == Ammunition.TYPES.LASER:
+		var particles = laser_charge_tscn.instance()
+		$"%BulletPoint".add_child(particles)
+		particles.start(1.5) # make a setting for that
 
 func _physics_process(delta):
 	if stances.size() >= 2 and stances[-1].PlayersStance.has(player_id) and stances[-2].PlayersStance.has(player_id):
@@ -34,6 +43,9 @@ func interpolation():
 func set_display_name(text):
 	nick = text
 	$"%NickLabel".text = text
+
+func set_turret_type(type):
+	$Turret.frame = type
 
 func template_stance(previous_stance, next_stance, interpolation_factor):
 	var _position = lerp(previous_stance.P, next_stance.P, interpolation_factor)

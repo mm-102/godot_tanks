@@ -98,6 +98,9 @@ func spawn_bullet(player_id, bullet_data):
 	var client_clock = clock_n.client_clock
 	bullet_inst.setup_multi(bullet_data)
 	if player_id == get_tree().get_network_unique_id():
+		var player = players_n.get_node_or_null(str(player_id))
+		if player != null:
+			player.shot_successful()
 		bullet_inst.player_path = NodePath(Dir.PLAYERS + "/" + str(local_player_id))
 	yield(get_tree().create_timer((bullet_data.ST - Transfer.get_time())*0.001), "timeout")
 	while bullet_data.ST - Transfer.get_time() > 0:
@@ -105,6 +108,25 @@ func spawn_bullet(player_id, bullet_data):
 		#print("WAAAAAAAAAAAA")
 	#print("SpawnTime: ", bullet_data.ST - Transfer.get_time() )
 	projectiles_n.add_child(bullet_inst, true)
+
+func player_shot_failed(player_id):
+	if player_id != get_tree().get_network_unique_id():
+		print("[GAME]: Somehow recived packet meant for other player!")
+		return
+	print("[GAME]: shot failed!")
+	var player = players_n.get_node_or_null(str(player_id))
+	if player != null:
+		player.shot_failed()
+
+func player_charge(player_id, ammo_type):
+	var player = players_n.get_node_or_null(str(player_id))
+	if player != null:
+		player.charge(ammo_type)
+
+func change_player_turret(player_id, ammo_type):
+	var player = players_n.get_node_or_null(str(player_id))
+	if player != null:
+		player.set_turret_type(ammo_type)
 
 func update_bounce_bullet(bulletS_state, time):
 	if time < clock_n.get_time():

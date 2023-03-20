@@ -1,20 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://textures/ammo_box.png" type="Texture" id=1]
 [ext_resource path="res://textures/text/Bosk.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Player/Player_GUI/AmmoSlots/Slot.gd" type="Script" id=3]
 [ext_resource path="res://textures/bullet.png" type="Texture" id=4]
-
-[sub_resource type="StyleBoxTexture" id=2]
-content_margin_left = 3.0
-content_margin_right = 3.0
-content_margin_top = 1.0
-content_margin_bottom = 2.0
-texture = ExtResource( 1 )
-region_rect = Rect2( 0, 0, 64, 64 )
-
-[sub_resource type="Theme" id=3]
-PanelContainer/styles/panel = SubResource( 2 )
+[ext_resource path="res://textures/square64.png" type="Texture" id=5]
+[ext_resource path="res://textures/PlayerGUI/slot_border.png" type="Texture" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 use_mipmaps = true
@@ -32,12 +22,32 @@ margin_top = -20.0
 margin_right = 20.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 40, 40 )
+size_flags_horizontal = 0
 script = ExtResource( 3 )
 
-[node name="Background" type="PanelContainer" parent="."]
+[node name="Background" type="TextureProgress" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = SubResource( 3 )
+texture_under = ExtResource( 5 )
+texture_over = ExtResource( 6 )
+texture_progress = ExtResource( 5 )
+fill_mode = 3
+tint_progress = Color( 0.439216, 1, 1, 1 )
+nine_patch_stretch = true
+
+[node name="Icon" type="TextureRect" parent="Background"]
+margin_left = 5.0
+margin_top = 7.0
+margin_right = 35.0
+margin_bottom = 31.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 30, 24 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 6
 
 [node name="Number" type="Label" parent="Background"]
 modulate = Color( 0, 0, 0, 1 )
@@ -55,16 +65,6 @@ text = "0"
 align = 2
 valign = 2
 
-[node name="Icon" type="TextureRect" parent="Background"]
-margin_left = 5.0
-margin_top = 7.0
-margin_right = 35.0
-margin_bottom = 31.0
-grow_horizontal = 2
-grow_vertical = 2
-rect_min_size = Vector2( 30, 24 )
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource( 4 )
-expand = true
-stretch_mode = 6
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]
