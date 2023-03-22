@@ -22,7 +22,6 @@ func setup_multi(bullet_data : Dictionary):
 	set_name(bullet_data.ID)
 	position = bullet_data.P
 	set_linear_velocity(bullet_data.V)
-	#print(bullet_data.DT)
 	left_time = (bullet_data.DT - Transfer.get_time()) * 0.001
 
 
