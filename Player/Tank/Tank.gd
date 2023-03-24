@@ -249,7 +249,6 @@ func shot_successful():
 	special_ammo[ammo_slot].amount -= 1
 	_update_slots_after_shoot()
 	slot_locked = false
-	print(ammo_slot)
 	if ammo_slot == 0:
 		reset_autoload_timer()
 	if ammo_slot == 0 and special_ammo[0].amount == 0:

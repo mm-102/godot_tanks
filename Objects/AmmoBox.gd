@@ -1,8 +1,15 @@
 extends Area2D
 
+const super_type_shader = preload("res://Objects/ammo_box_shader.tres")
+
 export(Ammunition.TYPES) var type = Ammunition.TYPES.ROCKET
 const bigger_types = [
 	Ammunition.TYPES.FRAG_BOMB,
+	Ammunition.TYPES.FIREBALL,
+]
+
+const super_types = [
+	Ammunition.TYPES.LASER,
 	Ammunition.TYPES.FIREBALL,
 ]
 
@@ -19,3 +26,7 @@ func _ready():
 	if type in bigger_types:
 		sprite.set_scale(Vector2(3,3))
 	sprite.texture = Ammunition.get_box_texture(type)
+	
+	if type in super_types:
+		$MainSprite.material = ShaderMaterial.new()
+		$MainSprite.material.shader = super_type_shader
