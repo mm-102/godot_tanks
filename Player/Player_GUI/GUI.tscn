@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Player/Player_GUI/AmmoSlots/AmmoSlots.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Player_GUI/BattleTimers.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Interface/Menu.tres" type="Theme" id=3]
-[ext_resource path="res://Player/Player_GUI/UpgradeSelector.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Player/Player_GUI/Upgrades/UpgradeSelector.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Player/Player_GUI/Upgrades/AllUpgrades.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Player/Player_GUI/Scoreboard.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Player/Player_GUI/Pause.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Player/Player_GUI/EventLog.gd" type="Script" id=8]
@@ -73,3 +74,16 @@ __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": true
 }
+
+[node name="AllUpgrades" parent="." instance=ExtResource( 5 )]
+visible = false
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 280.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 1
+size_flags_vertical = 10
+size_flags_stretch_ratio = 4.01
+color = Color( 0.768627, 0.67451, 0.67451, 0.121569 )

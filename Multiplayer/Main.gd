@@ -12,6 +12,7 @@ onready var gui_n = get_node(Dir.GUI)
 onready var gui_scoreboard_n = get_node(Dir.GUI_SCOREBOARD)
 onready var gui_timer_n = get_node(Dir.GUI_TIMER)
 onready var gui_events_n = get_node(Dir.GUI_EVENT_LOG)
+onready var gui_all_upgrades_n = get_node(Dir.GUI_ALL_UPGRADES)
 
 
 
@@ -24,6 +25,7 @@ func connection_succeeded():
 func init_data(init_data):
 	map_n.set_map_data(init_data.MapData)
 	GameSettings.set_dynamic_settings(init_data.PlayerSData, init_data.SpecialUpgrades)
+	gui_all_upgrades_n.add_points(init_data.PlayerSData)
 	for player in init_data.PlayerSData:
 		gui_scoreboard_n.add_scoreboard_player(player.ID, player)
 		if player.ID == Transfer.my_id:
@@ -33,6 +35,7 @@ func init_data(init_data):
 	game_n.set_corspses_data(init_data.PlayerSCorpses)
 	game_n.set_bullets_data(init_data.BulletsStances)
 	gui_timer_n._on_phase_recived(init_data.Phase)
+	gui_all_upgrades_n._on_phase_recived(init_data.Phase)
 
 func end_of_battle():
 	gui_n.queue_free()

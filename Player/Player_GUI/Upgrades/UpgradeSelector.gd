@@ -1,6 +1,7 @@
 extends PanelContainer
 
-const upgrade_tscn = preload("res://Player/Player_GUI/Upgrade.tscn")
+const upgrade_tscn = preload("res://Player/Player_GUI/Upgrades/Upgrade.tscn")
+export (bool) var show_all_upgrades = false
 var choosen_upgrades: Dictionary
 var state = null
 onready var upgrade_container = $"%UpgradeContainer"
@@ -10,10 +11,18 @@ onready var background = $"%Background"
 onready var title = $"%Title"
 onready var label_points = $"%LabelPoints"
 
+
+
 func _ready():
 	Transfer.connect("recive_player_possible_upgrades", self, "show_upgrades")
-	#show_upgrades({"State": "Winner", "Points": 2, "Upgrades": {["Tank", "BaseAmmoType"]: 2}})
+	if show_all_upgrades:
+		show_all_upgrades()
 
+func show_all_upgrades():
+	var i = 0
+	for upgrade in GameSettings.DEFAULT:
+		show_upgrades({"State": "Normal", "Points": 2, "Upgrades": [upgrade]})
+		i += 1
 
 func show_upgrades(data):
 	if data.State == null:
@@ -32,7 +41,7 @@ func show_upgrades(data):
 		var data1 = upgrade_info.duplicate()
 		if typeof(data.Upgrades) == TYPE_DICTIONARY:
 			data1.append(data.Upgrades[upgrade_info])
-		inst.init(data1)
+		inst.init(data1, state)
 		upgrade_container.add_child(inst)
 	match data.State:
 		"Normal":

@@ -17,6 +17,7 @@ const GUI_SCOREBOARD = GUI + "/Scoreboard"
 const GUI_TIMER = GUI + "/BattleTimers"
 const GUI_AMMUNITION = GUI + "/Ammunition"
 const GUI_EVENT_LOG = GUI + "/EventLog"
+const GUI_ALL_UPGRADES = GUI + "/AllUpgrades"
 
 
 

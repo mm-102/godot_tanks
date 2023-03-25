@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/windy-stripes.svg-8d1d11fc8eaedf839fa241e297a26878.stex"
+path="res://.import/cross-mark.svg-8bad30c383e5738ffb8d2e6afad765a5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/UpgradeIcon/windy-stripes.svg"
-dest_files=[ "res://.import/windy-stripes.svg-8d1d11fc8eaedf839fa241e297a26878.stex" ]
+source_file="res://textures/UpgradeIcon/cross-mark.svg"
+dest_files=[ "res://.import/cross-mark.svg-8bad30c383e5738ffb8d2e6afad765a5.stex" ]
 
 [params]
 

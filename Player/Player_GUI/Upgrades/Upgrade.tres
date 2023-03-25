@@ -1,0 +1,73 @@
+[gd_resource type="Theme" load_steps=12 format=2]
+
+[ext_resource path="res://textures/ammo_box.png" type="Texture" id=1]
+[ext_resource path="res://textures/text/Bosk.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="StyleBoxTexture" id=14]
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="StyleBoxTexture" id=9]
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 64, 64 )
+modulate_color = Color( 0.643137, 0.643137, 0.643137, 1 )
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends StyleBoxTexture
+
+func set_style(style):
+	if style == \"normal\":
+		print(\"Aaaa\")
+"
+
+[sub_resource type="StyleBoxTexture" id=8]
+resource_local_to_scene = true
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 64, 64 )
+script = SubResource( 1 )
+
+[sub_resource type="StyleBoxTexture" id=11]
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 64, 64 )
+modulate_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="DynamicFont" id=16]
+size = 22
+use_filter = true
+extra_spacing_top = 3
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=15]
+bg_color = Color( 0.6, 0.6, 0.6, 0.588235 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[sub_resource type="DynamicFont" id=12]
+size = 24
+extra_spacing_top = 3
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=13]
+bg_color = Color( 0.0862745, 0.0862745, 0.0862745, 0.827451 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.729412, 0.729412, 0.729412, 1 )
+border_blend = true
+
+[resource]
+Button/styles/disabled = SubResource( 14 )
+Button/styles/hover = SubResource( 9 )
+Button/styles/normal = SubResource( 8 )
+Button/styles/pressed = SubResource( 11 )
+Label/fonts/font = SubResource( 16 )
+PanelContainer/styles/panel = SubResource( 15 )
+TooltipLabel/colors/font_color = Color( 1, 1, 1, 1 )
+TooltipLabel/colors/font_color_shadow = Color( 0, 0, 0, 0 )
+TooltipLabel/constants/shadow_offset_x = 1
+TooltipLabel/constants/shadow_offset_y = 1
+TooltipLabel/fonts/font = SubResource( 12 )
+TooltipPanel/styles/panel = SubResource( 13 )

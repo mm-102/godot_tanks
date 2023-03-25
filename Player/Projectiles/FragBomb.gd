@@ -17,11 +17,8 @@ func spawn_frag(rotation):
 	if gd != null:
 		frag_inst.set_script(gd)
 		
-	SET UP Instance of frag bullet with use of ;setup; - Make similar to multiplayer
-	
 	#var frag_timer : Timer = frag_inst.get_node("LifeTime")
 	frag_inst.left_time *= s.Frag.LifetimeMultiplayer
-	print(frag_inst.left_time)
 	frag_inst.set_scale(frag_inst.scale * s.Frag.Scale)
 	
 	var velocity = Vector2.UP.rotated(rotation) 
