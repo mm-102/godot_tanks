@@ -17,7 +17,6 @@ func on_special_ammo_event(event, args : Array):
 func shoot_event(args : Array):
 	var type = str(args[0])
 	var amount_left = args[1]
-	print(type, " ", amount_left)
 	if amount_left != INF:
 		$AmmoSlots.get_node(type).set_left_ammo(amount_left)
 		
