@@ -17,14 +17,19 @@ func on_special_ammo_event(event, args : Array):
 func shoot_event(args : Array):
 	var type = str(args[0])
 	var amount_left = args[1]
-	if amount_left <= 0 and int(type) != GameSettings.Dynamic.Tank.BaseAmmoType:
-		$AmmoSlots.get_node(type).queue_free()
+	print(type, " ", amount_left)
+	if amount_left != INF:
+		$AmmoSlots.get_node(type).set_left_ammo(amount_left)
+		
+	if amount_left > 0:
 		change_selection([
-			BASE_SLOT,
-			GameSettings.Dynamic.Ammunition[GameSettings.Dynamic.Tank.BaseAmmoType].Reload
+			current_selection,
+			GameSettings.Dynamic.Ammunition[int(type)].Reload
 		])
 		return
-	if amount_left > 0:
+		
+	if int(type) != GameSettings.Dynamic.Tank.BaseAmmoType:
+		$AmmoSlots.get_node(type).queue_free()
 		change_selection([
 			BASE_SLOT,
 			GameSettings.Dynamic.Ammunition[GameSettings.Dynamic.Tank.BaseAmmoType].Reload
@@ -35,8 +40,6 @@ func shoot_event(args : Array):
 			GameSettings.Dynamic.Ammunition[GameSettings.Dynamic.Tank.BaseAmmoType].Reload \
 			* GameSettings.Dynamic.Tank.AutoloadTimeMultiplier
 		])
-	if amount_left != INF:
-		$AmmoSlots.get_node(type).set_left_ammo(amount_left)
 
 func pick_up_event(args : Array):
 	var type = str(args[0])
