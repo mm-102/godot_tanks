@@ -46,3 +46,10 @@ static func get_gd_multi(name):
 
 static func get_box_texture(name):
 	return _ammo_box_texture[name]
+
+static func get_string_from_type(type):
+	return TYPES.keys()[type]\
+		.to_lower()\
+		.replace("_", " ")\
+		.capitalize()
+	
