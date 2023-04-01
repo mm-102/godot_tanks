@@ -1,10 +1,54 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=14 format=2]
 
+[ext_resource path="res://textures/box_texture/rocket_box.png" type="Texture" id=1]
 [ext_resource path="res://textures/text/Bosk.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Player/Player_GUI/AmmoSlots/Slot.gd" type="Script" id=3]
-[ext_resource path="res://textures/bullet.png" type="Texture" id=4]
-[ext_resource path="res://textures/square64.png" type="Texture" id=5]
-[ext_resource path="res://textures/PlayerGUI/slot_border.png" type="Texture" id=6]
+[ext_resource path="res://Player/Player_GUI/AmmoSlots/progress_bar.gdshader" type="Shader" id=4]
+[ext_resource path="res://Objects/ammo_box_shader.gdshader" type="Shader" id=7]
+[ext_resource path="res://Objects/gray_sampler.tres" type="Texture" id=8]
+[ext_resource path="res://Objects/SlotRect.gd" type="Script" id=9]
+[ext_resource path="res://Player/Player_GUI/AmmoSlots/ProgressBar.gd" type="Script" id=10]
+
+[sub_resource type="ShaderMaterial" id=8]
+shader = ExtResource( 7 )
+shader_param/center = Vector2( 0.5, 0.5 )
+shader_param/size = Vector2( 1, 1 )
+shader_param/corner_radius = 0.25
+shader_param/border_width = 0.08
+shader_param/anim_speed = 0.5
+shader_param/modulate = Color( 1, 1, 1, 1 )
+shader_param/border_ramp = ExtResource( 8 )
+
+[sub_resource type="ShaderMaterial" id=9]
+shader = ExtResource( 4 )
+shader_param/value = 0.0
+shader_param/center = Vector2( 0.5, 0.5 )
+shader_param/size = Vector2( 1, 1 )
+shader_param/corner_radius = 0.25
+shader_param/border_width = 0.08
+shader_param/modulate = Color( 1, 1, 1, 1 )
+shader_param/modulate_bar = Color( 0.439216, 1, 1, 1 )
+
+[sub_resource type="Shader" id=7]
+code = "shader_type canvas_item;
+
+uniform vec4 shadow_color : hint_color;
+uniform vec2 offset = vec2(0.1);
+
+vec4 shadow(sampler2D tex, vec2 pos){
+	float a = textureLod(tex, pos - offset, 0.0).a;
+	return vec4(shadow_color.rgb, shadow_color.a * a);
+}
+
+void fragment(){
+	vec4 col = texture(TEXTURE, UV);
+	COLOR = mix(col, shadow(TEXTURE, UV), 1.0-col.a);
+}"
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 7 )
+shader_param/shadow_color = Color( 0, 0, 0, 0.160784 )
+shader_param/offset = Vector2( 0.05, 0.05 )
 
 [sub_resource type="DynamicFont" id=1]
 use_mipmaps = true
@@ -25,37 +69,49 @@ rect_min_size = Vector2( 40, 40 )
 size_flags_horizontal = 0
 script = ExtResource( 3 )
 
-[node name="Background" type="TextureProgress" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture_under = ExtResource( 5 )
-texture_over = ExtResource( 6 )
-texture_progress = ExtResource( 5 )
-fill_mode = 3
-tint_progress = Color( 0.439216, 1, 1, 1 )
-nine_patch_stretch = true
+[node name="SlotRect" type="ColorRect" parent="."]
+material = SubResource( 8 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 40, 40 )
+color = Color( 1, 1, 1, 0 )
+script = ExtResource( 9 )
+type = 1
 
-[node name="Icon" type="TextureRect" parent="Background"]
-margin_left = 5.0
-margin_top = 7.0
-margin_right = 35.0
-margin_bottom = 31.0
-grow_horizontal = 2
-grow_vertical = 2
-rect_min_size = Vector2( 30, 24 )
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource( 4 )
+[node name="ProgressBar" type="ColorRect" parent="SlotRect"]
+material = SubResource( 9 )
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+color = Color( 1, 1, 1, 0 )
+script = ExtResource( 10 )
+
+[node name="TypeRect" type="TextureRect" parent="SlotRect"]
+material = SubResource( 6 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -15.0
+margin_top = -15.0
+margin_right = 15.0
+margin_bottom = 15.0
+texture = ExtResource( 1 )
 expand = true
-stretch_mode = 6
 
-[node name="Number" type="Label" parent="Background"]
+[node name="Number" type="Label" parent="."]
 modulate = Color( 0, 0, 0, 1 )
 self_modulate = Color( 0, 0, 0, 1 )
-margin_left = 29.0
-margin_top = 25.0
-margin_right = 37.0
-margin_bottom = 38.0
+margin_left = 28.0
+margin_top = 24.0
+margin_right = 36.0
+margin_bottom = 37.0
 size_flags_horizontal = 8
 size_flags_vertical = 8
 custom_colors/font_color = Color( 0, 0, 0, 1 )

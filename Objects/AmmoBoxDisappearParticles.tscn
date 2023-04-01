@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://textures/smoke_particle.png" type="Texture" id=1]
+[ext_resource path="res://Global/particles_die_when_stop.gd" type="Script" id=2]
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0, 0.465812, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
+
+[sub_resource type="Curve" id=4]
+max_value = 0.1
+_data = [ Vector2( 0.0116732, 0.0136316 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.0385701 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=5]
+curve = SubResource( 4 )
+
+[sub_resource type="ParticlesMaterial" id=1]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 60.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_curve = SubResource( 5 )
+color = Color( 1.5, 1.5, 1.5, 1 )
+color_ramp = SubResource( 3 )
+
+[node name="AmmoBoxDisappearParticles" type="Particles2D"]
+amount = 16
+lifetime = 0.5
+explosiveness = 0.8
+process_material = SubResource( 1 )
+texture = ExtResource( 1 )
+script = ExtResource( 2 )

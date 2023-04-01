@@ -5,34 +5,35 @@ const LOADING_COLOR = "70ffff"
 const LOADED_COLOR = "66ff80"
 export var is_selected: bool = false setget set_is_selected
 
+func _ready():
+	$SlotRect/ProgressBar.set_loading_color(Color(LOADING_COLOR))
 
 func set_is_selected(value : bool, reload_time : float = 0):
 	is_selected = value
-	get_node("Background").tint_progress = LOADING_COLOR
+	$SlotRect/ProgressBar.set_loading_color(Color(LOADING_COLOR))
 	if is_selected:
 		$Tween.remove_all()
-		$Tween.interpolate_property(get_node("Background"), "value", 0, 100, reload_time, Tween.TRANS_LINEAR)
+		$Tween.interpolate_method(get_node("SlotRect/ProgressBar"), "set_value", 0.0, 1.0, reload_time, Tween.TRANS_LINEAR)
 		$Tween.start()
 	else:
 		$Tween.stop_all()
-		get_node("Background").value = 0
+		$SlotRect/ProgressBar.set_value(0.0)
 		
 func _on_Tween_tween_all_completed():
-	get_node("Background").tint_progress = LOADED_COLOR
+	$SlotRect/ProgressBar.set_loading_color(Color(LOADED_COLOR))
 		
 
 func setup(type, amount_left):
 	name = type
-	get_node("Background/Icon").set_texture(Ammunition.get_box_texture(int(type)))
-	if int(type) == Ammunition.TYPES.BULLET:
-		get_node("Background/Icon").set_custom_minimum_size(Vector2(7, 7))
+	$SlotRect.type = int(type)
+
 	if amount_left >= INF:
-		get_node("Background/Number").text = ""
+		$Number.text = ""
 	else:
-		get_node("Background/Number").text = str(amount_left)
+		$Number.text = str(amount_left)
 
 func set_left_ammo(amount_left):
-	get_node("Background/Number").text = str(amount_left)
+	$Number.text = str(amount_left)
 
 
 

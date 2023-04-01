@@ -2,9 +2,10 @@ extends Projectile
 
 #var ammo_type = Ammunition.TYPES.FRAG_BOMB
 #
+var t
+
 func _init():
 	s = GameSettings.Dynamic.Ammunition[2]
-
 
 func spawn_frag(rotation):
 	var frag_inst = load("res://Global/Ammunition.gd").get_tscn(s.Frag.Type).instance()
@@ -31,3 +32,10 @@ func explode():
 
 func die():
 	explode()
+
+func _ready():
+	t = $LifeTime.time_left # as lifeTime is not kept in dynamic settings :(
+
+func _physics_process(delta):
+	$Sprite.self_modulate = Color.red.linear_interpolate(Color.black, $LifeTime.time_left / t)
+	$Sprite.rotate(2 * delta)

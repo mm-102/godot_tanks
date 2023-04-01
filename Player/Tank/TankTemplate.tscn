@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://textures/tank_base.png" type="Texture" id=1]
 [ext_resource path="res://Player/Tank/TankTemplate.gd" type="Script" id=2]
 [ext_resource path="res://textures/tank_turret.png" type="Texture" id=3]
+[ext_resource path="res://Player/Particles/shoot_particles_material.tres" type="Material" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 24, 32 )
@@ -17,18 +18,29 @@ shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Hitbox"]
 unique_name_in_owner = true
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )
 
 [node name="Turret" type="Sprite" parent="."]
 unique_name_in_owner = true
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 3 )
 centered = false
-offset = Vector2( -16, -64 )
+offset = Vector2( -32, -128 )
 hframes = 6
 
 [node name="BulletPoint" type="Position2D" parent="Turret"]
 unique_name_in_owner = true
-position = Vector2( 0, -52 )
+position = Vector2( 0, -115 )
+
+[node name="ShootParticles" type="Particles2D" parent="Turret/BulletPoint"]
+unique_name_in_owner = true
+scale = Vector2( 2, 2 )
+emitting = false
+lifetime = 0.2
+one_shot = true
+explosiveness = 0.9
+process_material = ExtResource( 4 )
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
 unique_name_in_owner = true

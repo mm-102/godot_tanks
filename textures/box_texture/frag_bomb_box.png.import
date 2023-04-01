@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/laser_bullet_box.png-2b64596345f20dad5bd44cd4261150a3.stex"
+path="res://.import/frag_bomb_box.png-df0d3349e7931b7d2b2f4bce22e64088.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/laser_bullet_box.png"
-dest_files=[ "res://.import/laser_bullet_box.png-2b64596345f20dad5bd44cd4261150a3.stex" ]
+source_file="res://textures/box_texture/frag_bomb_box.png"
+dest_files=[ "res://.import/frag_bomb_box.png-df0d3349e7931b7d2b2f4bce22e64088.stex" ]
 
 [params]
 

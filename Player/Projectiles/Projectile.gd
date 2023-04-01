@@ -32,11 +32,12 @@ func _init():
 	add_child(append_timer)
 
 func _ready():
-	life_timer.start(left_time)
 	if !$"/root/Master".is_multiplayer:
 #		if player_path != NodePath(""):
 #			linear_velocity *= SPEED
 		connect("body_entered", self, "kill_on_singleplayer")
+	else:
+		life_timer.start(left_time)
 
 
 

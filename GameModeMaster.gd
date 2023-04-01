@@ -35,5 +35,3 @@ func queue_free_menu():
 func exit_to_menu():
 	$Main.queue_free()
 	get_tree().reload_current_scene()
-
-

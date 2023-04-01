@@ -38,6 +38,7 @@ onready var gun_ray_cast_node = $"%GunRayCast"
 onready var camera2d_n = $"%Camera2D"
 onready var reload_timer_n = $ReloadTimer
 onready var autoload_timer_n = $BaseTypeAutoloadTimer
+onready var shoot_particles_n = $"%ShootParticles"
 
 
 func set_display_name(text):
@@ -61,6 +62,8 @@ func _ready():
 	 {"type" : s.BaseAmmoType, "amount" : 0}
 	]
 	reset_autoload_timer()
+	shoot_particles_n.emitting = false
+	shoot_particles_n.one_shot = true
 
 
 func setup_multi(player_data, local_player_name):
@@ -230,6 +233,7 @@ func _shoot():
 	# ---- main shooting ----
 	shooting_locked = true
 	slot_locked = true
+	shoot_particles_n.emitting = true
 	if is_multiplayer:
 		player_stance = {
 			"T": OS.get_ticks_msec(),

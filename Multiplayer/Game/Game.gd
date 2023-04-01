@@ -83,7 +83,7 @@ func local_player_destroyed(projectile_name):
 func ammobox_destroyed(name):
 	var obj = get_node_or_null(Dir.MAP+"/AmmoBoxes/"+name)
 	if obj != null:
-		obj.queue_free()
+		obj.die()
 
 func create_corpse(corpse_data):
 	var wreck_inst = tank_wreck.instance()
@@ -103,6 +103,10 @@ func spawn_bullet(player_id, bullet_data):
 		if player != null:
 			player.shot_successful()
 		bullet_inst.player_path = NodePath(Dir.PLAYERS + "/" + str(local_player_id))
+	else:
+		var player = players_n.get_node_or_null(str(player_id))
+		if player != null:
+			player.shoot_particles()
 	yield(get_tree().create_timer((bullet_data.ST - Transfer.get_time())*0.001), "timeout")
 	while bullet_data.ST - Transfer.get_time() > 0:
 		yield(get_tree(),"idle_frame")

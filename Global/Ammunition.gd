@@ -22,12 +22,12 @@ const _ammo_gd_multi = {
 }
 
 const _ammo_box_texture = {
-	TYPES.BULLET: preload("res://textures/bullet.png"),
-	TYPES.ROCKET: preload("res://textures/rocket.png"),
-	TYPES.FRAG_BOMB: preload("res://textures/bullet.png"),
-	TYPES.LASER: preload("res://textures/laser_box.png"),
-	TYPES.LASER_BULLET: preload("res://textures/laser_bullet_box.png"),
-	TYPES.FIREBALL: preload("res://textures/fireball_box.png")
+	TYPES.BULLET: preload("res://textures/box_texture/bullet_box.png"),
+	TYPES.ROCKET: preload("res://textures/box_texture/rocket_box.png"),
+	TYPES.FRAG_BOMB: preload("res://textures/box_texture/frag_bomb_box.png"),
+	TYPES.LASER: preload("res://textures/box_texture/laser_box.png"),
+	TYPES.LASER_BULLET: preload("res://textures/box_texture/laser_bullet_box.png"),
+	TYPES.FIREBALL: preload("res://textures/box_texture/fireball_box.png")
 }
 
 

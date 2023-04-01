@@ -1,32 +1,25 @@
 extends Area2D
+tool
 
-const super_type_shader = preload("res://Objects/ammo_box_shader.tres")
+const disappear_particles = preload("res://Objects/AmmoBoxDisappearParticles.tscn")
 
-export(Ammunition.TYPES) var type = Ammunition.TYPES.ROCKET
-const bigger_types = [
-	Ammunition.TYPES.FRAG_BOMB,
-	Ammunition.TYPES.FIREBALL,
-]
-
-const super_types = [
-	Ammunition.TYPES.LASER,
-	Ammunition.TYPES.FIREBALL,
-]
-
+export(Ammunition.TYPES) var type = Ammunition.TYPES.ROCKET setget set_type
 
 func _on_AmmoBox_body_entered(body):
 	if !body.is_in_group("Players"):
 		return
 	if body.is_in_group("ME"):
 		if body.pick_up_ammo_box(type):
-			queue_free()
+			die()
+
+func die():
+	var particles = disappear_particles.instance()
+	particles.one_shot = true
+	particles.global_position = global_position
+	particles.scale = scale
+	get_parent().add_child(particles)
+	queue_free()
 	
-func _ready():
-	var sprite = $TypeSprite
-	if type in bigger_types:
-		sprite.set_scale(Vector2(3,3))
-	sprite.texture = Ammunition.get_box_texture(type)
-	
-	if type in super_types:
-		$MainSprite.material = ShaderMaterial.new()
-		$MainSprite.material.shader = super_type_shader
+func set_type(var t):
+	type = t
+	$SlotRect.type = type
