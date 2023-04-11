@@ -1,7 +1,7 @@
 extends Node
 
 signal recive_player_possible_upgrades(data)
-signal recive_battle_over_time(time_to_end)
+signal phase_recived(phase)
 
 const PORT = 42521
 var ip = null
@@ -105,18 +105,10 @@ remote func recive_new_battle(init_data):
 	main_n.init_data(init_data)
 
 #---------- CORE GAME MECHANIC ---------
-
-remote func recive_new_battle_time(left_sec):
+remote func recive_phase(phase):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
-	main_n.battle_time(left_sec)
-
-remote func recive_battle_over_time(time_to_end):
-	if !get_tree().get_rpc_sender_id() == 1:
-		return
-	get_tree().set_pause(true)
-	emit_signal("recive_battle_over_time", time_to_end)
-	
+	emit_signal("phase_recived", phase)
 
 remote func recive_player_destroyed(corpse_data, kill_event_data):
 	if !get_tree().get_rpc_sender_id() == 1:

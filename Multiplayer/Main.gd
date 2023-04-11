@@ -14,8 +14,6 @@ onready var gui_timer_n = get_node(Dir.GUI_TIMER)
 onready var gui_events_n = get_node(Dir.GUI_EVENT_LOG)
 
 
-func _ready():
-	pass
 
 func _exit_tree():
 	Transfer.close_connection()
@@ -34,10 +32,7 @@ func init_data(init_data):
 		game_n.create_template(player)
 	game_n.set_corspses_data(init_data.PlayerSCorpses)
 	game_n.set_bullets_data(init_data.BulletsStances)
-	if init_data.has("TimeLeft"):
-		gui_timer_n.battle_time(init_data.TimeLeft)
-	if init_data.has("TimeToStartNewGame"):
-		gui_timer_n.start_battle_time(init_data.TimeToStartNewGame)
+	gui_timer_n._on_phase_recived(init_data.Phase)
 
 func end_of_battle():
 	gui_n.queue_free()
@@ -49,9 +44,6 @@ func end_of_battle():
 
 func add_world_stance(time, playerS_stance):
 	game_n.add_world_stance(time, playerS_stance)
-
-func battle_time(left_sec):
-	gui_timer_n.battle_time(left_sec)
 
 func spawn_bullet(player_id, bullet_data):
 	game_n.spawn_bullet(player_id, bullet_data)

@@ -11,25 +11,32 @@ onready var t_clock_n = get_node(Dir.T_CLOCK)
 
 
 func _ready():
-	Transfer.connect("recive_battle_over_time", self, "_on_battle_over_time")
+	Transfer.connect("phase_recived", self, "_on_phase_recived")
 	start_round_background.hide()
 	set_process(false)
 
 func _process(delta):
 	start_round_label.set_text(str(battle_start_timer.get_time_left()).left(4))
 
-func start_battle_time(ms_to_new_game):
-	var left_sec = (ms_to_new_game - t_clock_n.get_time())*0.001
+func _on_phase_recived(phase):
+	match phase.Name:
+		"Prepare":
+			start_battle_time(phase.ClosingTick)
+		"Battle":
+			_on_battle_over_time(phase.ClosingTick)
+		"Upgrade":
+			end_round_label.set_modulate(Color.aqua)
+			get_tree().set_pause(true)
+			_on_battle_over_time(phase.ClosingTick)
+
+func start_battle_time(closing_tick):
+	var left_sec = (closing_tick - t_clock_n.get_time())*0.001
 	battle_start_timer.start(left_sec)
 	set_process(true)
 	start_round_background.show()
 
-func _on_battle_over_time(time_to_end):
-	end_round_label.set_modulate(Color.aqua)
-	battle_time(time_to_end)
-
-func battle_time(ms_to_new_game):
-	var left_sec = (ms_to_new_game - t_clock_n.get_time())*0.001
+func _on_battle_over_time(closing_tick):
+	var left_sec = (closing_tick - t_clock_n.get_time())*0.001
 	end_round_label.show()
 	time_left = left_sec
 	clock.start()
