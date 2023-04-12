@@ -25,6 +25,7 @@ mat2 rot(float theta){
 void vertex(){
 	vec2 pos = VERTEX - TEXTURE_PIXEL_SIZE * 0.5;
 	vec2 center_of_rot = vec2(radius, 0.0);
+	float _speed = (-0.03 * radius) + 20.0;
 	pos = (rot(PI * (part_of_circle * sin(TIME * speed) + 0.5)) * (pos-center_of_rot)) + center_of_rot;
 	VERTEX = pos + TEXTURE_PIXEL_SIZE * 0.5;
 }"
