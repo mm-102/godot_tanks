@@ -167,5 +167,8 @@ remote func recive_player_possible_upgrades(data):
 		return
 	emit_signal("recive_player_possible_upgrades", data)
 
+func fetch_update_acknowledge():
+	rpc_id(1, "recive_update_acknowledge")
+
 func fetch_player_possible_upgrades(player_choosen_upgrades):
 	rpc_id(1, "recive_upgrade", player_choosen_upgrades)

@@ -75,4 +75,5 @@ func disable_buttons(value):
 
 func _on_Button_pressed():
 	self.hide()
+	Transfer.fetch_update_acknowledge()
 	
