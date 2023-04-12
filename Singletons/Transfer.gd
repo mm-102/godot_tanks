@@ -73,7 +73,12 @@ func close_connection():
 
 #---- INIT DATA ----
 func fetch_init_data():
-	rpc_id(1, "recive_init_data", master_n.nick, master_n.player_color, Functions.get_version(), OS.get_ticks_msec())
+	var player_data = {
+		"Nick":  master_n.nick,
+		"Color": master_n.player_color,
+		"Version":  Functions.get_version(),
+	}
+	rpc_id(1, "recive_init_data", player_data, OS.get_ticks_msec())
 
 remote func recive_old_version_info(available_versions):
 	if !get_tree().get_rpc_sender_id() == 1:
