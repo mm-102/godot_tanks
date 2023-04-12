@@ -1,6 +1,7 @@
 extends Projectile
 
-var _target : PhysicsBody2D = null
+var target = null
+onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 var started_targeting = false
 
 #var ammo_type = Ammunition.TYPES.ROCKET
@@ -10,27 +11,31 @@ func _init():
 
 func _on_StartTargeting_timeout():
 	started_targeting = true
-	
-func _set_target():
-	var t = null
-	var d = INF
-	for player_node in get_tree().get_nodes_in_group("Players"):
-#		if player_node.dead:
-#			continue
-		var cd = global_transform.origin.distance_to(player_node.global_transform.origin)
-		if cd < d:
-			d = cd
-			t = player_node
-	
-	_target = t
 
-func _integrate_forces(_state):
+func _integrate_forces(state):
 	if !started_targeting:
+		return
+	for player in get_tree().get_nodes_in_group("Players"):
+		if target == null:
+			target = player
+		if !is_instance_valid(target) or !target.is_inside_tree():
+			target = null
+			continue
+		if !is_instance_valid(player):
+			continue
+		if player.global_position.distance_to(self.global_position) < \
+				target.global_position.distance_to(self.global_position):
+			target = player
+	if is_instance_valid(target):
+		navigation_agent.set_target_location(target.global_position)
+		var move_direction = position.direction_to(navigation_agent.get_next_location())
+		var velocity = move_direction * s.FollowSpeed
+		set_linear_velocity(velocity) 
+		navigation_agent.set_velocity(velocity)
+
+func _physics_process(delta):
+	if is_instance_valid(target):
+		var rot = navigation_agent.get_next_location().angle_to_point(position)
+		rotation = lerp_angle(rotation, rot, delta * 8)
+	else:
 		rotation = linear_velocity.angle()
-		return
-	elif _target == null or !is_instance_valid(_target) or !_target.is_in_group("Players"):
-		_set_target()
-		return
-		
-	rotation = global_transform.origin.angle_to_point(_target.global_transform.origin) + PI
-	linear_velocity = linear_velocity.linear_interpolate((_target.global_transform.origin.direction_to(global_transform.origin) * -s.Speed), _state.get_step()*s.FollowSpeed)
