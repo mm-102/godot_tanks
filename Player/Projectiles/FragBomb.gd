@@ -17,9 +17,9 @@ func spawn_frag(rotation):
 	frag_timer.wait_time *= s.Frag.LifetimeMultiplayer
 	frag_inst.set_scale(frag_inst.scale * s.Frag.Scale)
 	
-	var velocity = Vector2.UP.rotated(rotation)
+	var velocity = Vector2.UP.rotated(rotation) 
 	frag_inst.position = position + 1 * velocity # separate frags from each other
-	frag_inst.set_linear_velocity(velocity * s.Frag.Speed)
+	frag_inst.set_linear_velocity(velocity * s.Frag.Speed * GameSettings.Dynamic.Ammunition[s.Frag.Type].Speed)
 	get_node(Dir.PROJECTILES).add_child(frag_inst)
 	
 func explode():

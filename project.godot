@@ -15,11 +15,6 @@ _global_script_classes=[ {
 "path": "res://Global/Ammunition.gd"
 }, {
 "base": "Reference",
-"class": "DefaultSettings",
-"language": "GDScript",
-"path": "res://Global/DefaultSettings.gd"
-}, {
-"base": "Reference",
 "class": "Dir",
 "language": "GDScript",
 "path": "res://Global/Dir.gd"
@@ -41,7 +36,6 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Ammunition": "",
-"DefaultSettings": "",
 "Dir": "",
 "Functions": "",
 "GameSettings": "",
