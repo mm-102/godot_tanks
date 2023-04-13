@@ -1,6 +1,7 @@
 extends RigidBody2D
 
 signal special_ammo_event(type, amount_left)
+signal self_player_died()
 
 const tank_wreck = preload("res://Player/Tank/TankWreck.tscn")
 #const laser_charge_tscn = preload("res://Player/Particles/ChargeLaserBeamParticles.tscn")
@@ -275,10 +276,7 @@ func die():
 		wreck.life_time = INF # [info] <----- From tank instance
 		get_node(Dir.GAME + "/Objects").call_deferred("add_child", wreck)
 	
-	var spectator_camera : Camera2D = load("res://Player/Spectator/Spectator.tscn").instance()
-	spectator_camera.global_position = global_position
-	spectator_camera.current = true
-	players_n.add_child(spectator_camera)
+	emit_signal("self_player_died", global_position)
 
 func _on_timer_timeout():
 	queue_free()

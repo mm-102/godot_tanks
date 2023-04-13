@@ -2,6 +2,7 @@ extends Node
 
 signal recive_player_possible_upgrades(data)
 signal phase_recived(phase)
+signal data_during_game_recived()
 
 const PORT = 42521
 var ip = null
@@ -97,9 +98,7 @@ remote func recive_data_during_game(init_data):
 	time_diff_timer_node.start()
 	master_n.queue_free_menu()
 	main_n.init_data(init_data)
-	var spectator_camera : Camera2D = load("res://Player/Spectator/Spectator.tscn").instance()
-	spectator_camera.current = true
-	main_n.add_child(spectator_camera)
+	emit_signal("data_during_game_recived")
 	
 remote func recive_new_battle(init_data):
 	if !get_tree().get_rpc_sender_id() == 1:

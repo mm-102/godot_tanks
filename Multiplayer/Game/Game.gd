@@ -42,6 +42,7 @@ func self_initiation(player_data):
 	var tank_inst = tank.instance()
 	var local_player_name = get_node(Dir.MAIN).local_player_name
 	tank_inst.setup_multi(player_data, local_player_name)
+	tank_inst.connect("self_player_died", $Spectator, "on_self_player_died")
 	players_n.add_child(tank_inst, true)
 	players_n.move_child(tank_inst, 0)
 

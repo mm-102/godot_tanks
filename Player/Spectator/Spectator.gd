@@ -3,11 +3,20 @@ extends Camera2D
 signal zoom_change(new_zoom)
 
 const S = GameSettings.STATIC.CAMERA.SPECTATOR
-
 var following = false
+
+
 
 func _ready():
 	var _err = connect("zoom_change", get_node(Dir.MAIN + "/Background"), "zoom_change")
+	_err = Transfer.connect("data_during_game_recived", self, "_on_data_during_game_recived")
+	set_process_input(false)
+	set_process(false)
+
+func start_spectating():
+	_set_current(true)
+	set_process_input(true)
+	set_process(true)
 
 func zoom_point(zoom_diff, mouse_position):
 	var viewport_size = get_viewport().size
@@ -45,3 +54,12 @@ func _process(_delta):
 		$Tween.stop(self, "position")
 		$Tween.interpolate_property(self, "position", position, position + velocity * S.MOVE_SPEED, 0.1)
 		$Tween.start()
+
+
+func _on_data_during_game_recived():
+	start_spectating()
+
+func on_self_player_died(pos):
+	start_spectating()
+	set_global_position(pos)
+	
