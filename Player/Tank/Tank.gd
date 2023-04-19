@@ -187,6 +187,8 @@ func _update_slots_after_shoot():
 		special_ammo.pop_at(ammo_slot)
 		ammo_slot = 0
 		set_turret_type(special_ammo[0].type)
+		if is_multiplayer:
+			transfer_n.fetch_change_ammo_type(special_ammo[0].type)
 
 # multiplayer only
 func charge(ammo_type): # make universal when more types will need charging
@@ -254,7 +256,7 @@ func shot_successful():
 	special_ammo[ammo_slot].amount -= 1
 	_update_slots_after_shoot()
 	slot_locked = false
-	if ammo_slot == 0:
+	if ammo_slot == 0 and special_ammo[0].amount < s.BaseAmmoClipSize:
 		reset_autoload_timer()
 	if ammo_slot == 0 and special_ammo[0].amount == 0:
 		reload_timer_n.start(autoload_timer_n.time_left)
