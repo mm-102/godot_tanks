@@ -37,7 +37,6 @@ func _physics_process(delta):
 	if is_instance_valid(target):
 		var distance =  min(global_position.distance_to(target.global_position), 500)
 		$Sprite.get_material().set_shader_param("radius", distance)
-		print((-0.03 * distance) + 20.0)
 		#$Sprite.get_material().set_shader_param("speed", (-0.03 * distance) + 20.0)
 		var rot = navigation_agent.get_next_location().angle_to_point(position)
 		rotation = lerp_angle(rotation, rot, delta * 8)

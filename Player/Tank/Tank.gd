@@ -75,7 +75,7 @@ func setup_multi(player_data, local_player_name):
 
 func reset_autoload_timer():
 	var load_time = GameSettings.Dynamic.Ammunition[s.BaseAmmoType].Reload\
-	* s.AutoloadTimeMultiplier
+			* s.AutoloadTimeMultiplier
 	autoload_timer_n.start(load_time)
 	emit_signal("special_ammo_event", "reset_autoload", [load_time])
 	

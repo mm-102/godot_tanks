@@ -1,13 +1,25 @@
 extends TextureRect
 
 const upgrade_tscn = preload("res://Singleplayer/GUI/Upgrade.tscn")
+const upgrade_special_tscn = preload("res://Singleplayer/GUI/UpgradeSpecial.tscn")
 
 onready var master_n = get_node(Dir.MASTER)
 onready var upgrade_container = $"%UpgradeContainer"
 
 func _ready():
+	load_special_upgrades()
 	load_upgrades()
 
+func load_special_upgrades():
+	var all_special_upgrades = GameSettings.SPECIAL_DEFAULT
+	for upgrade_path in all_special_upgrades:
+		var upgrade_inst = upgrade_special_tscn.instance()
+		upgrade_inst.get_node("Name").set_modulate(Color.darkmagenta)
+		var value = get_value_asterix(upgrade_path)
+		upgrade_inst.connect("value_entered", self, "_on_value_entered")
+		upgrade_inst.setup(upgrade_path, value)
+		upgrade_container.add_child(upgrade_inst)
+		
 func load_upgrades():
 	var all_upgrades = GameSettings.DEFAULT
 	for upgrade_path in all_upgrades:
@@ -45,4 +57,4 @@ func _on_value_entered(path : Array, new_value):
 	for pice in path:
 		temp_dict = temp_dict[pice]
 	path.append(last_path_pice)
-	temp_dict[last_path_pice] = float(new_value)
+	temp_dict[last_path_pice] = new_value

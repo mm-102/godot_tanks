@@ -23,7 +23,7 @@ func set_value(value = 0):
 
 func _on_value_change(new_value):
 	$Slider.value = new_value
-	emit_signal("value_entered", upgrade_path, new_value)
+	emit_signal("value_entered", upgrade_path, float(new_value))
 
 func _on_Slider_value_changed(value):
 	$Value.value = value
