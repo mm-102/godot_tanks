@@ -209,6 +209,7 @@ expand_icon = true
 
 [node name="Background" parent="." instance=ExtResource( 3 )]
 
+[connection signal="self_player_died" from="Game/Tank" to="Game" method="_on_Tank_self_player_died"]
 [connection signal="toggled" from="GUILayer/GUI/TopRightButtons/SettingsButton" to="GUILayer/GUI/TopRightButtons" method="_on_button_toggled" binds= [ "SettingsButton" ]]
 [connection signal="toggled" from="GUILayer/GUI/TopRightButtons/SettingsButton" to="GUILayer/GUI/SettingsWindow" method="_on_SettingsButton_toggled"]
 [connection signal="toggled" from="GUILayer/GUI/TopRightButtons/PauseButton" to="GUILayer/GUI/TopRightButtons" method="_on_button_toggled" binds= [ "PauseButton" ]]

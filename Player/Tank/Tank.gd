@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 signal special_ammo_event(type, amount_left)
-signal self_player_died()
+signal self_player_died(position)
 
 const tank_wreck = preload("res://Player/Tank/TankWreck.tscn")
 #const laser_charge_tscn = preload("res://Player/Particles/ChargeLaserBeamParticles.tscn")
