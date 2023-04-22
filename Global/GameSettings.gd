@@ -33,6 +33,7 @@ static func set_base_value(path, value):
 	for step in path:
 		temp_dict = temp_dict[step]
 	path.append(last)
+	assert(temp_dict.has(last), str("[GameSettings] ", path, " doesn't have ", last, " value"))
 	temp_dict[last] = value
 
 static func add_value(path, value):
@@ -62,7 +63,7 @@ const DEFAULT = {
 	
 	["Ammunition", AT.BULLET, "Speed"]: 200,
 	["Ammunition", AT.BULLET, "Reload"]: 1,
-	["Ammunition", AT.BULLET, "LifeTime"]: 10,
+	["Ammunition", AT.BULLET, "LifeTime"]: 20,
 	
 	["Ammunition", AT.ROCKET, "Speed"]: 200,
 	["Ammunition", AT.ROCKET, "FollowSpeed"]: 150,
@@ -72,11 +73,11 @@ const DEFAULT = {
 	["Ammunition", AT.FRAG_BOMB, "Speed"]: 200,
 	["Ammunition", AT.FRAG_BOMB, "Count"]: 30,
 	["Ammunition", AT.FRAG_BOMB, "Reload"]: 3,
-	["Ammunition", AT.FRAG_BOMB, "LifeTime"]: 5,
+	["Ammunition", AT.FRAG_BOMB, "LifeTime"]: 1,
 	
 	["Ammunition", AT.FRAG_BOMB, "Frag", "Speed"]: 0.8,
 	["Ammunition", AT.FRAG_BOMB, "Frag", "Scale"]: 0.5,
-	["Ammunition", AT.FRAG_BOMB, "Frag", "LifetimeMultiplayer"]: 0.2,
+	["Ammunition", AT.FRAG_BOMB, "Frag", "LifetimeMultiplayer"]: 2,
 	
 	["Ammunition", AT.LASER, "Length"]: 2000,
 	["Ammunition", AT.LASER, "MaxBounces"]: 15,
@@ -118,11 +119,13 @@ const Dynamic = {
 			"Speed" : null,
 			"FollowSpeed" : null,
 			"Reload" : null,
+			"LifeTime": null,
 		},
 		AT.FRAG_BOMB: {
 			"Speed" : null,
 			"Count" : null,
 			"Reload" : null,
+			"LifeTime": null,
 			"Frag":{
 				"Speed" : null,
 				"Scale" : null,
@@ -136,16 +139,19 @@ const Dynamic = {
 			"MaxWidth" : null,
 			"Reload" : null,
 			"ChargeTime" : null,
+			"LifeTime": null,
 		},
 		AT.LASER_BULLET:{
 			"Speed" : null,
 			"Length" : null,
 			"MaxBounces" : null,
 			"Reload" : null,
+			"LifeTime": null,
 		},
 		AT.FIREBALL:{
 			"Speed" : null,
 			"Reload" : null,
+			"LifeTime": null,
 		},
 	},
 }

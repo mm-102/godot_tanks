@@ -17,6 +17,7 @@ func setup(player : RigidBody2D):
 	var point = player.get_node("%BulletPoint")
 	position = point.global_position
 	set_linear_velocity(Vector2.UP.rotated(point.global_rotation) * s.Speed)
+	left_time = s.LifeTime
 
 func setup_multi(bullet_data : Dictionary):
 	set_name(bullet_data.ID)
@@ -36,8 +37,7 @@ func _ready():
 #		if player_path != NodePath(""):
 #			linear_velocity *= SPEED
 		connect("body_entered", self, "kill_on_singleplayer")
-	else:
-		life_timer.start(left_time)
+	life_timer.start(left_time)
 
 
 

@@ -1,0 +1,136 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Player/Player_GUI/AmmoSlots/AmmoSlots.tscn" type="PackedScene" id=1]
+[ext_resource path="res://textures/PlayerGUI/pause.png" type="Texture" id=3]
+[ext_resource path="res://Interface/Menu.tres" type="Theme" id=4]
+[ext_resource path="res://Player/Player_GUI/Pause2.gd" type="Script" id=5]
+[ext_resource path="res://textures/GUI/MiniMenu.png" type="Texture" id=6]
+[ext_resource path="res://textures/PlayerGUI/undo_arrow.png" type="Texture" id=7]
+[ext_resource path="res://textures/PlayerGUI/change_settings.png" type="Texture" id=8]
+[ext_resource path="res://Player/Player_GUI/TopRightButtons.gd" type="Script" id=9]
+[ext_resource path="res://Player/Player_GUI/SettingsWindow.gd" type="Script" id=10]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[node name="GUI" type="PanelContainer"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_styles/panel = SubResource( 1 )
+
+[node name="Ammunition" parent="." instance=ExtResource( 1 )]
+margin_top = 510.0
+mouse_filter = 2
+
+[node name="TopRightButtons" type="HBoxContainer" parent="."]
+margin_left = 940.0
+margin_right = 1024.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 80, 40 )
+size_flags_horizontal = 8
+size_flags_vertical = 2
+script = ExtResource( 9 )
+
+[node name="SettingsButton" type="Button" parent="TopRightButtons"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+toggle_mode = true
+shortcut_in_tooltip = false
+icon = ExtResource( 8 )
+expand_icon = true
+
+[node name="PauseButton" type="Button" parent="TopRightButtons"]
+unique_name_in_owner = true
+margin_left = 44.0
+margin_right = 84.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+toggle_mode = true
+shortcut_in_tooltip = false
+icon = ExtResource( 3 )
+icon_align = 1
+expand_icon = true
+
+[node name="PauseWindow" type="TextureRect" parent="."]
+visible = false
+margin_left = 363.0
+margin_top = 182.0
+margin_right = 661.0
+margin_bottom = 418.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource( 6 )
+script = ExtResource( 5 )
+
+[node name="Label" type="Label" parent="PauseWindow"]
+anchor_right = 0.997
+anchor_bottom = 0.178
+margin_right = -0.106018
+margin_bottom = -0.00799942
+size_flags_horizontal = 4
+theme = ExtResource( 4 )
+text = "Paused"
+align = 1
+valign = 1
+
+[node name="ExitToMenuButton" type="Button" parent="PauseWindow"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -81.0
+margin_top = 104.0
+margin_right = 85.0
+margin_bottom = 160.0
+theme = ExtResource( 4 )
+text = "Exit to menu"
+icon_align = 1
+
+[node name="SettingsWindow" type="TextureRect" parent="."]
+visible = false
+margin_left = 12.0
+margin_top = 50.0
+margin_right = 1012.0
+margin_bottom = 550.0
+rect_min_size = Vector2( 1000, 500 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource( 6 )
+expand = true
+script = ExtResource( 10 )
+
+[node name="Label" type="Label" parent="SettingsWindow"]
+anchor_top = 0.004
+anchor_right = 1.002
+anchor_bottom = 0.182
+margin_right = -0.00012207
+theme = ExtResource( 4 )
+text = "Settings"
+align = 1
+valign = 1
+
+[node name="UpgradeScroll" type="ScrollContainer" parent="SettingsWindow"]
+margin_left = 84.0
+margin_top = 101.0
+margin_right = 924.0
+margin_bottom = 425.0
+scroll_horizontal_enabled = false
+
+[node name="UpgradeContainer" type="VBoxContainer" parent="SettingsWindow/UpgradeScroll"]
+unique_name_in_owner = true
+
+[node name="ResetButton" type="Button" parent="SettingsWindow"]
+margin_left = 874.0
+margin_top = 21.0
+margin_right = 924.0
+margin_bottom = 71.0
+rect_min_size = Vector2( 50, 50 )
+icon = ExtResource( 7 )
+expand_icon = true
+
+[connection signal="toggled" from="TopRightButtons/SettingsButton" to="TopRightButtons" method="_on_button_toggled" binds= [ "SettingsButton" ]]
+[connection signal="toggled" from="TopRightButtons/SettingsButton" to="SettingsWindow" method="_on_SettingsButton_toggled"]
+[connection signal="toggled" from="TopRightButtons/PauseButton" to="TopRightButtons" method="_on_button_toggled" binds= [ "PauseButton" ]]
+[connection signal="toggled" from="TopRightButtons/PauseButton" to="PauseWindow" method="_on_PauseButton_toggled"]
+[connection signal="pressed" from="PauseWindow/ExitToMenuButton" to="PauseWindow" method="_on_ExitToMenuButton_pressed"]
+[connection signal="pressed" from="SettingsWindow/ResetButton" to="SettingsWindow" method="reset_upgrades_values"]
