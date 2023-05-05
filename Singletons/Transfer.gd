@@ -24,6 +24,9 @@ func _process(_delta):
 	if network != null:
 		network.poll()
 
+func _ready():
+	pass
+
 #---------- SERVER CREATION ----------
 func _connect_to_server():
 	network = WebSocketClient.new()

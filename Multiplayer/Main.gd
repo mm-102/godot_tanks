@@ -16,8 +16,13 @@ onready var gui_all_upgrades_n = get_node(Dir.GUI_ALL_UPGRADES)
 
 
 
+func _ready():
+	pass
+
 func _exit_tree():
 	Transfer.close_connection()
+
+
 
 func connection_succeeded():
 	gui_n.set_visible(true)

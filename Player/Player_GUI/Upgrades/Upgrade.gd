@@ -14,7 +14,7 @@ onready var object_texture_n = $"%Object"
 func init(_upgrade_path, state = "Normal"):
 	upgrade_path = _upgrade_path
 	match state:
-		"Normal":
+		"Normal", "SelfDestroyed":
 			attribute = _upgrade_path[-1]
 			object = _upgrade_path[-2]
 		"Winner":
