@@ -3,7 +3,7 @@ extends Projectile
 var target = null
 onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 var started_targeting = false
-
+var anim_time = 0
 #var ammo_type = Ammunition.TYPES.ROCKET
 #
 func _init():
@@ -36,9 +36,13 @@ func _integrate_forces(state):
 func _physics_process(delta):
 	if is_instance_valid(target):
 		var distance =  min(global_position.distance_to(target.global_position), 500)
+		anim_time += delta * ((-0.03 * distance) + 20.0)
 		$Sprite.get_material().set_shader_param("radius", distance)
-		#$Sprite.get_material().set_shader_param("speed", (-0.03 * distance) + 20.0)
+		$Particles2D.process_material.set_shader_param("radius", distance)
 		var rot = navigation_agent.get_next_location().angle_to_point(position)
 		rotation = lerp_angle(rotation, rot, delta * 8)
 	else:
 		rotation = linear_velocity.angle()
+		anim_time += delta * 7
+	$Sprite.get_material().set_shader_param("current_time", anim_time)
+	$Particles2D.process_material.set_shader_param("current_time", anim_time)

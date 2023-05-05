@@ -15,7 +15,7 @@ const float PI = 3.14159265358979323846;
 
 uniform float radius = 500.0;
 uniform float part_of_circle = 0.02;
-uniform float speed = 5.0;
+uniform float current_time = 0;
 
 mat2 rot(float theta){
 	float c = sin(theta);
@@ -27,7 +27,7 @@ void vertex(){
 	vec2 pos = VERTEX - TEXTURE_PIXEL_SIZE * 0.5;
 	vec2 center_of_rot = vec2(radius, 0.0);
 	float _speed = (-0.03 * radius) + 20.0;
-	pos = (rot(PI * (part_of_circle * sin(TIME * speed) + 0.5)) * (pos-center_of_rot)) + center_of_rot;
+	pos = (rot(PI * (part_of_circle * sin(current_time) + 0.5)) * (pos-center_of_rot)) + center_of_rot;
 	VERTEX = pos + TEXTURE_PIXEL_SIZE * 0.5;
 }"
 
@@ -35,7 +35,7 @@ void vertex(){
 shader = SubResource( 3 )
 shader_param/radius = 500.0
 shader_param/part_of_circle = 0.02
-shader_param/speed = 5.0
+shader_param/current_time = 0.0
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -46,7 +46,7 @@ const float PI = 3.14159265358979323846;
 
 uniform float radius = 500.0;
 uniform float part_of_circle = 0.02;
-uniform float speed = 5.0;
+uniform float current_time = 0;
 uniform sampler2D color_ramp;
 uniform sampler2D scale_texture;
 
@@ -63,7 +63,7 @@ void vertex(){
 		mat2 base_transform = mat2(EMISSION_TRANSFORM[0].xy, EMISSION_TRANSFORM[1].xy);
 		vec2 center_of_rot = base_transform * vec2(radius, 0.0);
 		vec2 pos = TRANSFORM[3].xy;
-		pos += (rot(PI * (0.25 * part_of_circle * sin(TIME * speed) + 0.5)) * (-center_of_rot)) + center_of_rot;
+		pos += (rot(PI * (0.25 * part_of_circle * sin(current_time) + 0.5)) * (-center_of_rot)) + center_of_rot;
 		TRANSFORM[3].xy = pos;
 	}else {
 		CUSTOM.y += DELTA / LIFETIME;
@@ -95,7 +95,7 @@ curve = SubResource( 14 )
 shader = SubResource( 11 )
 shader_param/radius = 500.0
 shader_param/part_of_circle = 0.02
-shader_param/speed = 5.0
+shader_param/current_time = 0.0
 shader_param/color_ramp = SubResource( 13 )
 shader_param/scale_texture = SubResource( 15 )
 
