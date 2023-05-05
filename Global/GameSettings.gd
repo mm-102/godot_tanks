@@ -77,7 +77,7 @@ const DEFAULT = {
 	
 	["Ammunition", AT.FRAG_BOMB, "Frag", "Speed"]: 0.8,
 	["Ammunition", AT.FRAG_BOMB, "Frag", "Scale"]: 0.5,
-	["Ammunition", AT.FRAG_BOMB, "Frag", "LifetimeMultiplayer"]: 2,
+	["Ammunition", AT.FRAG_BOMB, "Frag", "LifetimeMultiplayer"]: 0.1,
 	
 	["Ammunition", AT.LASER, "Length"]: 2000,
 	["Ammunition", AT.LASER, "MaxBounces"]: 15,

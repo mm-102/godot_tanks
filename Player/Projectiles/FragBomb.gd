@@ -18,7 +18,7 @@ func spawn_frag(rotation):
 		frag_inst.set_script(gd)
 		
 	#var frag_timer : Timer = frag_inst.get_node("LifeTime")
-	frag_inst.left_time *= s.Frag.LifetimeMultiplayer
+	frag_inst.left_time = GameSettings.Dynamic.Ammunition[s.Frag.Type].LifeTime * s.Frag.LifetimeMultiplayer
 	frag_inst.set_scale(frag_inst.scale * s.Frag.Scale)
 	
 	var velocity = Vector2.UP.rotated(rotation) 
