@@ -1,10 +1,10 @@
-extends HBoxContainer
+extends Control
 
 const UPGRADE_ICONS = preload("res://textures/UpgradeIcon/UpgradeKey.gd")
 const OBJECT_ICONS = preload("res://Player/Player_GUI/Upgrades/ObjectIcons.gd")
 var attribute
 var object
-var readable_name: String
+var readable_name: String = "ABC"
 var upgrade_path: Array = ["Tank", "Speed"]
 var add_number = 0
 onready var attribute_texture_n = $"%Attribute"
@@ -31,16 +31,14 @@ func create_name(_upgrade_path):
 
 
 func _ready():
-	hide()
 	set_tooltip(readable_name)
-	$Base.set_text(str(GameSettings.DEFAULT[upgrade_path]))
-	$Now.set_text(str(GameSettings.DEFAULT[upgrade_path]))
+	$Container/Base.set_text(str(GameSettings.DEFAULT[upgrade_path]))
+	$Container/Now.set_text(str(GameSettings.DEFAULT[upgrade_path]))
 	attribute_texture_n.set_texture(UPGRADE_ICONS.get_image(attribute))
 	object_texture_n.set_texture(OBJECT_ICONS.get_image(object))
+	$Container/Now.set_text(str(int($Container/Now.get_text()) + add_number))
+	$Container/Add.set_text(str("(+ ", add_number, ")"))
 
 func add_value(value):
-	show()
-	$Now.set_text(str(int($Now.get_text()) + value))
 	add_number += value
-	$Add.set_text(str("(+ ", add_number, ")"))
 	

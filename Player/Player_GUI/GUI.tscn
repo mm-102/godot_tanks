@@ -18,6 +18,16 @@ anchor_bottom = 1.0
 mouse_filter = 2
 custom_styles/panel = SubResource( 1 )
 
+[node name="AllUpgrades" parent="." instance=ExtResource( 5 )]
+visible = false
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 280.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_vertical = 10
+
 [node name="Ammunition" parent="." instance=ExtResource( 1 )]
 margin_top = 510.0
 
@@ -74,16 +84,3 @@ __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": true
 }
-
-[node name="AllUpgrades" parent="." instance=ExtResource( 5 )]
-visible = false
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 280.0
-margin_right = 1024.0
-margin_bottom = 600.0
-size_flags_horizontal = 1
-size_flags_vertical = 10
-size_flags_stretch_ratio = 4.01
-color = Color( 0.768627, 0.67451, 0.67451, 0.121569 )

@@ -15,8 +15,8 @@ onready var label_points = $"%LabelPoints"
 
 func _ready():
 	Transfer.connect("recive_player_possible_upgrades", self, "show_upgrades")
-	if show_all_upgrades:
-		show_all_upgrades()
+#	if show_all_upgrades:
+#		show_all_upgrades()
 
 func show_all_upgrades():
 	var i = 0
