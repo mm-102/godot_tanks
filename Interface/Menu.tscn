@@ -69,11 +69,11 @@ margin_top = 47.0
 margin_right = 129.0
 margin_bottom = 79.0
 custom_fonts/font = SubResource( 9 )
-text = "local"
+text = "external"
 align = 1
 icon_align = 1
 items = [ "local", null, false, 0, null, "external", null, false, 1, null, "custom ip", null, false, 2, null ]
-selected = 0
+selected = 1
 
 [node name="MultiplayerRefresh" type="Timer" parent="Background/MultiplayerButton"]
 unique_name_in_owner = true

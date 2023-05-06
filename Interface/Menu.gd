@@ -16,6 +16,8 @@ var rng = RandomNumberGenerator.new()
 func _ready():
 	set_init_data()
 	set_version(Functions.get_version())
+	if OS.is_debug_build() == false:
+		$"%OptionButton".hide()
 
 func set_init_data():
 	var err = config.load("user://initial_data.cfg")
