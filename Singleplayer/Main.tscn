@@ -47,6 +47,8 @@ tile_data = PoolIntArray( 0, 0, 131076, 1, 0, 196609, 2, 0, 196609, 3, 0, 196609
 script = ExtResource( 5 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Game/Map/TileMap"]
+collision_layer = 4
+collision_mask = 0
 
 [node name="AmmoBoxesMap" type="TileMap" parent="Game/Map"]
 scale = Vector2( 0.5, 0.5 )
