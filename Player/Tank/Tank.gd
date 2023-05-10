@@ -175,6 +175,10 @@ func _gun_instde_wall() -> bool:
 	gun_ray_cast_node.enabled = true
 	gun_ray_cast_node.force_raycast_update()
 	if gun_ray_cast_node.is_colliding():
+		var collider = gun_ray_cast_node.get_collider()
+		if collider.has_method("highlight"):
+			collider.highlight(gun_ray_cast_node.get_collision_point()\
+					+ Vector2.UP.rotated(turret_node.rotation - PI * 0.5)*0.1)
 		gun_ray_cast_node.enabled = false
 		return true
 	gun_ray_cast_node.enabled = false

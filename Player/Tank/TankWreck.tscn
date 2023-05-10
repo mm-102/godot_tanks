@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://textures/tank_base.png" type="Texture" id=1]
 [ext_resource path="res://Player/Tank/TankWreck.gd" type="Script" id=2]
 [ext_resource path="res://Sound/wybuch1.wav" type="AudioStream" id=3]
+[ext_resource path="res://Player/Component/Highlight.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 24, 32 )
@@ -27,6 +28,7 @@ scale_random = 1.0
 color_initial_ramp = SubResource( 5 )
 
 [node name="TankWreck" type="StaticBody2D" groups=["Corpse"]]
+position = Vector2( 587, 322 )
 collision_layer = 2
 collision_mask = 0
 script = ExtResource( 2 )
@@ -35,6 +37,7 @@ script = ExtResource( 2 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="CollisionShape2D"]
+modulate = Color( 0, 0, 0, 1 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )
 
@@ -52,6 +55,10 @@ process_material = SubResource( 3 )
 stream = ExtResource( 3 )
 autoplay = true
 max_distance = 600.0
+
+[node name="Highlight" parent="." instance=ExtResource( 4 )]
+_rect_size = Vector2( 52, 74 )
+_position = Vector2( -26, -37 )
 
 [connection signal="timeout" from="LifeTime" to="." method="_on_LifeTime_timeout"]
 [connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]

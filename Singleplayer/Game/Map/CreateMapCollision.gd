@@ -14,6 +14,7 @@ func _ready():
 	build_collision()
 
 
+
 func _matrix_map(map, up_left_corners, rect):
 	for y in range(rect.position.y, rect.end.y):
 		var row = []

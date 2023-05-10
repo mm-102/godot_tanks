@@ -96,7 +96,7 @@ process_material = ExtResource( 8 )
 
 [node name="GunRayCast" type="RayCast2D" parent="Turret"]
 unique_name_in_owner = true
-cast_to = Vector2( 0, -100 )
+cast_to = Vector2( 0, -114 )
 collision_mask = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
