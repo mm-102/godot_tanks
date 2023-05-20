@@ -63,12 +63,12 @@ const DEFAULT = {
 	
 	["Ammunition", AT.BULLET, "Speed"]: 200,
 	["Ammunition", AT.BULLET, "Reload"]: 1,
-	["Ammunition", AT.BULLET, "LifeTime"]: 15,
+	["Ammunition", AT.BULLET, "LifeTime"]: 10,
 	
 	["Ammunition", AT.ROCKET, "Speed"]: 200,
 	["Ammunition", AT.ROCKET, "FollowSpeed"]: 105,
 	["Ammunition", AT.ROCKET, "Reload"]: 5,
-	["Ammunition", AT.ROCKET, "LifeTime"]: 12,
+	["Ammunition", AT.ROCKET, "LifeTime"]: 8,
 	
 	["Ammunition", AT.FRAG_BOMB, "Speed"]: 200,
 	["Ammunition", AT.FRAG_BOMB, "Count"]: 10,
@@ -80,14 +80,14 @@ const DEFAULT = {
 	["Ammunition", AT.FRAG_BOMB, "Frag", "LifetimeMultiplayer"]: 0.08,
 	
 	["Ammunition", AT.LASER, "Length"]: 2000,
-	["Ammunition", AT.LASER, "MaxBounces"]: 15,
+	["Ammunition", AT.LASER, "MaxBounces"]: 5,
 	["Ammunition", AT.LASER, "MaxWidth"]: 5,
 	["Ammunition", AT.LASER, "Reload"]: 10,
 	["Ammunition", AT.LASER, "ChargeTime"]: 1.5,
 	
 	["Ammunition", AT.LASER_BULLET, "Speed"]: 300,
 	["Ammunition", AT.LASER_BULLET, "Length"]: 50,
-	["Ammunition", AT.LASER_BULLET, "MaxBounces"]: 5,
+	["Ammunition", AT.LASER_BULLET, "MaxBounces"]: 15,
 	["Ammunition", AT.LASER_BULLET, "Reload"]: 2,
 	["Ammunition", AT.LASER_BULLET, "LifeTime"]: 6,
 	
