@@ -27,7 +27,7 @@ func show_on_screen():
 		if upgrade_inst.add_number == 0:
 			continue
 		yield(get_tree(), "idle_frame")
-		if i >= 9:
+		if i >= 8:
 			i = 0
 			column += 1
 			assert(column < 6, "[AllUpgrades] Too much upgrades")

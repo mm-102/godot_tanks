@@ -46,7 +46,7 @@ static func add_value(path, value):
 
 
 const SPECIAL_DEFAULT = {
-	["Tank", "BaseAmmoType"]:  Ammunition.TYPES.LASER,
+	["Tank", "BaseAmmoType"]:  Ammunition.TYPES.BULLET,
 	["Ammunition", AT.FRAG_BOMB, "Frag", "Type"]: AT.BULLET,
 #	["Visibility"]: true,
 #	["Camera", "CloseRange"]: false,
