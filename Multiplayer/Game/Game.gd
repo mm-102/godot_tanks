@@ -17,6 +17,7 @@ var world_stance_buffer: Array
 var local_player_id = 0
 var interpolation_factor = 0
 var CORPSE_LIFE_TIME
+var projectile_die_buffer
 
 onready var players_n = $"%Players"
 onready var projectiles_n = $"%Projectiles"
@@ -59,12 +60,14 @@ func create_template(template_data):
 
 
 func player_destroyed(corpse_data, projectile_name):
+	players_n.get_node(str(corpse_data.ID)).die()
+	create_corpse(corpse_data)
 	if projectile_name != null:
 		var projectile = projectiles_n.get_node_or_null(projectile_name)
 		if projectile != null:
 			projectile.die()
-	players_n.get_node(str(corpse_data.ID)).die()
-	create_corpse(corpse_data)
+		else:
+			projectile_die_buffer = projectile_name
 
 func local_player_destroyed(projectile_name):
 	var projectile = projectiles_n.get_node_or_null(projectile_name)
@@ -110,8 +113,9 @@ func spawn_bullet(player_id, bullet_data):
 	yield(get_tree().create_timer((bullet_data.ST - Transfer.get_time())*0.001), "timeout")
 	while bullet_data.ST - Transfer.get_time() > 0:
 		yield(get_tree(),"idle_frame")
-		#print("WAAAAAAAAAAAA")
-	#print("SpawnTime: ", bullet_data.ST - Transfer.get_time() )
+	if bullet_inst.name == projectile_die_buffer:
+		bullet_inst.queue_free()
+		return
 	projectiles_n.add_child(bullet_inst, true)
 
 func player_shot_failed(player_id):
