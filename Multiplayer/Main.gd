@@ -37,6 +37,7 @@ func init_data(init_data):
 			game_n.self_initiation(player)
 			continue
 		game_n.create_template(player)
+	gui_events_n.setup_player_names(init_data.PlayerSData)
 	game_n.set_corspses_data(init_data.PlayerSCorpses)
 	game_n.set_bullets_data(init_data.BulletsStances)
 	gui_timer_n._on_phase_recived(init_data.Phase)
@@ -69,14 +70,8 @@ func change_player_turret(player_id, ammo_type):
 	game_n.change_player_turret(player_id, ammo_type)
 
 func player_destroyed(corpse_data, kill_event_data):
-	var killer = get_node_or_null(Dir.PLAYERS + "/" + kill_event_data.KillerID)
-	var killed = get_node_or_null(Dir.PLAYERS + "/" + kill_event_data.KilledID)
-	if killer != null and killed != null and !kill_event_data.KillerID.empty() and !kill_event_data.KilledID.empty():
-		gui_events_n.on_kill_event(killer.nick, killed.nick, kill_event_data.AT)
-	else:
-		killed = get_node_or_null(Dir.PLAYERS + "/" + str(corpse_data.ID))
-		if killed != null:
-			gui_events_n.on_kill_event("", killed.nick, NAN)
+	if !kill_event_data.KillerID.empty() and !kill_event_data.KilledID.empty():
+		gui_events_n.on_kill_event(kill_event_data.KillerID, kill_event_data.KilledID, kill_event_data.AT)
 	gui_scoreboard_n.player_destroyed(corpse_data.ID, kill_event_data.KillerID)
 	game_n.player_destroyed(corpse_data, kill_event_data.PName)
 

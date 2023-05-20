@@ -53,10 +53,6 @@ func create_template(template_data):
 	var tank_inst = tank_template.instance()
 	tank_inst.setup(template_data)
 	players_n.add_child(tank_inst, true)
-#	if local_player_id:
-#		get_node("/root/Main/Game/Players/" + str(local_player_id))\
-#		.get_node("%PlayerIndicators")\
-#		.add_indicated_player(tank_inst)
 
 
 func player_destroyed(corpse_data, projectile_name):
