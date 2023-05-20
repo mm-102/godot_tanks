@@ -17,8 +17,10 @@ func setup_multi(corpse_data):
 
 func _ready():
 	$CollisionShape2D/Sprite.modulate = color
+	$LifeTime.start(life_time)
 	$Tween.interpolate_property($"CollisionShape2D/Sprite", "modulate", null, Color.black, 0.5)
 	$Tween.start()
+	
 
 func highlight(_global_point):
 	$Highlight.highlight()
