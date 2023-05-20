@@ -18,6 +18,26 @@ anchor_bottom = 1.0
 mouse_filter = 2
 custom_styles/panel = SubResource( 1 )
 
+[node name="EventLog" type="VBoxContainer" parent="."]
+pause_mode = 2
+margin_left = 624.0
+margin_top = 100.0
+margin_right = 1024.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 400, 500 )
+mouse_filter = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme = ExtResource( 3 )
+alignment = 2
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Ammunition" parent="." instance=ExtResource( 1 )]
+margin_top = 510.0
+
 [node name="AllUpgrades" parent="." instance=ExtResource( 5 )]
 visible = false
 anchor_top = 0.0
@@ -27,9 +47,6 @@ margin_top = 280.0
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_vertical = 10
-
-[node name="Ammunition" parent="." instance=ExtResource( 1 )]
-margin_top = 510.0
 
 [node name="Scoreboard" parent="." instance=ExtResource( 6 )]
 pause_mode = 2
@@ -57,23 +74,6 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 1024.0
 margin_bottom = 600.0
-
-[node name="EventLog" type="VBoxContainer" parent="."]
-pause_mode = 2
-margin_left = 624.0
-margin_top = 100.0
-margin_right = 1024.0
-margin_bottom = 600.0
-rect_min_size = Vector2( 400, 500 )
-mouse_filter = 2
-size_flags_horizontal = 8
-size_flags_vertical = 8
-theme = ExtResource( 3 )
-alignment = 2
-script = ExtResource( 8 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Pause" parent="." instance=ExtResource( 7 )]
 anchor_right = 0.0
