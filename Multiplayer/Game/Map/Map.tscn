@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Global/MapTileSet.tres" type="TileSet" id=1]
 [ext_resource path="res://Multiplayer/Game/Map/Map.gd" type="Script" id=2]
 [ext_resource path="res://Multiplayer/Game/Map/CreateMapCollision.gd" type="Script" id=3]
+[ext_resource path="res://Player/Component/Highlight.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Player/Component/MapCollision.gd" type="Script" id=5]
 
 [node name="Map" type="Node"]
 script = ExtResource( 2 )
@@ -20,6 +22,10 @@ script = ExtResource( 3 )
 [node name="StaticBody2D" type="StaticBody2D" parent="TileMap"]
 collision_layer = 4
 collision_mask = 0
+script = ExtResource( 5 )
+
+[node name="Highlight" parent="TileMap/StaticBody2D" instance=ExtResource( 4 )]
+_rect_size = Vector2( 96, 96 )
 
 [node name="AmmoBoxes" type="CanvasLayer" parent="."]
 unique_name_in_owner = true

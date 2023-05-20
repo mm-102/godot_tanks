@@ -71,7 +71,7 @@ const DEFAULT = {
 	["Ammunition", AT.ROCKET, "LifeTime"]: 12,
 	
 	["Ammunition", AT.FRAG_BOMB, "Speed"]: 200,
-	["Ammunition", AT.FRAG_BOMB, "Count"]: 30,
+	["Ammunition", AT.FRAG_BOMB, "Count"]: 10,
 	["Ammunition", AT.FRAG_BOMB, "Reload"]: 3,
 	["Ammunition", AT.FRAG_BOMB, "LifeTime"]: 5,
 	
@@ -87,7 +87,7 @@ const DEFAULT = {
 	
 	["Ammunition", AT.LASER_BULLET, "Speed"]: 300,
 	["Ammunition", AT.LASER_BULLET, "Length"]: 50,
-	["Ammunition", AT.LASER_BULLET, "MaxBounces"]: 15,
+	["Ammunition", AT.LASER_BULLET, "MaxBounces"]: 5,
 	["Ammunition", AT.LASER_BULLET, "Reload"]: 2,
 	["Ammunition", AT.LASER_BULLET, "LifeTime"]: 6,
 	
