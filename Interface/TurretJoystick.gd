@@ -12,7 +12,7 @@ func _unhandled_input(event):
 	
 	if rel_pos.length() <= shape.radius:
 		$Sprite.position = rel_pos
-	else:
+	elif rel_pos.length() <= 4 * shape.radius:
 		$Sprite.position = Vector2(shape.radius, 0).rotated(rel_pos.angle())
 	
 	var turret_angle = $Sprite.position.angle() + PI / 2
