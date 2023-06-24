@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://textures/bullet.png" type="Texture" id=1]
+[ext_resource path="res://Interface/MoveJoystick.gd" type="Script" id=2]
+
+[sub_resource type="CircleShape2D" id=11]
+radius = 80.0
+
+[node name="MoveJoystickContainer" type="MarginContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 300, 300 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="MoveJoystick" type="TouchScreenButton" parent="."]
+position = Vector2( 70, 70 )
+shape = SubResource( 11 )
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="MoveJoystick"]
+texture = ExtResource( 1 )
+offset = Vector2( 80, 80 )
+
+[connection signal="pressed" from="MoveJoystick" to="MoveJoystick" method="_on_Joystick_pressed"]
+[connection signal="released" from="MoveJoystick" to="MoveJoystick" method="_on_Joystick_released"]
