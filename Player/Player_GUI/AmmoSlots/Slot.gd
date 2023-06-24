@@ -7,6 +7,7 @@ export var is_selected: bool = false setget set_is_selected
 
 func _ready():
 	$SlotRect/ProgressBar.set_loading_color(Color(LOADING_COLOR))
+	$TouchScreenButton.action = "p_slot_" + str(get_index())
 
 func set_is_selected(value : bool, reload_time : float = 0):
 	is_selected = value
