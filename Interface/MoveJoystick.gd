@@ -4,6 +4,11 @@ const sensitivity = 0.4
 
 var press = false
 
+func _ready():
+	var use_touch = get_node(Dir.MASTER).is_touch_screen
+	if !use_touch:
+		get_parent().queue_free()
+		
 func _unhandled_input(event):
 	if !(event is InputEventScreenDrag):	return
 	if !press:	return
@@ -16,7 +21,7 @@ func _unhandled_input(event):
 		$Sprite.position = Vector2(shape.radius, 0).rotated(rel_pos.angle())
 	
 	var pos_norm : Vector2 = $Sprite.position / shape.radius
-#	print(pos_norm)
+
 	if pos_norm.x > sensitivity:
 		Input.action_release("p_left")
 		Input.action_press("p_right")

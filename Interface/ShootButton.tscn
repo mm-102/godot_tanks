@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://textures/PlayerGUI/shoot_button.png" type="Texture" id=1]
+[ext_resource path="res://Interface/ShootButton.gd" type="Script" id=2]
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 30.0
@@ -12,6 +13,7 @@ rect_min_size = Vector2( 100, 250 )
 mouse_filter = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+script = ExtResource( 2 )
 
 [node name="ShootButton" type="TouchScreenButton" parent="."]
 normal = ExtResource( 1 )

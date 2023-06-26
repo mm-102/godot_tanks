@@ -51,7 +51,8 @@ func set_turret_type(type):
 func _ready():
 	#warning-ignore:return_value_discarded
 	connect("special_ammo_event",get_node(Dir.GUI_AMMUNITION),"on_special_ammo_event")
-	get_node(Dir.GUI_TURRET_JOYSTICK).connect("set_turret_angle", turret_node, "set_rotation")
+	if get_node(Dir.MASTER).is_touch_screen:
+		get_node(Dir.GUI_TURRET_JOYSTICK).connect("set_turret_angle", turret_node, "set_global_rotation")
 	gun_ray_cast_node.cast_to = bullet_point_node.position
 	gun_ray_cast_node.add_exception(self)
 	$Turret.self_modulate = main_n.local_player_color

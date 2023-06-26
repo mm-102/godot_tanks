@@ -8,10 +8,13 @@ const MODE_DICT = {
 }
 var nick = ""
 var player_color = ""
-var is_multiplayer = false 
+var is_multiplayer = false
+var is_touch_screen = false 
 
 func _ready():
 	get_tree().paused = false
+	is_touch_screen = JavaScript.eval("('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)",true)
+	print(str(is_touch_screen))
 
 
 func game_mode(sel_mode: int):

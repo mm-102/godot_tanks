@@ -4,6 +4,11 @@ signal set_turret_angle(angle)
 
 var press = false
 
+func _ready():
+	var use_touch = get_node(Dir.MASTER).is_touch_screen
+	if !use_touch:
+		get_parent().queue_free()
+
 func _unhandled_input(event):
 	if !(event is InputEventScreenDrag):	return
 	if !press:	return
