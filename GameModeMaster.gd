@@ -14,7 +14,8 @@ var is_touch_screen = false
 func _ready():
 	get_tree().paused = false
 	is_touch_screen = JavaScript.eval("('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)",true)
-	print(str(is_touch_screen))
+	if is_touch_screen:
+		OS.SCREEN_ORIENTATION_REVERSE_PORTRAIT
 
 
 func game_mode(sel_mode: int):

@@ -111,8 +111,9 @@ func pick_up_ammo_box(type):
 
 func _integrate_forces(_state):
 	var velocity = Vector2.ZERO
-	velocity.y = int(Input.is_action_pressed("p_backward")) - int(Input.is_action_pressed("p_forward"))
-	var direction = int(Input.is_action_pressed("p_right")) - int(Input.is_action_pressed("p_left"))
+	velocity.y = Input.get_action_strength("p_backward") - Input.get_action_strength("p_forward")
+	var direction = Input.get_action_strength("p_right") - Input.get_action_strength("p_left")
+	#print(direction)
 	if velocity.y > 0:
 		direction = -direction
 	if is_multiplayer:

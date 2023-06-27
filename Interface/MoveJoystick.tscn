@@ -4,24 +4,32 @@
 [ext_resource path="res://Interface/MoveJoystick.gd" type="Script" id=2]
 
 [sub_resource type="CircleShape2D" id=11]
-radius = 80.0
+radius = 100.0
 
 [node name="MoveJoystickContainer" type="MarginContainer"]
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -150.0
+margin_top = -150.0
+margin_right = 10.0
+margin_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
 rect_min_size = Vector2( 300, 300 )
 mouse_filter = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
 [node name="MoveJoystick" type="TouchScreenButton" parent="."]
-position = Vector2( 70, 70 )
+position = Vector2( 140, 70 )
 shape = SubResource( 11 )
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="MoveJoystick"]
 texture = ExtResource( 1 )
-offset = Vector2( 80, 80 )
+offset = Vector2( 100, 100 )
 
 [connection signal="pressed" from="MoveJoystick" to="MoveJoystick" method="_on_Joystick_pressed"]
 [connection signal="released" from="MoveJoystick" to="MoveJoystick" method="_on_Joystick_released"]
