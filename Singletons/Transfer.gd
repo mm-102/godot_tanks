@@ -36,7 +36,7 @@ func _connect_to_server():
 	_err = network.connect("server_disconnected", self, "_server_disconnected")
 	_err = network.connect("connection_closed", self, "_connection_closed")
 	_err = network.connect("connection_error", self, "_connection_error")
-	_err = network.connect_to_url("ws://"+ip+":"+str(PORT), PoolStringArray(), true)
+	_err = network.connect_to_url(ip+str(PORT), PoolStringArray(), true)
 	get_tree().set_network_peer(network)
 	set_process(true)
 	print("[Transfer]: Connecting to server...")

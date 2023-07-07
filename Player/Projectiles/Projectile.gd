@@ -42,6 +42,9 @@ func _ready():
 
 
 func _integrate_forces(state):
+	update_bounce(state)
+
+func update_bounce(state):
 	if bullet_state_queue.empty() == true:
 		return
 	if bullet_state_queue[0].ST > Transfer.get_time():

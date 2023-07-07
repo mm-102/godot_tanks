@@ -17,7 +17,6 @@ func _ready():
 	if is_touch_screen:
 		OS.SCREEN_ORIENTATION_REVERSE_PORTRAIT
 
-
 func game_mode(sel_mode: int):
 	#[info] Transfer node have to be after main
 	var mode_inst = MODE_DICT[sel_mode].instance()

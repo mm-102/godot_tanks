@@ -8,6 +8,8 @@ func _init():
 	s = GameSettings.Dynamic.Ammunition[4]
 
 func _integrate_forces(state):
+	update_bounce(state)
+	
 	var length_left = s.Length
 	rotation = 0
 	

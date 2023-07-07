@@ -1,8 +1,8 @@
 extends Control
 
 const ADRESS = {
-	0: "127.0.0.1",
-	1: "194.187.72.136"
+	0: "ws://127.0.0.1:",
+	1: "wss://tanksgf.online:"
 }
 var config = ConfigFile.new()
 onready var master_n = get_node(Dir.MASTER)
@@ -62,7 +62,7 @@ func _on_MultiplayerButton_pressed():
 	if selected < 2:
 		Transfer.ip = ADRESS[int(selected)]
 	else:
-		Transfer.ip = $"%CustomIP".text
+		Transfer.ip = "ws://"+$"%CustomIP".text+":"
 	Transfer._connect_to_server()
 	save_data($"%PlayerNickInput".text, selected, $"%CustomIP".text)
 	multiplayer_button.set_disabled(true)
