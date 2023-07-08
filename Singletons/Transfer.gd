@@ -103,23 +103,26 @@ remote func recive_data_during_game(init_data):
 	main_n.init_data(init_data)
 	emit_signal("data_during_game_recived")
 	
-remote func recive_new_battle(init_data):
+remote func recive_new_battle(_time, init_data):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
+	yield(get_tree().create_timer((_time - get_time())*0.001), "timeout")
 	yield(main_n.end_of_battle(), "completed")
 	_ready()
 	get_tree().set_pause(true)
 	main_n.init_data(init_data)
 
 #---------- CORE GAME MECHANIC ---------
-remote func recive_phase(phase):
+remote func recive_phase(_time, phase):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
+	yield(get_tree().create_timer((_time - get_time())*0.001), "timeout")
 	emit_signal("phase_recived", phase)
 
-remote func recive_player_destroyed(corpse_data, kill_event_data):
+remote func recive_player_destroyed(_time, corpse_data, kill_event_data):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
+	yield(get_tree().create_timer((_time - get_time())*0.001), "timeout")
 	main_n.player_destroyed(corpse_data, kill_event_data)
 	
 remote func recive_ammobox_destroyed(name):
@@ -169,9 +172,10 @@ remote func recive_shoot_bounce_state(bulletS_state, _time):
 	main_n.update_bounce_bullet(bulletS_state, _time)
 
 #------------Upgrades-------------
-remote func recive_player_possible_upgrades(data):
+remote func recive_player_possible_upgrades(_time, data):
 	if !get_tree().get_rpc_sender_id() == 1:
 		return
+	yield(get_tree().create_timer((_time - get_time())*0.001), "timeout")
 	emit_signal("recive_player_possible_upgrades", data)
 
 func fetch_update_acknowledge():
