@@ -1,6 +1,8 @@
 extends Camera2D
 
 signal zoom_change(new_zoom)
+signal started_spectating(reason)
+var reason
 
 const S = GameSettings.STATIC.CAMERA.SPECTATOR
 var following = false
@@ -13,10 +15,12 @@ func _ready():
 	set_process_input(false)
 	set_process(false)
 
-func start_spectating():
+func start_spectating(_reason):
+	reason = _reason
 	_set_current(true)
 	set_process_input(true)
 	set_process(true)
+	emit_signal("started_spectating", reason)
 
 func zoom_point(zoom_diff, mouse_position):
 	var viewport_size = get_viewport().size
@@ -57,9 +61,9 @@ func _process(_delta):
 
 
 func _on_data_during_game_recived():
-	start_spectating()
+	start_spectating("DuringGame")
 
 func on_self_player_died(pos):
-	start_spectating()
+	start_spectating("SelfDied")
 	set_global_position(pos)
 	

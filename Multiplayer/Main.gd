@@ -37,6 +37,12 @@ func init_data(init_data):
 			game_n.self_initiation(player)
 			continue
 		game_n.create_template(player)
+	var position = 1
+	for spectator in init_data.Spectators:
+		if spectator == Transfer.my_id:
+			game_n.get_node("Spectator").start_spectating(position)
+			continue
+		position += 1
 	gui_events_n.setup_player_names(init_data.PlayerSData)
 	game_n.set_corspses_data(init_data.PlayerSCorpses)
 	game_n.set_bullets_data(init_data.BulletsStances)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Player/Player_GUI/AmmoSlots/AmmoSlots.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Player_GUI/BattleTimers.tscn" type="PackedScene" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://Interface/TurretJoystick.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Interface/MoveJoystick.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Interface/ShootButton.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Player/Player_GUI/Spectating.gd" type="Script" id=12]
+[ext_resource path="res://Player/Player_GUI/Upgrades/Upgrade.tres" type="Theme" id=13]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -118,3 +120,30 @@ margin_right = 1024.0
 margin_bottom = 425.0
 size_flags_horizontal = 8
 size_flags_vertical = 4
+
+[node name="Spectating" type="VBoxContainer" parent="."]
+visible = false
+margin_top = 530.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_vertical = 8
+script = ExtResource( 12 )
+
+[node name="Title" type="Label" parent="Spectating"]
+margin_left = 436.0
+margin_right = 588.0
+margin_bottom = 40.0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme = ExtResource( 3 )
+text = "Spectating"
+
+[node name="Reason" type="Label" parent="Spectating"]
+margin_left = 485.0
+margin_top = 44.0
+margin_right = 539.0
+margin_bottom = 70.0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme = ExtResource( 13 )
+text = "Reason"
