@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Tanksgf - Icon Hover.wav-1b00b5567ef9f39e876f2b320cc53400.sample"
+
+[deps]
+
+source_file="res://Sound2.3/Tanksgf - Icon Hover.wav"
+dest_files=[ "res://.import/Tanksgf - Icon Hover.wav-1b00b5567ef9f39e876f2b320cc53400.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
