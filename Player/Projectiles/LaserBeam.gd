@@ -19,11 +19,7 @@ func setup_multi(bullet_data : Dictionary):
 	point = bullet_data.P
 	point_rotation = bullet_data.R
 	
-func _on_Tween_tween_all_completed():
-#	var player = get_node_or_null(player_path)
-#	if !(player == null):
-#		player.ammo_left += 1
-	queue_free()
+	
 	
 func _ready():
 	tween.interpolate_property(self, "width", width, s.MaxWidth, 0.2)
@@ -69,3 +65,7 @@ func cast_laser():
 		# move ray position a bit from collision point not to collide with the same point twice
 		
 		ray.force_raycast_update()
+
+func _on_laserbeam_sound_finished():
+	queue_free()
+

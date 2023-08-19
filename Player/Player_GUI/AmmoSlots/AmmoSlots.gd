@@ -62,9 +62,12 @@ func pick_up_event(args : Array):
 func change_selection(args : Array):
 	var new_selection = args[0]
 	var reload_time = args[1]
+	#$Ammo_Slot_Change.play()
 	if $AmmoSlots.get_child_count() >= new_selection:
 		$AmmoSlots.get_child(current_selection).set_is_selected(false)
 	$AmmoSlots.get_child(new_selection).set_is_selected(true, reload_time)
+	if new_selection != current_selection:
+		$SFX_AmmoSlotChange.play()
 	current_selection = new_selection
 
 func reset_autoload(args : Array):

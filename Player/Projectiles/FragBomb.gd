@@ -20,6 +20,7 @@ func spawn_frag(rotation):
 	#var frag_timer : Timer = frag_inst.get_node("LifeTime")
 	frag_inst.left_time = GameSettings.Dynamic.Ammunition[s.Frag.Type].LifeTime * s.Frag.LifetimeMultiplayer
 	frag_inst.set_scale(frag_inst.scale * s.Frag.Scale)
+	frag_inst.is_shot_sound_enabled = false
 	
 	var velocity = Vector2.UP.rotated(rotation) 
 	frag_inst.position = position + 1 * velocity # separate frags from each other
@@ -27,11 +28,13 @@ func spawn_frag(rotation):
 	get_node(Dir.PROJECTILES).add_child(frag_inst)
 	
 func explode():
+	$Frag_Bomb_explosion.play()
 	for n in range(s.Count):
 		var rotation = 2 * PI * n / s.Count
 		call_deferred("spawn_frag", rotation)
-
-	.die()	#call super die() function
+	hide()
+	yield($Frag_Bomb_explosion,"finished")
+	.die()	#calls super die() function
 
 func die():
 	explode()

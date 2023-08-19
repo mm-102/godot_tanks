@@ -11,6 +11,7 @@ func _init():
 
 func _on_StartTargeting_timeout():
 	started_targeting = true
+	$SFX_Target_Locket.play()
 
 func _integrate_forces(state):
 	if !started_targeting:
@@ -24,13 +25,13 @@ func _integrate_forces(state):
 		if !is_instance_valid(player):
 			continue
 		if player.global_position.distance_to(self.global_position) < \
-				target.global_position.distance_to(self.global_position):
+			target.global_position.distance_to(self.global_position):
 			target = player
 	if is_instance_valid(target):
 		navigation_agent.set_target_location(target.global_position)
 		var move_direction = position.direction_to(navigation_agent.get_next_location())
 		var velocity = move_direction * s.FollowSpeed
-		set_linear_velocity(velocity) 
+		set_linear_velocity(velocity)
 		navigation_agent.set_velocity(velocity)
 
 func _physics_process(delta):
