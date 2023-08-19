@@ -127,7 +127,10 @@ text = "Info: Your client is not update.
 Please download newest version."
 align = 1
 
+[connection signal="mouse_entered" from="Background/SingleplayerButton" to="." method="_on_button_focus"]
 [connection signal="pressed" from="Background/SingleplayerButton" to="." method="_on_SingleplayerButton_pressed"]
+[connection signal="mouse_entered" from="Background/MultiplayerButton" to="." method="_on_button_focus"]
 [connection signal="pressed" from="Background/MultiplayerButton" to="." method="_on_MultiplayerButton_pressed"]
 [connection signal="item_selected" from="Background/MultiplayerButton/OptionButton" to="." method="_on_OptionButton_item_selected"]
+[connection signal="mouse_entered" from="Background/MultiplayerButton/OptionButton" to="." method="_on_button_focus"]
 [connection signal="timeout" from="Background/MultiplayerButton/MultiplayerRefresh" to="." method="_on_MultiplayerRefresh_timeout"]

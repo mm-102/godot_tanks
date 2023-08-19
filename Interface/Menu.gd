@@ -84,3 +84,8 @@ func save_data(nick, select_int, custom_ip=""):
 
 func _on_OptionButton_item_selected(index):
 	$"%CustomIP".visible = index == 2 # custom ip is selected
+
+
+func _on_button_focus():
+	# sound here
+	pass
