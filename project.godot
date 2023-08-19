@@ -47,7 +47,7 @@ _global_script_class_icons={
 config/name="Godot Tanks"
 run/main_scene="res://GameModeMaster.tscn"
 boot_splash/bg_color=Color( 0.141176, 0.141176, 0.141176, 1 )
-config/version="0.7.8"
+config/version="0.2.0"
 
 [autoload]
 
@@ -81,7 +81,6 @@ is_multiplayer=false
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
-timers/tooltip_delay_sec=0.3
 
 [input]
 
@@ -177,10 +176,6 @@ Scoreboard={
  ]
 }
 
-[input_devices]
-
-pointing/emulate_touch_from_mouse=true
-
 [layer_names]
 
 2d_physics/layer_1="player"
@@ -205,4 +200,5 @@ common/enable_object_picking=false
 
 2d/snapping/use_gpu_pixel_snap=true
 vram_compression/import_etc=true
+vram_compression/import_etc2=false
 environment/default_environment="res://default_env.tres"
