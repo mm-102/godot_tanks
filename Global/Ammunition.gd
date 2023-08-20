@@ -52,4 +52,3 @@ static func get_string_from_type(type):
 		.to_lower()\
 		.replace("_", " ")\
 		.capitalize()
-	

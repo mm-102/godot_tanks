@@ -46,8 +46,8 @@ _global_script_class_icons={
 
 config/name="Godot Tanks"
 run/main_scene="res://GameModeMaster.tscn"
-boot_splash/bg_color=Color( 0.141176, 0.141176, 0.141176, 1 )
-config/version="0.7.8"
+boot_splash/bg_color=Color( 0.188235, 0.215686, 0.227451, 1 )
+config/version="0.7.9"
 
 [autoload]
 
@@ -74,14 +74,34 @@ enabled=PoolStringArray( "res://addons/multirun/plugin.cfg" )
 
 singletons=[  ]
 
-[global]
-
-is_multiplayer=false
-
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
 timers/tooltip_delay_sec=0.3
+
+[importer_defaults]
+
+texture={
+"compress/bptc_ldr": 0,
+"compress/hdr_mode": 0,
+"compress/lossy_quality": 0.7,
+"compress/mode": 0,
+"compress/normal_map": 0,
+"detect_3d": true,
+"flags/anisotropic": false,
+"flags/filter": true,
+"flags/mipmaps": false,
+"flags/repeat": 0,
+"flags/srgb": 2,
+"process/HDR_as_SRGB": false,
+"process/fix_alpha_border": false,
+"process/invert_color": false,
+"process/normal_map_invert_y": false,
+"process/premult_alpha": false,
+"size_limit": 0,
+"stream": false,
+"svg/scale": 20.0
+}
 
 [input]
 
@@ -188,10 +208,6 @@ pointing/emulate_touch_from_mouse=true
 2d_physics/layer_3="wall"
 2d_physics/layer_4="ammo_box"
 2d_physics/layer_5="projectile"
-
-[mono]
-
-project/assembly_name="t"
 
 [physics]
 
