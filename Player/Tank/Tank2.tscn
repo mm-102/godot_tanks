@@ -8,15 +8,14 @@
 position = Vector2( 146, 138 )
 script = ExtResource( 2 )
 
-[node name="Pivot" type="Node2D" parent="."]
+[node name="Rotor" type="Node2D" parent="."]
 
-[node name="Tank" type="Sprite" parent="Pivot"]
+[node name="Tank" type="Sprite" parent="Rotor"]
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 1 )
 
-[node name="TurretPlace" type="Node2D" parent="Pivot"]
+[node name="TurretPlace" type="Node2D" parent="Rotor"]
 script = ExtResource( 3 )
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-visible = false
+[node name="Collision" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( -19.7156, -34.9646, -20.9309, -33.9973, -24.6254, -24.2097, -24.9514, -22.9259, -25, 33.0938, -24.5312, 34.5781, -23.6719, 35.625, -22.0156, 36.4688, -7.74854, 36.4717, -4.80936, 34.996, 4.78815, 34.9731, 7.57031, 36.4453, 21.8936, 36.4427, 23.6393, 35.6251, 24.49, 34.5202, 24.932, 33.2276, 24.9531, -23.3125, 20.9688, -34.1875, 19.7812, -34.9219, 9.59375, -34.9531, 8.34375, -34.4375, 4.59375, -30, -4.53125, -30, -7.96875, -34.0625, -9.15625, -34.9219 )
