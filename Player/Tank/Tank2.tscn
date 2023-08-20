@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://textures/wovri/svg/tank.svg" type="Texture" id=1]
 [ext_resource path="res://Player/Tank/tank2.gd" type="Script" id=2]
 [ext_resource path="res://Player/Tank/TurretManager.gd" type="Script" id=3]
+[ext_resource path="res://Player/Tank/tank_multiplayer_manager.gd" type="Script" id=4]
 
 [node name="Tank" type="KinematicBody2D"]
 position = Vector2( 146, 138 )
@@ -19,3 +20,14 @@ script = ExtResource( 3 )
 
 [node name="Collision" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( -19.7156, -34.9646, -20.9309, -33.9973, -24.6254, -24.2097, -24.9514, -22.9259, -25, 33.0938, -24.5312, 34.5781, -23.6719, 35.625, -22.0156, 36.4688, -7.74854, 36.4717, -4.80936, 34.996, 4.78815, 34.9731, 7.57031, 36.4453, 21.8936, 36.4427, 23.6393, 35.6251, 24.49, 34.5202, 24.932, 33.2276, 24.9531, -23.3125, 20.9688, -34.1875, 19.7812, -34.9219, 9.59375, -34.9531, 8.34375, -34.4375, 4.59375, -30, -4.53125, -30, -7.96875, -34.0625, -9.15625, -34.9219 )
+
+[node name="MultiplayerManager" type="Node" parent="."]
+script = ExtResource( 4 )
+tank_node = NodePath("..")
+rotor_node = NodePath("../Rotor")
+turret_rotor_node = NodePath("../Rotor/TurretPlace")
+
+[node name="SendTimer" type="Timer" parent="MultiplayerManager"]
+wait_time = 0.05
+
+[connection signal="timeout" from="MultiplayerManager/SendTimer" to="MultiplayerManager" method="_on_SendTimer_timeout"]

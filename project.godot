@@ -52,6 +52,7 @@ config/version="0.7.9"
 [autoload]
 
 Transfer="*res://Singletons/Transfer.tscn"
+GlobalVaribles="*res://Global/global_varibles.gd"
 
 [debug]
 

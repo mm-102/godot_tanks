@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://textures/wovri/svg/tank_base.svg" type="Texture" id=1]
+[ext_resource path="res://textures/wovri/svg/tank.svg" type="Texture" id=1]
 [ext_resource path="res://Player/Tank/Tank.gd" type="Script" id=2]
 [ext_resource path="res://textures/tank_turret.png" type="Texture" id=3]
 [ext_resource path="res://Player/Tank/Turret.gd" type="Script" id=4]

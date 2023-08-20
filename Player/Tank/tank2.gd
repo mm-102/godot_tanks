@@ -10,7 +10,6 @@ onready var collision = $Collision
 func _physics_process(delta):
 	movement(delta)
 
-
 func movement(delta):
 	var velocity: Vector2 = Vector2.ZERO
 	var y_direction = Input.get_action_strength("p_backward") - Input.get_action_strength("p_forward")
@@ -21,4 +20,5 @@ func movement(delta):
 	collision.rotation = rotor.rotation
 	velocity = Vector2(0, y_direction * movement_speed).rotated(rotor.rotation)
 	
-	move_and_slide(velocity)
+	var _x = move_and_slide(velocity)
+
