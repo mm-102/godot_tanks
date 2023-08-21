@@ -2,6 +2,7 @@ extends Reference
 class_name Ammunition
 
 enum TYPES{BULLET, ROCKET, FRAG_BOMB, LASER, LASER_BULLET, FIREBALL}
+enum FRAG_TYPES{BULLET, FIREBALL}
 
 
 const _ammo_tscn_path = {

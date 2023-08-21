@@ -1,7 +1,7 @@
 extends RigidBody2D
 class_name Projectile
 
-var s:Dictionary
+#var s:Dictionary
 
 var player_path = NodePath("")
 var bullet_state_queue: Array
@@ -15,14 +15,21 @@ export(float) var life_time = 10
 var shooter = null
 
 
-func _ready():
-	$LifeTime.start(life_time)
-
-
 
 
 func setup(data: ShootableSetupData):
-	data.setup_rigid_body(self)
+	self.position = data.position
+	self.set_linear_velocity(Vector2.UP.rotated(data.rotation) * speed)
+	shooter = data.shooter
+
+func setup_frag(data: ShootableSetupData):
+	setup(data)
+	data.frag_speed_multiplier
+	data.frag_lifetime_multiplier
+	data.frag_scale_multiplier
+
+func _ready():
+	$LifeTime.start(life_time)
 
 #func setup(player : RigidBody2D):
 #	player_path = player.get_path()
