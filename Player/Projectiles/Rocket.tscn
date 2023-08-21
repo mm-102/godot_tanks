@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Player/Projectiles/Rocket.gd" type="Script" id=1]
-[ext_resource path="res://textures/rocket.png" type="Texture" id=2]
+[ext_resource path="res://textures/wovri/svg/rocket.svg" type="Texture" id=2]
 [ext_resource path="res://textures/smoke_particle.png" type="Texture" id=3]
 
 [sub_resource type="PhysicsMaterial" id=2]
@@ -100,8 +100,10 @@ shader_param/color_ramp = SubResource( 13 )
 shader_param/scale_texture = SubResource( 15 )
 
 [node name="Rocket" type="RigidBody2D" groups=["Projectiles"]]
+position = Vector2( 69, 250 )
 collision_layer = 16
 collision_mask = 23
+mass = 0.1
 physics_material_override = SubResource( 2 )
 gravity_scale = 0.0
 contacts_reported = 1
@@ -112,11 +114,13 @@ script = ExtResource( 1 )
 [node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 4 )
 position = Vector2( 2.5, 0 )
-scale = Vector2( 0.25, 0.25 )
+rotation = 1.5708
+scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
+position = Vector2( 13, 0 )
 shape = SubResource( 1 )
 
 [node name="LifeTime" type="Timer" parent="."]
@@ -130,11 +134,17 @@ autostart = true
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 
 [node name="Particles2D" type="Particles2D" parent="."]
-position = Vector2( -17, 0 )
+position = Vector2( -20, 0 )
 amount = 16
 local_coords = false
 process_material = SubResource( 16 )
 texture = ExtResource( 3 )
 
+[node name="StunDuration" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_Rocket_body_entered"]
 [connection signal="timeout" from="LifeTime" to="." method="_on_LifeTime_timeout"]
 [connection signal="timeout" from="StartTargeting" to="." method="_on_StartTargeting_timeout"]
+[connection signal="timeout" from="StunDuration" to="." method="_on_StunDuration_timeout"]
