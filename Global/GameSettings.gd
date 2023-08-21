@@ -5,6 +5,10 @@ const MAX_UPGRADES = 3
 const VALUE_PER_POINT = 0.1
 
 
+func _init():
+	for path in DEFAULT:
+		set_base_value(path, DEFAULT[path])
+
 
 static func get_all_players_upgrades(players_data):
 	var upgrades: Array = []

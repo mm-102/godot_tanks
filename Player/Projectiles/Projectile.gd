@@ -10,14 +10,26 @@ onready var append_timer_n = $AppendTimer
 onready var life_timer = $LifeTime
 
 
+export(float) var speed = 200
+export(float) var life_time = 10
+var shooter = null
 
 
-func setup(player : RigidBody2D):
-	player_path = player.get_path()
-	var point = player.get_node("%BulletPoint")
-	position = point.global_position
-	set_linear_velocity(Vector2.UP.rotated(point.global_rotation) * s.Speed)
-	left_time = s.LifeTime
+func _ready():
+	$LifeTime.start(life_time)
+
+
+
+
+func setup(data: ShootableSetupData):
+	data.setup_rigid_body(self)
+
+#func setup(player : RigidBody2D):
+#	player_path = player.get_path()
+#	var point = player.get_node("%BulletPoint")
+#	position = point.global_position
+#	set_linear_velocity(Vector2.UP.rotated(point.global_rotation) * s.Speed)
+#	left_time = s.LifeTime
 
 func setup_multi(bullet_data : Dictionary):
 	set_name(bullet_data.ID)
@@ -32,12 +44,12 @@ func _init():
 	append_timer.one_shot = true
 	add_child(append_timer)
 
-func _ready():
-	if !$"/root/Master".is_multiplayer:
-#		if player_path != NodePath(""):
-#			linear_velocity *= SPEED
-		connect("body_entered", self, "kill_on_singleplayer")
-	life_timer.start(left_time)
+#func _ready():
+#	if !$"/root/Master".is_multiplayer:
+##		if player_path != NodePath(""):
+##			linear_velocity *= SPEED
+#		connect("body_entered", self, "kill_on_singleplayer")
+#	life_timer.start(left_time)
 
 
 

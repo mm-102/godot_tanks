@@ -17,9 +17,9 @@ const _ammo_charge_particles_tscn_path = {
 	TYPES.LASER : "res://Player/Particles/ChargeLaserBeamParticles.tscn"
 }
 
-const _ammo_gd_multi = {
-	TYPES.ROCKET: preload("res://Player/Projectiles/RocketMulti.gd"),
-}
+#const _ammo_gd_multi = {
+#	TYPES.ROCKET: preload("res://Player/Projectiles/RocketMulti.gd"),
+#}
 
 const _ammo_box_texture = {
 	TYPES.BULLET: preload("res://textures/box_texture/bullet_box.png"),
@@ -40,8 +40,8 @@ static func get_charge_particles_tscn(name):
 	return null
 
 static func get_gd_multi(name):
-	if _ammo_gd_multi.has(name):
-		return _ammo_gd_multi[name]
+#	if _ammo_gd_multi.has(name):
+#		return _ammo_gd_multi[name]
 	return null
 
 static func get_box_texture(name):

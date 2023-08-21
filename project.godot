@@ -33,13 +33,19 @@ _global_script_classes=[ {
 "class": "Projectile",
 "language": "GDScript",
 "path": "res://Player/Projectiles/Projectile.gd"
+}, {
+"base": "Node",
+"class": "ShootableSetupData",
+"language": "GDScript",
+"path": "res://Player/Projectiles/shootable_setup_data.gd"
 } ]
 _global_script_class_icons={
 "Ammunition": "",
 "Dir": "",
 "Functions": "",
 "GameSettings": "",
-"Projectile": ""
+"Projectile": "",
+"ShootableSetupData": ""
 }
 
 [application]
