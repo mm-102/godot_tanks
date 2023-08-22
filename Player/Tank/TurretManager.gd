@@ -18,6 +18,8 @@ func set_current_turret(new):
 		self.add_child(turrets[current_turret])
 
 func _ready():
+	for turret in turrets.values():
+		turret.shooter = owner
 	set_current_turret(Ammunition.TYPES.BULLET)
 
 func get_turret_rotation() -> float:

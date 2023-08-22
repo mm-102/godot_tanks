@@ -24,6 +24,7 @@ contacts_reported = 1
 contact_monitor = true
 linear_damp = 0.0
 script = ExtResource( 1 )
+scalable = [ NodePath("Sprite"), NodePath("CollisionShape2D") ]
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.2, 0.2 )

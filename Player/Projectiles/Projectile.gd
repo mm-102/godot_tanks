@@ -8,10 +8,11 @@ var bullet_state_queue: Array
 var left_time = 0
 onready var append_timer_n = $AppendTimer
 onready var life_timer = $LifeTime
+export var scalable: Array 
 
 
-export(float) var speed = 200
-export(float) var life_time = 10
+export(float) var speed:float = 200
+export(float) var life_time:float = 10
 var shooter = null
 
 
@@ -23,10 +24,11 @@ func setup(data: ShootableSetupData):
 	shooter = data.shooter
 
 func setup_frag(data: ShootableSetupData):
+	speed *= data.frag_speed_multiplier
+	life_time *= data.frag_lifetime_multiplier
+	for node_path in scalable:
+		get_node(node_path).scale *= data.frag_scale_multiplier
 	setup(data)
-	data.frag_speed_multiplier
-	data.frag_lifetime_multiplier
-	data.frag_scale_multiplier
 
 func _ready():
 	$LifeTime.start(life_time)

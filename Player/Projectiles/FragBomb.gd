@@ -8,6 +8,7 @@ export(Ammunition.FRAG_TYPES) var frag_type
 const FRAG_TSCNS = {
 	Ammunition.FRAG_TYPES.BULLET: preload("res://Player/Projectiles/Bullet.tscn"),
 	Ammunition.FRAG_TYPES.FIREBALL: preload("res://Player/Projectiles/Fireball.tscn"),
+	Ammunition.FRAG_TYPES.ROCKET: preload("res://Player/Projectiles/Rocket.tscn"),
 }
 export var frag_speed_multiplier = 0.7
 export var frag_lifetime_multiplier = 0.5

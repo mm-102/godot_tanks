@@ -43,6 +43,7 @@ contacts_reported = 1
 contact_monitor = true
 linear_damp = 0.0
 script = ExtResource( 2 )
+scalable = [ NodePath("Sprite"), NodePath("CollisionShape2D"), NodePath("ExplosionArea"), NodePath("Particles2D") ]
 speed = 100.0
 life_time = 2.0
 

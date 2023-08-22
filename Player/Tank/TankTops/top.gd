@@ -7,8 +7,7 @@ var shooter = null
 onready var spawn_point = $RotateAtMouse/ProjectileSpawnPoint
 onready var turret_transform = $RotateAtMouse
 
-func get_turret_global_rotation() -> float:
-	return $RotateAtMouse.global_rotation
+
 
 func _unhandled_input(event):
 	if event.is_action_pressed("p_shoot") and not is_shooting_locked:
@@ -16,6 +15,9 @@ func _unhandled_input(event):
 #			call_deferred("_charge_shoot")
 #			return
 		call_deferred("shoot")
+
+func get_turret_global_rotation() -> float:
+	return $RotateAtMouse.global_rotation
 
 func shoot():
 	var bullet_inst = shootable_tscn.instance()
