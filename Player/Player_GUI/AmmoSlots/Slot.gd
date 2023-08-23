@@ -1,40 +1,38 @@
-tool
 extends Control
 
-const LOADING_COLOR = "70ffff"
-const LOADED_COLOR = "66ff80"
-export var is_selected: bool = false setget set_is_selected
+enum STATES{NOT_SELECTED, LOADING, LOADED}
+export(STATES) var state = STATES.NOT_SELECTED setget set_state
+func set_state(new):
+	state = new
+	state_functions[state].call_func()
+
+var reload_time = 0
+onready var progress_bar = $SlotRect/ProgressBar
+onready var state_functions = {
+	STATES.NOT_SELECTED: funcref(progress_bar, "reset"),
+	STATES.LOADING: funcref(progress_bar, "start_loading"),
+	STATES.LOADED: funcref(progress_bar, "loaded"),
+}
+
+
+
+func setup(type, amount_left, _reload_time):
+	name = type
+	progress_bar.loading_time = _reload_time
+	$SlotRect.type = int(type)
+	set_left_ammo(amount_left)
+
 
 func _ready():
-	$SlotRect/ProgressBar.set_loading_color(Color(LOADING_COLOR))
 	$TouchScreenButton.action = "p_slot_" + str(get_index())
 
-func set_is_selected(value : bool, reload_time : float = 0):
-	is_selected = value
-	$SlotRect/ProgressBar.set_loading_color(Color(LOADING_COLOR))
-	if is_selected:
-		$Tween.remove_all()
-		$Tween.interpolate_method(get_node("SlotRect/ProgressBar"), "set_value", 0.0, 1.0, reload_time, Tween.TRANS_LINEAR)
-		$Tween.start()
-	else:
-		$Tween.stop_all()
-		$SlotRect/ProgressBar.set_value(0.0)
-		
-func _on_Tween_tween_all_completed():
-	$SlotRect/ProgressBar.set_loading_color(Color(LOADED_COLOR))
-		
 
-func setup(type, amount_left):
-	name = type
-	$SlotRect.type = int(type)
 
+func set_left_ammo(amount_left):
 	if amount_left >= INF:
 		$Number.text = ""
 	else:
 		$Number.text = str(amount_left)
-
-func set_left_ammo(amount_left):
-	$Number.text = str(amount_left)
 
 
 

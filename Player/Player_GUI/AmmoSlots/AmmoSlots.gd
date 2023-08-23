@@ -11,6 +11,11 @@ var event_funcs = {
 }
 var current_selection = BASE_SLOT
 
+
+
+func _ready():
+	test_all()
+
 func on_special_ammo_event(event, args : Array):
 	event_funcs[event].call_func(args)
 

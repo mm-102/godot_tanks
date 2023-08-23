@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://textures/box_texture/rocket_box.png" type="Texture" id=1]
+[ext_resource path="res://textures/box_texture/bullet_box.png" type="Texture" id=1]
 [ext_resource path="res://textures/text/Bosk.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Player/Player_GUI/AmmoSlots/Slot.gd" type="Script" id=3]
 [ext_resource path="res://Player/Player_GUI/AmmoSlots/progress_bar.gdshader" type="Shader" id=4]
@@ -9,7 +9,11 @@
 [ext_resource path="res://Objects/SlotRect.gd" type="Script" id=9]
 [ext_resource path="res://Player/Player_GUI/AmmoSlots/ProgressBar.gd" type="Script" id=10]
 
-[sub_resource type="ShaderMaterial" id=10]
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 20, 20 )
+
+[sub_resource type="ShaderMaterial" id=12]
+resource_local_to_scene = true
 shader = ExtResource( 7 )
 shader_param/center = Vector2( 0.5, 0.5 )
 shader_param/size = Vector2( 1, 1 )
@@ -20,6 +24,7 @@ shader_param/modulate = Color( 1, 1, 1, 1 )
 shader_param/border_ramp = ExtResource( 8 )
 
 [sub_resource type="ShaderMaterial" id=9]
+resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/value = 0.0
 shader_param/center = Vector2( 0.5, 0.5 )
@@ -56,9 +61,6 @@ use_filter = true
 extra_spacing_bottom = -3
 font_data = ExtResource( 2 )
 
-[sub_resource type="RectangleShape2D" id=11]
-extents = Vector2( 20, 20 )
-
 [node name="Slot" type="Control"]
 anchor_left = 0.5
 anchor_top = 0.5
@@ -72,8 +74,12 @@ rect_min_size = Vector2( 40, 40 )
 size_flags_horizontal = 0
 script = ExtResource( 3 )
 
+[node name="TouchScreenButton" type="TouchScreenButton" parent="."]
+shape = SubResource( 11 )
+action = "p_slot_1"
+
 [node name="SlotRect" type="ColorRect" parent="."]
-material = SubResource( 10 )
+material = SubResource( 12 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -85,7 +91,6 @@ margin_bottom = 20.0
 rect_min_size = Vector2( 40, 40 )
 color = Color( 1, 1, 1, 0 )
 script = ExtResource( 9 )
-type = 1
 
 [node name="ProgressBar" type="ColorRect" parent="SlotRect"]
 material = SubResource( 9 )
@@ -94,6 +99,8 @@ margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
 color = Color( 1, 1, 1, 0 )
 script = ExtResource( 10 )
+
+[node name="Tween" type="Tween" parent="SlotRect/ProgressBar"]
 
 [node name="TypeRect" type="TextureRect" parent="SlotRect"]
 material = SubResource( 6 )
@@ -124,11 +131,4 @@ text = "0"
 align = 2
 valign = 2
 
-[node name="Tween" type="Tween" parent="."]
-playback_process_mode = 0
-
-[node name="TouchScreenButton" type="TouchScreenButton" parent="."]
-shape = SubResource( 11 )
-action = "p_slot_1"
-
-[connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]
+[connection signal="tween_all_completed" from="SlotRect/ProgressBar/Tween" to="." method="_on_Tween_tween_all_completed"]
