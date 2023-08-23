@@ -1,6 +1,17 @@
 extends KinematicBody2D
+class_name Tank
 
 const tank_wreck = preload("res://Player/Tank/TankWreck.tscn")
+
+export var display_name: String = "abc" setget set_display_name
+func set_display_name(new):
+	display_name = new
+	$Nick.text = display_name
+export var color: Color = Color.white setget set_color
+func set_color(new):
+	color = new
+	self.modulate = color
+
 var movement_speed = 100
 var rotation_speed = 2
 
@@ -8,6 +19,11 @@ var is_multiplayer = false
 
 onready var rotor = $Rotor
 onready var collision = $Collision
+
+
+
+func _ready():
+	set_display_name("")
 
 
 func _physics_process(delta):

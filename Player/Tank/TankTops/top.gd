@@ -3,7 +3,7 @@ extends Node2D
 export(Ammunition.TYPES) var turret_type
 export(PackedScene) var shootable_tscn
 var is_shooting_locked = false
-var shooter = null
+var shooter: Tank = null
 onready var spawn_point = $RotateAtMouse/ProjectileSpawnPoint
 onready var turret_transform = $RotateAtMouse
 onready var gun_checker = $RotateAtMouse/GunInsideWallChecker
@@ -29,6 +29,7 @@ func shoot():
 	shootable_data.position = spawn_point.global_position
 	shootable_data.rotation = turret_transform.global_rotation + PI * 0.5
 	shootable_data.shooter = shooter
+	shootable_data.color = shooter.color
 	bullet_inst.setup(shootable_data)
 	get_tree().get_root().add_child(bullet_inst)
 	#shot_successful()

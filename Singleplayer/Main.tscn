@@ -5,7 +5,7 @@
 [ext_resource path="res://Objects/Background.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Global/MapTileSet.tres" type="TileSet" id=4]
 [ext_resource path="res://Singleplayer/Game/Map/CreateMapCollision.gd" type="Script" id=5]
-[ext_resource path="res://Player/Tank/Tank.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Player/Tank/Tank2.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Singleplayer/Main.gd" type="Script" id=7]
 [ext_resource path="res://textures/ammo_box.png" type="Texture" id=8]
 [ext_resource path="res://Singleplayer/Game/Map/AmmoBoxesMap.gd" type="Script" id=9]
@@ -84,7 +84,8 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 
 [node name="Tank" parent="Game" instance=ExtResource( 6 )]
-position = Vector2( 1968, 1488 )
+unique_name_in_owner = true
+position = Vector2( 1978, 1485 )
 
 [node name="GUILayer" type="CanvasLayer" parent="."]
 layer = 10
@@ -92,5 +93,3 @@ layer = 10
 [node name="GUI" parent="GUILayer" instance=ExtResource( 1 )]
 
 [node name="Background" parent="." instance=ExtResource( 3 )]
-
-[connection signal="self_player_died" from="Game/Tank" to="Game" method="_on_Tank_self_player_died"]

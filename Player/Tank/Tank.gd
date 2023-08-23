@@ -44,7 +44,7 @@ onready var shoot_particles_n = $"%ShootParticles"
 func set_display_name(text):
 	nick = text
 	$"%NickLabel".text = text
-	
+
 func set_turret_type(type):
 	$Turret.frame = type
 

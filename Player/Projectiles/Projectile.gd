@@ -28,6 +28,7 @@ func setup(data: ShootableSetupData, is_frag = false):
 	self.position = data.position
 	self.set_linear_velocity(Vector2.UP.rotated(data.rotation) * speed)
 	shooter = data.shooter
+	self.modulate = data.color
 
 func make_frag():
 	speed *= frag_speed_multiplier
