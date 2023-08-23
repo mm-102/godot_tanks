@@ -20,6 +20,6 @@ func is_gun_inside_wall():
 
 func call_highlight(ray, collider):
 	var collider_position = ray.get_collision_point()
-	var angle = self.position.angle_to_point(ray.cast_to) 
+	var angle = get_parent().global_rotation
 	var offset = Vector2.RIGHT.rotated(angle) * 0.1
 	collider.highlight(collider_position + offset)

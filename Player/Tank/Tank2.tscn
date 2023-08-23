@@ -46,4 +46,7 @@ text = "Abc"
 align = 1
 autowrap = true
 
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+
 [connection signal="timeout" from="MultiplayerManager/SendTimer" to="MultiplayerManager" method="_on_SendTimer_timeout"]
