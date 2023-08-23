@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/Tanksgf - Icon Hover.wav-1b00b5567ef9f39e876f2b320cc53400.sample"
+path="res://.import/Tanksgf - upgrade sound.wav-c81b0bf210d50b75415144d8eba9446f.sample"
 
 [deps]
 
-source_file="res://Sound2.3/Tanksgf - Icon Hover.wav"
-dest_files=[ "res://.import/Tanksgf - Icon Hover.wav-1b00b5567ef9f39e876f2b320cc53400.sample" ]
+source_file="res://Sound2.3/Misc/Tanksgf - upgrade sound.wav"
+dest_files=[ "res://.import/Tanksgf - upgrade sound.wav-c81b0bf210d50b75415144d8eba9446f.sample" ]
 
 [params]
 

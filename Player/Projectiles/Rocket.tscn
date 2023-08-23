@@ -136,5 +136,8 @@ local_coords = false
 process_material = SubResource( 16 )
 texture = ExtResource( 3 )
 
+[node name="Rocket_sound" type="AudioStreamPlayer" parent="."]
+bus = "Projectiles"
+
 [connection signal="timeout" from="LifeTime" to="." method="_on_LifeTime_timeout"]
 [connection signal="timeout" from="StartTargeting" to="." method="_on_StartTargeting_timeout"]

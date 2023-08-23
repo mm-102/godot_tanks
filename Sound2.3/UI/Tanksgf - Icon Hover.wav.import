@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/Tanksgf - Bomb gun.wav-2dbf6de946475a7327301d5703cef9ff.sample"
+path="res://.import/Tanksgf - Icon Hover.wav-52ceb7a121df54f73b6aa59b097bc475.sample"
 
 [deps]
 
-source_file="res://Sound2.3/Tanksgf - Bomb gun.wav"
-dest_files=[ "res://.import/Tanksgf - Bomb gun.wav-2dbf6de946475a7327301d5703cef9ff.sample" ]
+source_file="res://Sound2.3/UI/Tanksgf - Icon Hover.wav"
+dest_files=[ "res://.import/Tanksgf - Icon Hover.wav-52ceb7a121df54f73b6aa59b097bc475.sample" ]
 
 [params]
 

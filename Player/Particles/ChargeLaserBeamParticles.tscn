@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player/Particles/die_on_timer.gd" type="Script" id=1]
+[ext_resource path="res://Sound2.3/Projectiles/Laserbeam Gun/Tanksgf - Laser Charge.wav" type="AudioStream" id=2]
 
 [sub_resource type="Curve" id=3]
 min_value = 1.0
@@ -45,5 +46,9 @@ environment = SubResource( 5 )
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+bus = "Projectiles"
 
 [connection signal="timeout" from="Timer" to="." method="die"]
