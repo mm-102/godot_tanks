@@ -6,7 +6,7 @@ onready var ray = $RayCast2D
 
 
 func is_gun_inside_wall():
-	ray.cast_to = end_point.global_position
+	ray.cast_to = end_point.position
 	ray.force_raycast_update()
 	
 	if not ray.is_colliding():

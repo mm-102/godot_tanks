@@ -26,5 +26,6 @@ texture = ExtResource( 1 )
 [node name="ProjectileSpawnPoint" type="Node2D" parent="RotateAtMouse"]
 position = Vector2( 70, 0 )
 
-[node name="GunInsideWallChecker" parent="." instance=ExtResource( 7 )]
-end_point = NodePath("../RotateAtMouse/ProjectileSpawnPoint")
+[node name="GunInsideWallChecker" parent="RotateAtMouse" instance=ExtResource( 7 )]
+rotation = -0.00310985
+end_point = NodePath("../ProjectileSpawnPoint")

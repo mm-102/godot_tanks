@@ -6,7 +6,7 @@ var is_shooting_locked = false
 var shooter = null
 onready var spawn_point = $RotateAtMouse/ProjectileSpawnPoint
 onready var turret_transform = $RotateAtMouse
-onready var gun_checker = $GunInsideWallChecker
+onready var gun_checker = $RotateAtMouse/GunInsideWallChecker
 
 
 
