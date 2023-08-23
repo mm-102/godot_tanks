@@ -14,6 +14,7 @@ export var scalable: Array
 export(float) var speed:float = 200
 export(float) var life_time:float = 10
 var shooter = null
+var is_multiplayer = false
 
 export var frag_speed_multiplier = 0.7
 export var frag_lifetime_multiplier = 0.5
@@ -34,17 +35,6 @@ func make_frag():
 	for node_path in scalable:
 		get_node(node_path).scale *= frag_scale_multiplier
 
-
-func _ready():
-	$LifeTime.start(life_time)
-
-#func setup(player : RigidBody2D):
-#	player_path = player.get_path()
-#	var point = player.get_node("%BulletPoint")
-#	position = point.global_position
-#	set_linear_velocity(Vector2.UP.rotated(point.global_rotation) * s.Speed)
-#	left_time = s.LifeTime
-
 func setup_multi(bullet_data : Dictionary):
 	set_name(bullet_data.ID)
 	position = bullet_data.P
@@ -52,19 +42,23 @@ func setup_multi(bullet_data : Dictionary):
 	left_time = (bullet_data.DT - Transfer.get_time()) * 0.001
 
 
+func _ready():
+	$LifeTime.start(life_time)
+	if is_multiplayer:
+		pass
+#		if player_path != NodePath(""):
+#			linear_velocity *= SPEED
+	else:
+		var _err = connect("body_entered", self, "kill_on_singleplayer")
+		
+
+
+
 func _init():
 	var append_timer = Timer.new()
 	append_timer.name = "AppendTimer"
 	append_timer.one_shot = true
 	add_child(append_timer)
-
-#func _ready():
-#	if !$"/root/Master".is_multiplayer:
-##		if player_path != NodePath(""):
-##			linear_velocity *= SPEED
-#		connect("body_entered", self, "kill_on_singleplayer")
-#	life_timer.start(left_time)
-
 
 
 func _integrate_forces(state):
@@ -92,6 +86,7 @@ func die():
 	queue_free()
 
 func kill_on_singleplayer(body):
-	if !body.is_in_group("Players"):	return
+	if not body.is_in_group("Players"):
+		return
 	body.die()
 	die()

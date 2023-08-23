@@ -40,7 +40,7 @@ static func get_charge_particles_tscn(name):
 		return load(_ammo_charge_particles_tscn_path[name])
 	return null
 
-static func get_gd_multi(name):
+static func get_gd_multi(_name):
 #	if _ammo_gd_multi.has(name):
 #		return _ammo_gd_multi[name]
 	return null

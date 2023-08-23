@@ -1,7 +1,7 @@
 extends Projectile
 
 const explosion_particles_tsnc = preload("res://Player/Particles/FireballExplosionParticles.tscn")
-var is_multiplayer = false#get_node(Dir.MASTER).is_multiplayer
+#get_node(Dir.MASTER).is_multiplayer
 var is_dying = false
 const ammo_type = Ammunition.TYPES.FIREBALL
 #

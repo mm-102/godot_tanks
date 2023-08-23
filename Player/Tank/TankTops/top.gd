@@ -6,6 +6,7 @@ var is_shooting_locked = false
 var shooter = null
 onready var spawn_point = $RotateAtMouse/ProjectileSpawnPoint
 onready var turret_transform = $RotateAtMouse
+onready var gun_checker = $GunInsideWallChecker
 
 
 
@@ -20,6 +21,9 @@ func get_turret_global_rotation() -> float:
 	return $RotateAtMouse.global_rotation
 
 func shoot():
+	if gun_checker.is_gun_inside_wall():
+		return
+	
 	var bullet_inst = shootable_tscn.instance()
 	var shootable_data = ShootableSetupData.new()
 	shootable_data.position = spawn_point.global_position

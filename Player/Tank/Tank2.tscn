@@ -5,8 +5,9 @@
 [ext_resource path="res://Player/Tank/TurretManager.gd" type="Script" id=3]
 [ext_resource path="res://Player/Tank/tank_multiplayer_manager.gd" type="Script" id=4]
 
-[node name="Tank" type="KinematicBody2D"]
+[node name="Tank" type="KinematicBody2D" groups=["Players"]]
 position = Vector2( 146, 138 )
+collision_mask = 0
 script = ExtResource( 2 )
 
 [node name="Rotor" type="Node2D" parent="."]

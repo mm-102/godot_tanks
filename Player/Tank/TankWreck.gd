@@ -1,9 +1,15 @@
 extends StaticBody2D
 
-var life_time = GameSettings.Dynamic.Wreck.LifeTime
-var color := Color.black
+var life_time = 20
+var color: Color
 var s = GameSettings.Dynamic.Wreck
 
+func setup(data: WreckSetupData):
+	if data.id != null:
+		self.name = data.id
+	self.position = data.position
+	self.rotation = data.rotation
+	self.modulate = data.color
 
 func setup_multi(corpse_data):
 	life_time = s.LifeTime
@@ -16,9 +22,8 @@ func setup_multi(corpse_data):
 
 
 func _ready():
-	$CollisionShape2D/Sprite.modulate = color
 	$LifeTime.start(life_time)
-	$Tween.interpolate_property($"CollisionShape2D/Sprite", "modulate", null, Color.black, 0.5)
+	$Tween.interpolate_property($"Sprite", "modulate", self.modulate, Color.black, 0.5)
 	$Tween.start()
 	
 

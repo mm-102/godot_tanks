@@ -34,10 +34,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Player/Projectiles/Projectile.gd"
 }, {
-"base": "Node",
+"base": "Resource",
 "class": "ShootableSetupData",
 "language": "GDScript",
 "path": "res://Player/Projectiles/shootable_setup_data.gd"
+}, {
+"base": "Resource",
+"class": "WreckSetupData",
+"language": "GDScript",
+"path": "res://Player/Tank/wreck_setup_data.gd"
 } ]
 _global_script_class_icons={
 "Ammunition": "",
@@ -45,7 +50,8 @@ _global_script_class_icons={
 "Functions": "",
 "GameSettings": "",
 "Projectile": "",
-"ShootableSetupData": ""
+"ShootableSetupData": "",
+"WreckSetupData": ""
 }
 
 [application]
