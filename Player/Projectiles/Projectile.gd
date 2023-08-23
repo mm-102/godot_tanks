@@ -15,20 +15,25 @@ export(float) var speed:float = 200
 export(float) var life_time:float = 10
 var shooter = null
 
+export var frag_speed_multiplier = 0.7
+export var frag_lifetime_multiplier = 0.5
+export var frag_scale_multiplier = 0.5
 
 
 
-func setup(data: ShootableSetupData):
+func setup(data: ShootableSetupData, is_frag = false):
+	if is_frag:
+		make_frag()
 	self.position = data.position
 	self.set_linear_velocity(Vector2.UP.rotated(data.rotation) * speed)
 	shooter = data.shooter
 
-func setup_frag(data: ShootableSetupData):
-	speed *= data.frag_speed_multiplier
-	life_time *= data.frag_lifetime_multiplier
+func make_frag():
+	speed *= frag_speed_multiplier
+	life_time *= frag_lifetime_multiplier
 	for node_path in scalable:
-		get_node(node_path).scale *= data.frag_scale_multiplier
-	setup(data)
+		get_node(node_path).scale *= frag_scale_multiplier
+
 
 func _ready():
 	$LifeTime.start(life_time)

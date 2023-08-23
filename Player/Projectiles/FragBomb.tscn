@@ -39,7 +39,6 @@ contact_monitor = true
 script = ExtResource( 2 )
 scalable = [ NodePath("Sprite"), NodePath("CollisionShape2D"), NodePath("Particles2D") ]
 life_time = 1.0
-frag_type = 2
 
 [node name="LifeTime" type="Timer" parent="."]
 one_shot = true

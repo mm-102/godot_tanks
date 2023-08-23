@@ -10,9 +10,6 @@ const FRAG_TSCNS = {
 	Ammunition.FRAG_TYPES.FIREBALL: preload("res://Player/Projectiles/Fireball.tscn"),
 	Ammunition.FRAG_TYPES.ROCKET: preload("res://Player/Projectiles/Rocket.tscn"),
 }
-export var frag_speed_multiplier = 0.7
-export var frag_lifetime_multiplier = 0.5
-export var frag_scale_multiplier = 0.5
 var is_dying = false
 
 
@@ -31,11 +28,7 @@ func spawn_frag(_rotation):
 	shootable_data.rotation = _rotation
 	shootable_data.shooter = shooter
 	
-	shootable_data.frag_speed_multiplier = frag_speed_multiplier
-	shootable_data.frag_lifetime_multiplier = frag_lifetime_multiplier
-	shootable_data.frag_scale_multiplier = frag_scale_multiplier
-	
-	frag_inst.setup_frag(shootable_data)
+	frag_inst.setup(shootable_data, true)
 	get_tree().get_root().add_child(frag_inst)
 
 
@@ -45,7 +38,7 @@ func die():
 		return
 	is_dying = true
 	for n in range(count):
-		var _rotation = 2 * PI * n / count
+		var _rotation = (2 * PI * n / count) + self.rotation
 		call_deferred("spawn_frag", _rotation)
 	
 	queue_free()
