@@ -2,15 +2,16 @@ tool
 extends ColorRect
 
 enum BORDER_TYPES{DEFAULT, SUPER}
+enum SLOT_TYPES{EMPTY = -1}
 const SUPER_TYPES = [
 	Ammunition.TYPES.LASER,
 	Ammunition.TYPES.FIREBALL,
 ]
-
 const BORDER_DICT = {
 	BORDER_TYPES.DEFAULT: preload("res://Objects/gray_sampler.tres"),
 	BORDER_TYPES.SUPER: preload("res://Objects/rainbow_sampler.tres"),
 }
+
 
 
 export(Ammunition.TYPES) var type setget set_type

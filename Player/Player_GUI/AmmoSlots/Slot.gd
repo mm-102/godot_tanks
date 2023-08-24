@@ -5,7 +5,11 @@ export(STATES) var state = STATES.NOT_SELECTED setget set_state
 func set_state(new):
 	state = new
 	state_functions[state].call_func()
-
+var is_empty = true setget set_is_empty
+func set_is_empty(new):
+	is_empty = new
+	$SlotRect/TypeRect.visible = not is_empty
+	$Number.visible = not is_empty
 var reload_time = 0
 onready var progress_bar = $SlotRect/ProgressBar
 onready var state_functions = {
@@ -24,6 +28,7 @@ func setup(type, amount_left, _reload_time):
 
 
 func _ready():
+	set_is_empty(is_empty)
 	$TouchScreenButton.action = "p_slot_" + str(get_index())
 
 
