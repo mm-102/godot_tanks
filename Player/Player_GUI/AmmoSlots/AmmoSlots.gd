@@ -1,7 +1,7 @@
 extends VBoxContainer
 
-const SLOT_BASE_TSCN = preload("res://Player/Player_GUI/AmmoSlots/Slot.tscn")
-const P_SLOT = "p_slot_"
+const SLOT_TSCN = preload("res://Player/Player_GUI/AmmoSlots/Slot.tscn")
+const INPUT_BASE_NAME = "p_slot_"
 const BASE_SLOT = 0
 var event_funcs = {
 	"shoot": funcref(self, "shoot_event"),
