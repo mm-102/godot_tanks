@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Player/Projectiles/LaserBullet.gd" type="Script" id=1]
-[ext_resource path="res://Sound2.3/Projectiles/Laser Bullet Gun/Tanksgf - Smaller laser shot.wav" type="AudioStream" id=2]
+[ext_resource path="res://Sound2.3/Projectiles/Laser Bullet Gun/Laser_bullet_shot.wav" type="AudioStream" id=2]
 
 [sub_resource type="PhysicsMaterial" id=2]
 friction = 0.0
@@ -54,7 +54,6 @@ environment = SubResource( 3 )
 
 [node name="Laser_bullet_sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 2 )
-volume_db = 24.0
 autoplay = true
 max_distance = 600.0
 bus = "Projectiles"

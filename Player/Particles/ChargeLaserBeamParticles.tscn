@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player/Particles/die_on_timer.gd" type="Script" id=1]
-[ext_resource path="res://Sound2.3/Projectiles/Laserbeam Gun/Tanksgf - Laser Charge.wav" type="AudioStream" id=2]
+[ext_resource path="res://Sound2.3/Projectiles/Laserbeam Gun/Laserbeam_charge.wav" type="AudioStream" id=2]
 
 [sub_resource type="Curve" id=3]
 min_value = 1.0

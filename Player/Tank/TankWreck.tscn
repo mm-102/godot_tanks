@@ -2,7 +2,7 @@
 
 [ext_resource path="res://textures/tank_base.png" type="Texture" id=1]
 [ext_resource path="res://Player/Tank/TankWreck.gd" type="Script" id=2]
-[ext_resource path="res://Sound2.3/Projectiles/Kill Shot/Tanksgf - Tank Wreck 2.wav" type="AudioStream" id=3]
+[ext_resource path="res://Sound2.3/Projectiles/Kill Shot/Kill_sound.wav" type="AudioStream" id=3]
 [ext_resource path="res://Player/Component/Highlight.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Player/Projectiles/Bullet.gd" type="Script" id=1]
 [ext_resource path="res://textures/bullet.png" type="Texture" id=2]
-[ext_resource path="res://Sound2.3/Projectiles/Default Bomb Gun/Tanksgf - Bomb gun.wav" type="AudioStream" id=3]
+[ext_resource path="res://Sound2.3/Projectiles/Default Bomb Gun/Default_bomb_gun_shot.wav" type="AudioStream" id=3]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0

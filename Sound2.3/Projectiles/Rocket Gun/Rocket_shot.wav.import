@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Rocket_shot.wav-72622639cc964adbf19f43ff3ff0c5f2.sample"
+
+[deps]
+
+source_file="res://Sound2.3/Projectiles/Rocket Gun/Rocket_shot.wav"
+dest_files=[ "res://.import/Rocket_shot.wav-72622639cc964adbf19f43ff3ff0c5f2.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
