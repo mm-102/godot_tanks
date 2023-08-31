@@ -56,7 +56,6 @@ script = ExtResource( 6 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="AmmunitionSystem"]
 
-[node name="Ammunition" parent="AmmunitionSystem/CanvasLayer" instance=ExtResource( 7 )]
-margin_top = 510.0
+[node name="AmmoSlot" parent="AmmunitionSystem/CanvasLayer" instance=ExtResource( 7 )]
 
 [connection signal="timeout" from="MultiplayerManager/SendTimer" to="MultiplayerManager" method="_on_SendTimer_timeout"]

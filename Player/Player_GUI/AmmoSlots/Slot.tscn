@@ -1,6 +1,5 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://textures/box_texture/bullet_box.png" type="Texture" id=1]
 [ext_resource path="res://textures/text/Bosk.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Player/Player_GUI/AmmoSlots/Slot.gd" type="Script" id=3]
 [ext_resource path="res://Player/Player_GUI/AmmoSlots/progress_bar.gdshader" type="Shader" id=4]
@@ -75,6 +74,7 @@ size_flags_horizontal = 0
 script = ExtResource( 3 )
 
 [node name="TouchScreenButton" type="TouchScreenButton" parent="."]
+visible = false
 shape = SubResource( 11 )
 action = "p_slot_1"
 
@@ -91,6 +91,9 @@ margin_bottom = 20.0
 rect_min_size = Vector2( 40, 40 )
 color = Color( 1, 1, 1, 0 )
 script = ExtResource( 9 )
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="ProgressBar" type="ColorRect" parent="SlotRect"]
 material = SubResource( 9 )
@@ -112,7 +115,6 @@ margin_left = -15.0
 margin_top = -15.0
 margin_right = 15.0
 margin_bottom = 15.0
-texture = ExtResource( 1 )
 expand = true
 
 [node name="Number" type="Label" parent="."]

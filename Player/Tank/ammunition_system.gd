@@ -1,6 +1,36 @@
 extends Node
 
+const INPUT_BASE_NAME = "p_slot_"
+const BASE_SLOT = 0
+var num_of_slots = 3
 var base_ammo_type: int = Ammunition.TYPES.BULLET
+var number_of_slots = 3
+var base_ammo_clip_size = 4
+var selected_slot: AmmunitionSlotObj = null
+var ammunition_clips: Dictionary
+
+
+func _init():
+	for i in range(num_of_slots):
+		ammunition_clips[INPUT_BASE_NAME + str(i)] = AmmunitionSlotObj.new()
+
+func _ready():
+	var ammunition_clip_name: String = INPUT_BASE_NAME + str(BASE_SLOT)
+	var base_slot = ammunition_clips[ammunition_clip_name]
+	base_slot.ammo_type = base_ammo_type
+	base_slot.amount = base_ammo_clip_size
+	base_slot.state = AmmunitionSlotObj.STATES.LOADED
+	selected_slot = base_slot
+	ammunition_clips[ammunition_clip_name] = base_slot
+	GlobalSignals.emit_signal("new_ammunition_clips", ammunition_clips)
+
+func _unhandled_input(event):
+	if event is InputEventKey and event.is_pressed():
+		for possible_action in ammunition_clips.keys():
+			if event.is_action_pressed(possible_action):
+				selected_slot.state = AmmunitionSlotObj.STATES.NOT_SELECTED
+				selected_slot = ammunition_clips[possible_action]
+				selected_slot.state = AmmunitionSlotObj.STATES.LOADING
 
 #func reset_autoload_timer():
 #	var load_time = GameSettings.Dynamic.Ammunition[s.BaseAmmoType].Reload\
@@ -17,10 +47,20 @@ var base_ammo_type: int = Ammunition.TYPES.BULLET
 #		special_ammo[0].amount += 1
 #		emit_signal("special_ammo_event", "pick_up" , [s.BaseAmmoType, special_ammo[0].amount])
 
-
-func pick_up_ammo_box(type):
+func pick_up_ammo_box(type, amount = 1):
 	if type == base_ammo_type:
 		return false
+	
+	for ammunition_clip in ammunition_clips:
+		if ammunition_clip is AmmunitionSlotObj:
+			if ammunition_clip.ammo_type == type:
+				ammunition_clip.amount += amount
+				return
+	
+	var ammunition_clip = AmmunitionSlotObj.new()
+	ammunition_clip.ammo_type = type
+	ammunition_clip.amount = amount
+	#ammunition_clips.append(ammunition_clip)
 
 #	var picked = false
 #	var type_slot = {}

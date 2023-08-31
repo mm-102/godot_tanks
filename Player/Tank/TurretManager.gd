@@ -8,7 +8,6 @@ var turrets: Dictionary = {
 	Ammunition.TYPES.ROCKET: preload("res://Player/Tank/TankTops/top_rocket.tscn").instance(),
 }
 var current_turret: int setget set_current_turret
-var current_turret_node = null
 func set_current_turret(new):
 	if turrets.has(new):
 		current_turret = new
@@ -16,6 +15,7 @@ func set_current_turret(new):
 			self.remove_child(child)
 		current_turret_node = turrets[current_turret]
 		self.add_child(turrets[current_turret])
+var current_turret_node = null
 
 func _ready():
 	for turret in turrets.values():

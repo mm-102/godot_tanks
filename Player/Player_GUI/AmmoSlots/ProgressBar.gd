@@ -8,8 +8,8 @@ var loading_time = 0
 
 func reset():
 	$Tween.stop_all()
-	material.set_shader_param("value", 0.0)
-	material.set_shader_param("modulate_bar", LOADING_COLOR)
+	set_value(0.0)
+	set_loading_color(LOADING_COLOR)
 
 
 func start_loading():
@@ -19,8 +19,8 @@ func start_loading():
 
 func loaded():
 	$Tween.stop_all()
-	material.set_shader_param("value", 1.0)
-	material.set_shader_param("modulate_bar", LOADED_COLOR)
+	set_value(1.0)
+	set_loading_color(LOADED_COLOR)
 
 
 
