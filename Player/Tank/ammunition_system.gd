@@ -1,36 +1,48 @@
 extends Node
 
+signal selected_turret(ammunition_clip_res)
+
 const INPUT_BASE_NAME = "p_slot_"
 const BASE_SLOT = 0
 var num_of_slots = 3
+var base_ammo_max_clip_size = 4
+var base_ammo_reload_time_multiplayer = 0.5
 var base_ammo_type: int = Ammunition.TYPES.BULLET
-var number_of_slots = 3
-var base_ammo_clip_size = 4
-var selected_slot: AmmunitionSlotObj = null
+var selected_slot: AmmunitionSlotObj = null setget set_selected_slot
+func set_selected_slot(new):
+	if selected_slot != new: 
+		selected_slot.state = AmmunitionSlotObj.STATES.NOT_SELECTED
+		selected_slot = new
+		selected_slot.state = AmmunitionSlotObj.STATES.LOADING
+		emit_signal("selected_turret", selected_slot)
 var ammunition_clips: Dictionary
+
 
 
 func _init():
 	for i in range(num_of_slots):
 		ammunition_clips[INPUT_BASE_NAME + str(i)] = AmmunitionSlotObj.new()
 
+
 func _ready():
 	var ammunition_clip_name: String = INPUT_BASE_NAME + str(BASE_SLOT)
 	var base_slot = ammunition_clips[ammunition_clip_name]
 	base_slot.ammo_type = base_ammo_type
-	base_slot.amount = base_ammo_clip_size
+	base_slot.amount = base_ammo_max_clip_size
 	base_slot.state = AmmunitionSlotObj.STATES.LOADED
+	base_slot.reload_time = Ammunition.RELOAD[base_ammo_type] * base_ammo_reload_time_multiplayer
 	selected_slot = base_slot
 	ammunition_clips[ammunition_clip_name] = base_slot
+	
+	emit_signal("selected_turret", selected_slot)
 	GlobalSignals.emit_signal("new_ammunition_clips", ammunition_clips)
+
 
 func _unhandled_input(event):
 	if event is InputEventKey and event.is_pressed():
 		for possible_action in ammunition_clips.keys():
 			if event.is_action_pressed(possible_action):
-				selected_slot.state = AmmunitionSlotObj.STATES.NOT_SELECTED
-				selected_slot = ammunition_clips[possible_action]
-				selected_slot.state = AmmunitionSlotObj.STATES.LOADING
+				set_selected_slot(ammunition_clips[possible_action])
 
 #func reset_autoload_timer():
 #	var load_time = GameSettings.Dynamic.Ammunition[s.BaseAmmoType].Reload\

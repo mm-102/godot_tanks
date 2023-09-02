@@ -18,10 +18,11 @@ func set_selected_slot(new):
 			selected_slot.state = Slot.STATES.NOT_SELECTED
 		selected_slot = new
 		selected_slot.state = Slot.STATES.LOADING
-onready var autoload = $"Autoload/0"
+onready var ammo_autoload = $"Autoload/0"
 var ammunition_clips: Dictionary setget set_ammunition_clips
 func set_ammunition_clips(new):
 	ammunition_clips = new
+	init_ammo_autoload(ammunition_clips[INPUT_BASE_NAME + str(BASE_SLOT)])
 	init_slots(ammunition_clips.size())
 
 
@@ -29,6 +30,8 @@ func set_ammunition_clips(new):
 func _init():
 	GlobalSignals.connect("new_ammunition_clips", self, "set_ammunition_clips")
 
+func init_ammo_autoload(ammo_autoload_res):
+	ammo_autoload.ammunition_clip_res = ammo_autoload_res
 
 func init_slots(_num_of_slots: int):
 	for child in $AmmoSlots.get_children():

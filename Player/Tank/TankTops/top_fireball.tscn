@@ -29,3 +29,5 @@ position = Vector2( 36, 0 )
 
 [node name="GunInsideWallChecker" parent="RotateAtMouse" instance=ExtResource( 6 )]
 end_point = NodePath("../ProjectileSpawnPoint")
+
+[node name="Reload" type="Timer" parent="."]

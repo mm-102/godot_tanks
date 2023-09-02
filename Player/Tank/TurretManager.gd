@@ -9,18 +9,25 @@ var turrets: Dictionary = {
 }
 var current_turret: int setget set_current_turret
 func set_current_turret(new):
+	current_turret = new
+	for child in self.get_children():
+		self.remove_child(child)
 	if turrets.has(new):
-		current_turret = new
-		for child in self.get_children():
-			self.remove_child(child)
 		current_turret_node = turrets[current_turret]
 		self.add_child(turrets[current_turret])
+
 var current_turret_node = null
+
 
 func _ready():
 	for turret in turrets.values():
 		turret.shooter = owner
-	set_current_turret(Ammunition.TYPES.BULLET)
+	#set_current_turret(Ammunition.TYPES.BULLET)
 
 func get_turret_rotation() -> float:
 	return current_turret_node.get_turret_global_rotation()
+
+
+func _on_AmmunitionSystem_selected_turret(ammunition_clip_res: AmmunitionSlotObj):
+	set_current_turret(ammunition_clip_res.ammo_type)
+	current_turret_node.ammunition_clip_res = ammunition_clip_res

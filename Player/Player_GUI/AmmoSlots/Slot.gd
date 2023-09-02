@@ -1,12 +1,11 @@
 extends Control
 class_name Slot
 
-enum STATES{NOT_SELECTED, LOADING, LOADED}
+const STATES = AmmunitionSlotObj.STATES
 export(STATES) var state = STATES.NOT_SELECTED setget set_state
 func set_state(new):
 	state = new
 	state_functions[state].call_func()
-
 
 enum BORDER_TYPES{DEFAULT, SUPER}
 const SUPER_TYPES = [
@@ -42,20 +41,20 @@ onready var state_functions = {
 var ammunition_clip_res: AmmunitionSlotObj = null setget set_ammunition_clip_res
 func set_ammunition_clip_res(new):
 	ammunition_clip_res = new
+	if self.is_inside_tree():
+		_on_ammunition_clip_res_changed()
+		progress_bar.loading_time = ammunition_clip_res.reload_time
 	ammunition_clip_res.connect("changed", self, "_on_ammunition_clip_res_changed")
 
 
-
-func setup(type, amount_left, _reload_time):
-	name = type
-	progress_bar.loading_time = _reload_time
-	$SlotRect.type = int(type)
-	set_amount_left_text(amount_left)
 
 
 func _ready():
 	set_type(EMPTY)
 	$TouchScreenButton.action = "p_slot_" + str(get_index())
+	if ammunition_clip_res != null:
+		_on_ammunition_clip_res_changed()
+		progress_bar.loading_time = ammunition_clip_res.reload_time
 
 func set_inside(is_empty: bool):
 	$SlotRect/TypeRect.visible = not is_empty
@@ -69,10 +68,9 @@ func set_amount_left_text(amount_left):
 
 
 func _on_ammunition_clip_res_changed():
-	#print(ammunition_clip_res.state)
 	set_state(ammunition_clip_res.state)
-	print(state)
-
+	set_type(ammunition_clip_res.ammo_type)
+	set_amount_left_text(ammunition_clip_res.amount)
 
 
 func _on_Tween_tween_all_completed():

@@ -2,7 +2,7 @@ extends Node2D
 
 export(Ammunition.TYPES) var turret_type
 export(PackedScene) var shootable_tscn
-var is_shooting_locked = false
+var is_reloading = false
 var shooter: Tank = null setget set_shooter
 func set_shooter(new):
 	shooter = new
@@ -11,15 +11,31 @@ var color: Color = Color.white
 onready var spawn_point = $RotateAtMouse/ProjectileSpawnPoint
 onready var turret_transform = $RotateAtMouse
 onready var gun_checker = $RotateAtMouse/GunInsideWallChecker
+var ammunition_clip_res: AmmunitionSlotObj = null
 
 
+func _ready():
+	$Reload.connect("timeout", self, "_on_reloaded")
 
 func _unhandled_input(event):
-	if event.is_action_pressed("p_shoot") and not is_shooting_locked:
+	if event.is_action_pressed("p_shoot") and not is_reloading:
+		is_reloading = true
+		$Reload.start(ammunition_clip_res.reload_time)
+		if not is_instance_valid(ammunition_clip_res):
+			call_deferred("shoot")
+			return
+		
+		if ammunition_clip_res.amount > 0:
+			ammunition_clip_res.state = AmmunitionSlotObj.STATES.LOADING
+			ammunition_clip_res.amount -= 1
+			call_deferred("shoot")
 #		if GameSettings.Dynamic.Ammunition[special_ammo[ammo_slot].type].has("ChargeTime"):
 #			call_deferred("_charge_shoot")
 #			return
-		call_deferred("shoot")
+
+func _on_reloaded():
+	ammunition_clip_res.state = AmmunitionSlotObj.STATES.LOADED
+	is_reloading = false
 
 func get_turret_global_rotation() -> float:
 	return $RotateAtMouse.global_rotation

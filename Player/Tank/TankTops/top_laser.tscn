@@ -33,3 +33,5 @@ end_point = NodePath("../ProjectileSpawnPoint")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 6 )
+
+[node name="Reload" type="Timer" parent="."]

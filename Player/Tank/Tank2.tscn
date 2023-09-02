@@ -59,3 +59,4 @@ script = ExtResource( 6 )
 [node name="AmmoSlot" parent="AmmunitionSystem/CanvasLayer" instance=ExtResource( 7 )]
 
 [connection signal="timeout" from="MultiplayerManager/SendTimer" to="MultiplayerManager" method="_on_SendTimer_timeout"]
+[connection signal="selected_turret" from="AmmunitionSystem" to="Rotor/TurretPlace" method="_on_AmmunitionSystem_selected_turret"]
