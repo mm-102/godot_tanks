@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Player/Projectiles/Rocket.gd" type="Script" id=1]
 [ext_resource path="res://textures/rocket.png" type="Texture" id=2]
 [ext_resource path="res://textures/smoke_particle.png" type="Texture" id=3]
 [ext_resource path="res://Sound2.3/Projectiles/Rocket Gun/Rocket_shot.wav" type="AudioStream" id=4]
+[ext_resource path="res://Sound2.3/Projectiles/Laserbeam Gun/Laserbeam_charge.wav" type="AudioStream" id=5]
 
 [sub_resource type="PhysicsMaterial" id=2]
 friction = 0.0
@@ -137,9 +138,13 @@ local_coords = false
 process_material = SubResource( 16 )
 texture = ExtResource( 3 )
 
-[node name="Rocket_sound" type="AudioStreamPlayer" parent="."]
+[node name="Rocket_shot_Sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 4 )
-bus = "Projectiles"
+autoplay = true
+
+[node name="Rocket_Flying_Loop" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+autoplay = true
 
 [connection signal="timeout" from="LifeTime" to="." method="_on_LifeTime_timeout"]
 [connection signal="timeout" from="StartTargeting" to="." method="_on_StartTargeting_timeout"]

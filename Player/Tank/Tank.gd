@@ -105,6 +105,7 @@ func pick_up_ammo_box(type):
 		picked = true
 	get_method_list()
 	if picked:
+		$Pickup_Sound.play()
 		# [improve] This event 'pick_up' var may be done by constant ".PICK_UP with enum in global file
 		emit_signal("special_ammo_event", "pick_up" , [type, special_ammo[type_slot[type]].amount])
 	return picked
