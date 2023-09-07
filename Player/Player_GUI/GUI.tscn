@@ -41,7 +41,10 @@ __meta__ = {
 }
 
 [node name="Ammunition" parent="." instance=ExtResource( 1 )]
-margin_top = 510.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 1024.0
+margin_bottom = 600.0
 
 [node name="AllUpgrades" parent="." instance=ExtResource( 5 )]
 visible = false

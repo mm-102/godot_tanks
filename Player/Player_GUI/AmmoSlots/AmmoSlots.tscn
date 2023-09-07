@@ -1,8 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player/Player_GUI/AmmoSlots/AmmoSlots.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player_GUI/AmmoSlots/Slot.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Player/Player_GUI/AmmoSlots/progress_bar.gdshader" type="Shader" id=3]
+[ext_resource path="res://Player/Player_GUI/AmmoSlots/Autoload.gd" type="Script" id=3]
 [ext_resource path="res://Objects/ammo_box_shader.gdshader" type="Shader" id=4]
 [ext_resource path="res://Objects/gray_sampler.tres" type="Texture" id=5]
 
@@ -16,17 +16,6 @@ shader_param/border_width = 0.08
 shader_param/anim_speed = 0.5
 shader_param/modulate = Color( 1, 1, 1, 1 )
 shader_param/border_ramp = ExtResource( 5 )
-
-[sub_resource type="ShaderMaterial" id=2]
-resource_local_to_scene = true
-shader = ExtResource( 3 )
-shader_param/value = 0.0
-shader_param/center = Vector2( 0.5, 0.5 )
-shader_param/size = Vector2( 1, 1 )
-shader_param/corner_radius = 0.25
-shader_param/border_width = 0.08
-shader_param/modulate = Color( 1, 1, 1, 1 )
-shader_param/modulate_bar = Color( 0.439216, 1, 1, 1 )
 
 [node name="AmmoSlot" type="PanelContainer"]
 margin_left = 9.0
@@ -43,14 +32,6 @@ margin_bottom = 94.0
 size_flags_vertical = 8
 
 [node name="0" parent="AmmoSlots" instance=ExtResource( 2 )]
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 0.0
-margin_top = 0.0
-margin_right = 40.0
-margin_bottom = 40.0
 
 [node name="Autoload" type="CenterContainer" parent="."]
 margin_left = 7.0
@@ -59,24 +40,11 @@ margin_right = 47.0
 margin_bottom = 47.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
+script = ExtResource( 3 )
 
 [node name="0" parent="Autoload" instance=ExtResource( 2 )]
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 0.0
-margin_top = 0.0
-margin_right = 40.0
-margin_bottom = 40.0
 
 [node name="SlotRect" parent="Autoload/0" index="1"]
 material = SubResource( 1 )
-
-[node name="ProgressBar" parent="Autoload/0/SlotRect" index="0"]
-material = SubResource( 2 )
-
-[node name="Number" parent="Autoload/0" index="2"]
-visible = false
 
 [editable path="Autoload/0"]

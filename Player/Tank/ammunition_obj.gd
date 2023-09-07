@@ -16,4 +16,3 @@ func set_amount(new):
 	amount = new
 	emit_changed()
 export(int) var reload_time = 0 
-

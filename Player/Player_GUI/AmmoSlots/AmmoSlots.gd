@@ -10,50 +10,33 @@ var event_funcs = {
 	"reset_autoload" : funcref(self, "reset_autoload")
 }
 var current_selection = BASE_SLOT
-var num_of_slots
-var selected_slot: Slot = null setget set_selected_slot
-func set_selected_slot(new):
-	if new != selected_slot:
-		if is_instance_valid(selected_slot):
-			selected_slot.state = Slot.STATES.NOT_SELECTED
-		selected_slot = new
-		selected_slot.state = Slot.STATES.LOADING
-onready var ammo_autoload = $"Autoload/0"
+onready var ammo_autoload = $"Autoload"
 var ammunition_clips: Dictionary setget set_ammunition_clips
 func set_ammunition_clips(new):
 	ammunition_clips = new
-	init_ammo_autoload(ammunition_clips[INPUT_BASE_NAME + str(BASE_SLOT)])
-	init_slots(ammunition_clips.size())
+	init_ammo_autoload(ammunition_clips[GConst.AUTOLOAD_NAME], ammunition_clips[INPUT_BASE_NAME + str(BASE_SLOT)])
+	init_slots()
 
 
 
 func _init():
 	GlobalSignals.connect("new_ammunition_clips", self, "set_ammunition_clips")
 
-func init_ammo_autoload(ammo_autoload_res):
-	ammo_autoload.ammunition_clip_res = ammo_autoload_res
+func init_ammo_autoload(ammo_autoload_res, ammo_base_res):
+	ammo_autoload.ammo_autoload_res = ammo_autoload_res
+	ammo_autoload.ammo_base_res = ammo_autoload_res
 
-func init_slots(_num_of_slots: int):
+func init_slots():
 	for child in $AmmoSlots.get_children():
 		if child is Node:
 			child.queue_free()
 	yield(get_tree(), "idle_frame")
 	
-	for i in range(_num_of_slots):
-		var slot_inst = SLOT_TSCN.instance()
-		slot_inst.name = str(i)
-		slot_inst.ammunition_clip_res = ammunition_clips[INPUT_BASE_NAME + str(i)]
-		$AmmoSlots.add_child(slot_inst)
-	num_of_slots = _num_of_slots
-	select_slot(BASE_SLOT)
-
-
-func select_slot(slot_position: int):
-	if slot_position > num_of_slots:
-		printerr("[AmmoSlots]: selected slot too high")
-	set_selected_slot($AmmoSlots.get_node(str(slot_position)))
-
-
+	for ammo_clip_keys in ammunition_clips:
+		if ammo_clip_keys.begins_with(INPUT_BASE_NAME):
+			var slot_inst = SLOT_TSCN.instance()
+			slot_inst.ammunition_clip_res = ammunition_clips[ammo_clip_keys]
+			$AmmoSlots.add_child(slot_inst)
 
 
 
@@ -61,11 +44,6 @@ func select_slot(slot_position: int):
 
 func on_special_ammo_event(event, args : Array):
 	event_funcs[event].call_func(args)
-
-func new_shoot(type, amount_left):
-	
-	pass
-
 
 func shoot_event(args : Array):
 	var type = str(args[0])

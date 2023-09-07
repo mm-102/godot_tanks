@@ -15,6 +15,8 @@ func set_current_turret(new):
 	if turrets.has(new):
 		current_turret_node = turrets[current_turret]
 		self.add_child(turrets[current_turret])
+	else:
+		current_turret_node = null
 
 var current_turret_node = null
 
@@ -29,5 +31,8 @@ func get_turret_rotation() -> float:
 
 
 func _on_AmmunitionSystem_selected_turret(ammunition_clip_res: AmmunitionSlotObj):
+#	if turrets.has(ammunition_clip_res.ammo_type):
+#		turrets[ammunition_clip_res.ammo_type].ammunition_clip_res = ammunition_clip_res
 	set_current_turret(ammunition_clip_res.ammo_type)
-	current_turret_node.ammunition_clip_res = ammunition_clip_res
+	if is_instance_valid(current_turret_node):
+		current_turret_node.ammunition_clip_res = ammunition_clip_res

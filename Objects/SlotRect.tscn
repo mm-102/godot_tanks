@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://textures/box_texture/bullet_box.png" type="Texture" id=1]
 [ext_resource path="res://Objects/ammo_box_shader.gdshader" type="Shader" id=2]
 [ext_resource path="res://Objects/gray_sampler.tres" type="Texture" id=3]
 [ext_resource path="res://Objects/SlotRect.gd" type="Script" id=4]
+[ext_resource path="res://textures/text/Bosk.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://Player/Player_GUI/AmmoSlots/progress_bar.gdshader" type="Shader" id=6]
+[ext_resource path="res://Player/Player_GUI/AmmoSlots/ProgressBar.gd" type="Script" id=7]
 
 [sub_resource type="ShaderMaterial" id=5]
 shader = ExtResource( 2 )
@@ -14,6 +17,17 @@ shader_param/border_width = 0.08
 shader_param/anim_speed = 0.5
 shader_param/modulate = Color( 1, 1, 1, 1 )
 shader_param/border_ramp = ExtResource( 3 )
+
+[sub_resource type="ShaderMaterial" id=8]
+resource_local_to_scene = true
+shader = ExtResource( 6 )
+shader_param/value = 0.0
+shader_param/center = Vector2( 0.5, 0.5 )
+shader_param/size = Vector2( 1, 1 )
+shader_param/corner_radius = 0.25
+shader_param/border_width = 0.08
+shader_param/modulate = Color( 1, 1, 1, 1 )
+shader_param/modulate_bar = Color( 0.439216, 1, 1, 1 )
 
 [sub_resource type="Shader" id=7]
 code = "shader_type canvas_item;
@@ -36,6 +50,12 @@ shader = SubResource( 7 )
 shader_param/shadow_color = Color( 0, 0, 0, 0.160784 )
 shader_param/offset = Vector2( 0.05, 0.05 )
 
+[sub_resource type="DynamicFont" id=1]
+use_mipmaps = true
+use_filter = true
+extra_spacing_bottom = -3
+font_data = ExtResource( 5 )
+
 [node name="SlotRect" type="ColorRect"]
 material = SubResource( 5 )
 anchor_left = 0.5
@@ -50,15 +70,48 @@ rect_min_size = Vector2( 64, 64 )
 color = Color( 1, 1, 1, 0 )
 script = ExtResource( 4 )
 
+[node name="ProgressBar" type="ColorRect" parent="."]
+material = SubResource( 8 )
+margin_right = 64.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 40, 40 )
+color = Color( 1, 1, 1, 0 )
+script = ExtResource( 7 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Tween" type="Tween" parent="ProgressBar"]
+
 [node name="TypeRect" type="TextureRect" parent="."]
 material = SubResource( 6 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -24.0
-margin_top = -24.0
-margin_right = 24.0
-margin_bottom = 24.0
+margin_left = -22.0
+margin_top = -22.0
+margin_right = 26.0
+margin_bottom = 26.0
 texture = ExtResource( 1 )
 expand = true
+
+[node name="Number" type="Label" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color( 0, 0, 0, 1 )
+margin_left = 37.0
+margin_top = 28.0
+margin_right = 50.0
+margin_bottom = 48.0
+rect_scale = Vector2( 1.5, 1.5 )
+size_flags_horizontal = 8
+size_flags_vertical = 8
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "0"
+align = 2
+valign = 2
+__meta__ = {
+"_editor_description_": ""
+}

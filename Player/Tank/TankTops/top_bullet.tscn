@@ -31,3 +31,4 @@ rotation = -0.00310985
 end_point = NodePath("../ProjectileSpawnPoint")
 
 [node name="Reload" type="Timer" parent="."]
+one_shot = true

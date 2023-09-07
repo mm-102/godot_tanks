@@ -2,7 +2,7 @@ extends Node2D
 
 export(Ammunition.TYPES) var turret_type
 export(PackedScene) var shootable_tscn
-var is_reloading = false
+var is_reloading = true
 var shooter: Tank = null setget set_shooter
 func set_shooter(new):
 	shooter = new
@@ -11,20 +11,27 @@ var color: Color = Color.white
 onready var spawn_point = $RotateAtMouse/ProjectileSpawnPoint
 onready var turret_transform = $RotateAtMouse
 onready var gun_checker = $RotateAtMouse/GunInsideWallChecker
-var ammunition_clip_res: AmmunitionSlotObj = null
+var ammunition_clip_res: AmmunitionSlotObj = null setget set_ammunition_clip_res
+func set_ammunition_clip_res(new):
+	ammunition_clip_res = new
+	if ammunition_clip_res:
+		$Reload.start(ammunition_clip_res.reload_time)
+	else:
+		is_reloading = false
+
 
 
 func _ready():
 	$Reload.connect("timeout", self, "_on_reloaded")
-
+	
 func _unhandled_input(event):
 	if event.is_action_pressed("p_shoot") and not is_reloading:
 		is_reloading = true
-		$Reload.start(ammunition_clip_res.reload_time)
 		if not is_instance_valid(ammunition_clip_res):
 			call_deferred("shoot")
 			return
 		
+		$Reload.start(ammunition_clip_res.reload_time)
 		if ammunition_clip_res.amount > 0:
 			ammunition_clip_res.state = AmmunitionSlotObj.STATES.LOADING
 			ammunition_clip_res.amount -= 1
@@ -32,6 +39,9 @@ func _unhandled_input(event):
 #		if GameSettings.Dynamic.Ammunition[special_ammo[ammo_slot].type].has("ChargeTime"):
 #			call_deferred("_charge_shoot")
 #			return
+
+func _exit_tree():
+	is_reloading = true
 
 func _on_reloaded():
 	ammunition_clip_res.state = AmmunitionSlotObj.STATES.LOADED

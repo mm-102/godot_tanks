@@ -20,6 +20,7 @@ var ammunition_clips: Dictionary
 
 
 func _init():
+	create_autoload_res()
 	for i in range(num_of_slots):
 		ammunition_clips[INPUT_BASE_NAME + str(i)] = AmmunitionSlotObj.new()
 
@@ -43,6 +44,16 @@ func _unhandled_input(event):
 		for possible_action in ammunition_clips.keys():
 			if event.is_action_pressed(possible_action):
 				set_selected_slot(ammunition_clips[possible_action])
+
+
+func create_autoload_res():
+	var autoload_res = AmmunitionSlotObj.new()
+	autoload_res.ammo_type = base_ammo_type
+	autoload_res.amount = base_ammo_max_clip_size
+	autoload_res.state = AmmunitionSlotObj.STATES.LOADED
+	autoload_res.reload_time = Ammunition.RELOAD[base_ammo_type]
+	ammunition_clips[GConst.AUTOLOAD_NAME] =autoload_res
+	
 
 #func reset_autoload_timer():
 #	var load_time = GameSettings.Dynamic.Ammunition[s.BaseAmmoType].Reload\

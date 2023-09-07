@@ -30,6 +30,11 @@ _global_script_classes=[ {
 "path": "res://Global/Functions.gd"
 }, {
 "base": "Reference",
+"class": "GConst",
+"language": "GDScript",
+"path": "res://Global/GlobalConst.gd"
+}, {
+"base": "Reference",
 "class": "GameSettings",
 "language": "GDScript",
 "path": "res://Global/GameSettings.gd"
@@ -64,6 +69,7 @@ _global_script_class_icons={
 "AmmunitionSlotObj": "",
 "Dir": "",
 "Functions": "",
+"GConst": "",
 "GameSettings": "",
 "Projectile": "",
 "ShootableSetupData": "",
