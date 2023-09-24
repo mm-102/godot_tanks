@@ -11,20 +11,23 @@ var event_funcs = {
 }
 var current_selection = BASE_SLOT
 onready var ammo_autoload = $"Autoload"
+var autoload_clip_res: AmmunitionSlotObj setget set_autoload_clip
+func set_autoload_clip(new):
+	autoload_clip_res = new
+	ammo_autoload.ammo_autoload_res = autoload_clip_res
 var ammunition_clips: Dictionary setget set_ammunition_clips
 func set_ammunition_clips(new):
 	ammunition_clips = new
-	init_ammo_autoload(ammunition_clips[GConst.AUTOLOAD_NAME], ammunition_clips[INPUT_BASE_NAME + str(BASE_SLOT)])
 	init_slots()
 
 
 
 func _init():
-	GlobalSignals.connect("new_ammunition_clips", self, "set_ammunition_clips")
+	GlobalSignals.connect("new_ammunition_set", self, "_on_new_ammunition_set")
 
-func init_ammo_autoload(ammo_autoload_res, ammo_base_res):
-	ammo_autoload.ammo_autoload_res = ammo_autoload_res
-	ammo_autoload.ammo_base_res = ammo_autoload_res
+func _on_new_ammunition_set(_autoload_clip_res, _ammunition_clips):
+	set_autoload_clip(_autoload_clip_res)
+	set_ammunition_clips(_ammunition_clips)
 
 func init_slots():
 	for child in $AmmoSlots.get_children():
@@ -32,6 +35,7 @@ func init_slots():
 			child.queue_free()
 	yield(get_tree(), "idle_frame")
 	
+	ammo_autoload.ammo_base_res = ammunition_clips[INPUT_BASE_NAME + str(BASE_SLOT)]
 	for ammo_clip_keys in ammunition_clips:
 		if ammo_clip_keys.begins_with(INPUT_BASE_NAME):
 			var slot_inst = SLOT_TSCN.instance()

@@ -16,6 +16,7 @@ func set_selected_slot(new):
 		selected_slot.state = AmmunitionSlotObj.STATES.LOADING
 		emit_signal("selected_turret", selected_slot)
 var ammunition_clips: Dictionary
+var autoload_clip_res 
 
 
 
@@ -36,7 +37,7 @@ func _ready():
 	ammunition_clips[ammunition_clip_name] = base_slot
 	
 	emit_signal("selected_turret", selected_slot)
-	GlobalSignals.emit_signal("new_ammunition_clips", ammunition_clips)
+	GlobalSignals.emit_signal("new_ammunition_set", autoload_clip_res, ammunition_clips)
 
 
 func _unhandled_input(event):
@@ -47,12 +48,11 @@ func _unhandled_input(event):
 
 
 func create_autoload_res():
-	var autoload_res = AmmunitionSlotObj.new()
-	autoload_res.ammo_type = base_ammo_type
-	autoload_res.amount = base_ammo_max_clip_size
-	autoload_res.state = AmmunitionSlotObj.STATES.LOADED
-	autoload_res.reload_time = Ammunition.RELOAD[base_ammo_type]
-	ammunition_clips[GConst.AUTOLOAD_NAME] =autoload_res
+	autoload_clip_res = AmmunitionSlotObj.new()
+	autoload_clip_res.ammo_type = base_ammo_type
+	autoload_clip_res.amount = base_ammo_max_clip_size
+	autoload_clip_res.state = AmmunitionSlotObj.STATES.LOADED
+	autoload_clip_res.reload_time = Ammunition.RELOAD[base_ammo_type]
 	
 
 #func reset_autoload_timer():
