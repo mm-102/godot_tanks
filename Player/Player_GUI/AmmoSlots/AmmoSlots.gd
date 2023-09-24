@@ -37,10 +37,9 @@ func init_slots():
 	
 	ammo_autoload.ammo_base_res = ammunition_clips[INPUT_BASE_NAME + str(BASE_SLOT)]
 	for ammo_clip_keys in ammunition_clips:
-		if ammo_clip_keys.begins_with(INPUT_BASE_NAME):
-			var slot_inst = SLOT_TSCN.instance()
-			slot_inst.ammunition_clip_res = ammunition_clips[ammo_clip_keys]
-			$AmmoSlots.add_child(slot_inst)
+		var slot_inst = SLOT_TSCN.instance()
+		slot_inst.ammunition_clip_res = ammunition_clips[ammo_clip_keys]
+		$AmmoSlots.add_child(slot_inst)
 
 
 

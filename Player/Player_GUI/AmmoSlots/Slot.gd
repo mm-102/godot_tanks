@@ -5,10 +5,11 @@ class_name Slot
 var ammunition_clip_res: AmmunitionSlotObj = null setget set_ammunition_clip_res
 func set_ammunition_clip_res(new):
 	ammunition_clip_res = new
-	if self.is_inside_tree():
-		_on_ammunition_clip_res_changed()
-		progress_bar.loading_time = ammunition_clip_res.reload_time
 	ammunition_clip_res.connect("changed", self, "_on_ammunition_clip_res_changed")
+	if not self.is_inside_tree():
+		yield(self, "ready")
+	_on_ammunition_clip_res_changed()
+	progress_bar.loading_time = ammunition_clip_res.reload_time
 onready var slot_rect = $SlotRect
 onready var progress_bar = $SlotRect/ProgressBar
 

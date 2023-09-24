@@ -15,7 +15,7 @@ var ammunition_clip_res: AmmunitionSlotObj = null setget set_ammunition_clip_res
 func set_ammunition_clip_res(new):
 	ammunition_clip_res = new
 	if ammunition_clip_res:
-		$Reload.start(ammunition_clip_res.reload_time)
+		start_reloading()
 	else:
 		is_reloading = false
 
@@ -26,15 +26,16 @@ func _ready():
 	
 func _unhandled_input(event):
 	if event.is_action_pressed("p_shoot") and not is_reloading:
-		is_reloading = true
-		if not is_instance_valid(ammunition_clip_res):
+		if not ammunition_clip_res:
 			call_deferred("shoot")
 			return
 		
-		$Reload.start(ammunition_clip_res.reload_time)
 		if ammunition_clip_res.amount > 0:
-			ammunition_clip_res.state = AmmunitionSlotObj.STATES.LOADING
 			ammunition_clip_res.amount -= 1
+			if ammunition_clip_res.amount != 0:
+				start_reloading()
+			else:
+				no_ammo()
 			call_deferred("shoot")
 #		if GameSettings.Dynamic.Ammunition[special_ammo[ammo_slot].type].has("ChargeTime"):
 #			call_deferred("_charge_shoot")
@@ -43,9 +44,19 @@ func _unhandled_input(event):
 func _exit_tree():
 	is_reloading = true
 
+func start_reloading():
+	is_reloading = true
+	$Reload.start(ammunition_clip_res.reload_time)
+	ammunition_clip_res.state = AmmunitionSlotObj.STATES.LOADING
+	
+
 func _on_reloaded():
 	ammunition_clip_res.state = AmmunitionSlotObj.STATES.LOADED
 	is_reloading = false
+
+func no_ammo():
+	is_reloading = true
+	ammunition_clip_res.state = AmmunitionSlotObj.STATES.NOT_SELECTED
 
 func get_turret_global_rotation() -> float:
 	return $RotateAtMouse.global_rotation
