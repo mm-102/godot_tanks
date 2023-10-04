@@ -6,6 +6,7 @@ var s:Dictionary
 var player_path = NodePath("")
 var bullet_state_queue: Array
 var left_time = 0
+var is_shot_sound_enabled = true
 onready var append_timer_n = $AppendTimer
 onready var life_timer = $LifeTime
 
@@ -38,8 +39,6 @@ func _ready():
 #			linear_velocity *= SPEED
 		connect("body_entered", self, "kill_on_singleplayer")
 	life_timer.start(left_time)
-
-
 
 func _integrate_forces(state):
 	update_bounce(state)

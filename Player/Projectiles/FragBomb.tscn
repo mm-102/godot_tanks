@@ -48,7 +48,6 @@ lifetime = 0.5
 process_material = SubResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource( 1 )
 
 [node name="LifeTime" type="Timer" parent="."]
