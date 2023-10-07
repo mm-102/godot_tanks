@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player/Projectiles/LaserBullet.gd" type="Script" id=1]
 [ext_resource path="res://Sound2.3/Projectiles/Laser Bullet Gun/Laser_bullet_shot.wav" type="AudioStream" id=2]
+[ext_resource path="res://Sound2.3/Projectiles/Laser Bullet Gun/Laser_bullet_bounce_1.wav" type="AudioStream" id=3]
 
 [sub_resource type="PhysicsMaterial" id=2]
 friction = 0.0
@@ -58,4 +59,8 @@ autoplay = true
 max_distance = 600.0
 bus = "Projectiles"
 
+[node name="SFX_Bounce_1" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+
+[connection signal="body_entered" from="." to="." method="_on_LaserBullet_body_entered"]
 [connection signal="timeout" from="LifeTime" to="." method="_on_LifeTime_timeout"]

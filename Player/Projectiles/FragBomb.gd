@@ -28,9 +28,12 @@ func spawn_frag(rotation):
 	get_node(Dir.PROJECTILES).add_child(frag_inst)
 	
 func explode():
+	$Frag_Bomb_explosion.play()
 	for n in range(s.Count):
 		var rotation = 2 * PI * n / s.Count
 		call_deferred("spawn_frag", rotation)
+	hide()
+	yield($Frag_Bomb_explosion,"finished")
 	.die()	#calls super die() function
 
 func die():

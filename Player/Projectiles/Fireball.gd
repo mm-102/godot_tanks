@@ -15,6 +15,7 @@ func _on_Fireball_body_entered(_body):
 	explode()
 	
 func explode():
+	$Fireball_explosion.play()
 	var explosion_particles = explosion_particles_tsnc.instance()
 	explosion_particles.global_position = global_position
 	explosion_particles.one_shot = true
@@ -23,4 +24,6 @@ func explode():
 	for body in $ExplosionArea.get_overlapping_bodies():
 		if body.is_in_group("Projectiles") or (body.is_in_group("Players") and !is_multiplayer):
 			body.die()
+	hide()
+	yield($Fireball_explosion,"finished")
 	.die()

@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Player/Projectiles/Rocket.gd" type="Script" id=1]
 [ext_resource path="res://textures/rocket.png" type="Texture" id=2]
 [ext_resource path="res://textures/smoke_particle.png" type="Texture" id=3]
 [ext_resource path="res://Sound2.3/Projectiles/Rocket Gun/Rocket_shot.wav" type="AudioStream" id=4]
-[ext_resource path="res://Sound2.3/Projectiles/Laserbeam Gun/Laserbeam_charge.wav" type="AudioStream" id=5]
+[ext_resource path="res://Sound2.3/Projectiles/Rocket Gun/SFX_Rocket_flying.wav" type="AudioStream" id=5]
+[ext_resource path="res://Sound2.3/Misc/Target locked 2.wav" type="AudioStream" id=6]
 
 [sub_resource type="PhysicsMaterial" id=2]
 friction = 0.0
@@ -125,7 +126,7 @@ shape = SubResource( 1 )
 one_shot = true
 
 [node name="StartTargeting" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 4.0
 one_shot = true
 autostart = true
 
@@ -145,6 +146,9 @@ autoplay = true
 [node name="Rocket_Flying_Loop" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 5 )
 autoplay = true
+
+[node name="SFX_Target_Locket" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
 
 [connection signal="timeout" from="LifeTime" to="." method="_on_LifeTime_timeout"]
 [connection signal="timeout" from="StartTargeting" to="." method="_on_StartTargeting_timeout"]

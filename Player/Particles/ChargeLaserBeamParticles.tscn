@@ -47,8 +47,7 @@ environment = SubResource( 5 )
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Laserbeam_charge" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 2 )
-bus = "Projectiles"
 
 [connection signal="timeout" from="Timer" to="." method="die"]

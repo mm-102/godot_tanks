@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://textures/tank_base.png" type="Texture" id=1]
 [ext_resource path="res://Player/Tank/Tank.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Player/Tank/Camera.gd" type="Script" id=7]
 [ext_resource path="res://Player/Particles/shoot_particles_material.tres" type="Material" id=8]
 [ext_resource path="res://Sound2.3/Misc/Pickup_sound.wav" type="AudioStream" id=9]
+[ext_resource path="res://Tanks gf - Tank Movement.wav" type="AudioStream" id=10]
 
 [sub_resource type="PhysicsMaterial" id=2]
 friction = 0.0
@@ -176,6 +177,9 @@ one_shot = true
 
 [node name="Pickup_Sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 9 )
+
+[node name="SFX_movement" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 10 )
 
 [connection signal="ready" from="." to="CanvasLayer/CenterPosition/PlayerIndicators" method="_on_Tank_ready"]
 [connection signal="timeout" from="CanvasLayer/CenterPosition/PlayerIndicators/RefreshTimer" to="CanvasLayer/CenterPosition/PlayerIndicators" method="_on_RefreshTimer_timeout"]

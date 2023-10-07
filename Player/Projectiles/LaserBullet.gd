@@ -1,5 +1,11 @@
 extends Projectile
 
+var bouncey_sounds=[
+	preload("res://Sound2.3/Projectiles/Laser Bullet Gun/Laser_bullet_bounce_1.wav"),
+	preload("res://Sound2.3/Projectiles/Laser Bullet Gun/Laser_bullet_bounce_2.wav"), 
+	preload("res://Sound2.3/Projectiles/Laser Bullet Gun/Laser_bullet_bounce_3.wav")
+]
+var bouncey_sounds_counter = 0
 onready var ray = $RayCast2D
 onready var line = $Line2D
 #var ammo_type = Ammunition.TYPES.LASER_BULLET
@@ -43,3 +49,12 @@ func _integrate_forces(state):
 		# move ray position a bit from collision point not to collide with the same point twice
 		
 		ray.force_raycast_update()
+
+
+func _on_LaserBullet_body_entered(body):
+	$SFX_Bounce_1.play()
+	$SFX_Bounce_1.stream = bouncey_sounds[bouncey_sounds_counter]
+	bouncey_sounds_counter = bouncey_sounds_counter + 1
+	if bouncey_sounds_counter > 2:
+		bouncey_sounds_counter = 0
+	pass # Replace with function body.

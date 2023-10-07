@@ -16,5 +16,5 @@ script = ExtResource( 3 )
 [node name="AmmoSlots" type="HBoxContainer" parent="."]
 margin_right = 150.0
 
-[node name="Ammo_Slot_Change" type="AudioStreamPlayer" parent="."]
+[node name="SFX_AmmoSlotChange" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 1 )
