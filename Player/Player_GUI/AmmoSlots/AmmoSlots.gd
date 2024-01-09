@@ -66,6 +66,8 @@ func change_selection(args : Array):
 	if $AmmoSlots.get_child_count() >= new_selection:
 		$AmmoSlots.get_child(current_selection).set_is_selected(false)
 	$AmmoSlots.get_child(new_selection).set_is_selected(true, reload_time)
+	if new_selection != current_selection:
+		$SFX_AmmoSlotChange.play()
 	current_selection = new_selection
 
 func reset_autoload(args : Array):
