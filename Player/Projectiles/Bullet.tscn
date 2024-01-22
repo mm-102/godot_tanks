@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Player/Projectiles/Bullet.gd" type="Script" id=1]
-[ext_resource path="res://textures/wovri/svg/bullet.svg" type="Texture" id=2]
+[ext_resource path="res://textures/modern_text/svg/bullet.svg" type="Texture" id=2]
 [ext_resource path="res://Sound/strzal.wav" type="AudioStream" id=3]
 
 [sub_resource type="PhysicsMaterial" id=1]

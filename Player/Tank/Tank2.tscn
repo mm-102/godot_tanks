@@ -1,12 +1,13 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://textures/wovri/svg/tank.svg" type="Texture" id=1]
+[ext_resource path="res://textures/modern_text/svg/tank.svg" type="Texture" id=1]
 [ext_resource path="res://Player/Tank/tank2.gd" type="Script" id=2]
 [ext_resource path="res://Player/Tank/TurretManager.gd" type="Script" id=3]
 [ext_resource path="res://Player/Tank/tank_multiplayer_manager.gd" type="Script" id=4]
 [ext_resource path="res://assets/fonts/LT Comical.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Player/Tank/ammunition_system.gd" type="Script" id=6]
 [ext_resource path="res://Player/Player_GUI/AmmoSlots/AmmoSlots.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Player/Tank/AutoloadSystem.gd" type="Script" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 20
@@ -53,6 +54,9 @@ current = true
 
 [node name="AmmunitionSystem" type="Node" parent="."]
 script = ExtResource( 6 )
+
+[node name="AutoloadSystem" type="Node" parent="AmmunitionSystem"]
+script = ExtResource( 8 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="AmmunitionSystem"]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://textures/wovri/svg/bomb.svg" type="Texture" id=1]
+[ext_resource path="res://textures/modern_text/svg/bomb.svg" type="Texture" id=1]
 [ext_resource path="res://Player/Projectiles/FragBomb.gd" type="Script" id=2]
 [ext_resource path="res://Sound/strzal2.wav" type="AudioStream" id=3]
 

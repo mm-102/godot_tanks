@@ -1,18 +1,19 @@
 extends Projectile
 
+const MAX_WIDTH = 8
+const MAX_LENGHT = 30
+export var max_bounces = 4
+var point : Vector2 = Vector2.ZERO
+var point_rotation = 0
+
 onready var ray = $RayCast2D
 onready var line = $Line2D
-#var ammo_type = Ammunition.TYPES.LASER_BULLET
-#
-func _init():
-	s = GameSettings.Dynamic.Ammunition[4]
+
 
 func _integrate_forces(state):
 	update_bounce(state)
-	
-	var length_left = s.Length
 	rotation = 0
-	
+	var length_left = MAX_LENGHT
 	line.clear_points()
 	line.add_point(Vector2.ZERO)
 	
@@ -20,7 +21,7 @@ func _integrate_forces(state):
 	ray.cast_to = -state.linear_velocity.normalized() * length_left
 	ray.force_raycast_update()
 	
-	for i in range(s.MaxBounces):
+	for i in range(max_bounces):
 		if !ray.is_colliding():
 			line.add_point(ray.cast_to + ray.position)
 			break

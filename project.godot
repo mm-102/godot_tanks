@@ -90,6 +90,7 @@ config/version="0.7.9"
 Transfer="*res://Singletons/Transfer.tscn"
 GlobalVaribles="*res://Global/global_varibles.gd"
 GlobalSignals="*res://Global/global_signals.gd"
+AmmunitionSlotTimers="*res://Global/AmmunitionSlotTimers.tscn"
 
 [debug]
 

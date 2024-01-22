@@ -27,6 +27,7 @@ func spawn_frag(_rotation):
 	shootable_data.position = self.position + Vector2.UP.rotated(_rotation) * frag_spawn_distance
 	shootable_data.rotation = _rotation
 	shootable_data.shooter = shooter
+	shootable_data.color = self.modulate
 	
 	frag_inst.setup(shootable_data, true)
 	get_tree().get_root().add_child(frag_inst)

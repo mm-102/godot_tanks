@@ -6,6 +6,7 @@ var turrets: Dictionary = {
 	Ammunition.TYPES.FIREBALL: preload("res://Player/Tank/TankTops/top_fireball.tscn").instance(),
 	Ammunition.TYPES.LASER: preload("res://Player/Tank/TankTops/top_laser.tscn").instance(),
 	Ammunition.TYPES.ROCKET: preload("res://Player/Tank/TankTops/top_rocket.tscn").instance(),
+	Ammunition.TYPES.LASER_BULLET: preload("res://Player/Tank/TankTops/top_laser_bullet.tscn").instance(),
 }
 var current_turret: int setget set_current_turret
 func set_current_turret(new):

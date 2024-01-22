@@ -7,7 +7,7 @@ const BASE_SLOT = 0
 var num_of_slots = 3
 var base_ammo_max_clip_size = 4
 var base_ammo_reload_time_multiplayer = 0.5
-var base_ammo_type: int = Ammunition.TYPES.BULLET
+var base_ammo_type: int = Ammunition.TYPES.LASER_BULLET
 var selected_slot: AmmunitionSlotObj = null setget set_selected_slot
 func set_selected_slot(new):
 	if selected_slot != new: 
@@ -17,6 +17,7 @@ func set_selected_slot(new):
 		emit_signal("selected_turret", selected_slot)
 var ammunition_clips: Dictionary
 var autoload_clip_res 
+var ammunition_timers: Array
 
 
 
@@ -35,7 +36,10 @@ func _ready():
 	base_slot.reload_time = Ammunition.RELOAD[base_ammo_type] * base_ammo_reload_time_multiplayer
 	selected_slot = base_slot
 	ammunition_clips[ammunition_clip_name] = base_slot
-	
+	$AutoloadSystem.autoload_clip_res = autoload_clip_res
+	$AutoloadSystem.base_slot = base_slot
+	$AutoloadSystem.last_base_ammo_amount = base_slot.amount
+	ammunition_clips[ammunition_clip_name].connect("changed", $AutoloadSystem, "_on_base_slot_changed")
 	emit_signal("selected_turret", selected_slot)
 	GlobalSignals.emit_signal("new_ammunition_set", autoload_clip_res, ammunition_clips)
 
@@ -53,7 +57,7 @@ func create_autoload_res():
 	autoload_clip_res.amount = base_ammo_max_clip_size
 	autoload_clip_res.state = AmmunitionSlotObj.STATES.LOADED
 	autoload_clip_res.reload_time = Ammunition.RELOAD[base_ammo_type]
-	
+
 
 #func reset_autoload_timer():
 #	var load_time = GameSettings.Dynamic.Ammunition[s.BaseAmmoType].Reload\

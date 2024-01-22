@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://textures/wovri/svg/tank.svg" type="Texture" id=1]
+[ext_resource path="res://textures/modern_text/svg/tank.svg" type="Texture" id=1]
 [ext_resource path="res://Player/Tank/TankWreck.gd" type="Script" id=2]
 [ext_resource path="res://Sound/wybuch1.wav" type="AudioStream" id=3]
 [ext_resource path="res://Player/Component/Highlight.tscn" type="PackedScene" id=4]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://textures/wovri/svg/turret_fireball_light.svg" type="Texture" id=1]
-[ext_resource path="res://textures/wovri/svg/turret_fireball.svg" type="Texture" id=2]
+[ext_resource path="res://textures/modern_text/svg/turret_fireball_light.svg" type="Texture" id=1]
+[ext_resource path="res://textures/modern_text/svg/turret_fireball.svg" type="Texture" id=2]
 [ext_resource path="res://Player/Tank/TankTops/top.gd" type="Script" id=3]
 [ext_resource path="res://Player/Tank/TankTops/rotate_at_mouse.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Player/Projectiles/Fireball.tscn" type="PackedScene" id=5]
@@ -25,7 +25,7 @@ scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 1 )
 
 [node name="ProjectileSpawnPoint" type="Node2D" parent="RotateAtMouse"]
-position = Vector2( 36, 0 )
+position = Vector2( 70, 0 )
 
 [node name="GunInsideWallChecker" parent="RotateAtMouse" instance=ExtResource( 6 )]
 end_point = NodePath("../ProjectileSpawnPoint")

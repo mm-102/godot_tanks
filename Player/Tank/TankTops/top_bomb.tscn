@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://textures/wovri/svg/turret_bomb_light.svg" type="Texture" id=1]
-[ext_resource path="res://textures/wovri/svg/turret_bomb.svg" type="Texture" id=2]
+[ext_resource path="res://textures/modern_text/svg/turret_bomb_light.svg" type="Texture" id=1]
+[ext_resource path="res://textures/modern_text/svg/turret_bomb.svg" type="Texture" id=2]
 [ext_resource path="res://Player/Tank/TankTops/top.gd" type="Script" id=3]
 [ext_resource path="res://Player/Tank/TankTops/rotate_at_mouse.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Player/Projectiles/FragBomb.tscn" type="PackedScene" id=5]

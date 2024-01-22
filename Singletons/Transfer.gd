@@ -10,7 +10,7 @@ var my_id = null
 
 onready var time_diff_timer_node = $"%TimeDiffTimer"
 onready var clock_node = $"%Clock"
-onready var master_n = get_node(Dir.MASTER)
+onready var master_n = null
 onready var main_n 
 
 #var network : NetworkedMultiplayerENet = null
@@ -25,6 +25,8 @@ func _process(_delta):
 		network.poll()
 
 func _ready():
+	if has_node(Dir.MASTER):
+		master_n = get_node(Dir.MASTER)
 	pass
 
 #---------- SERVER CREATION ----------
