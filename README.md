@@ -1,5 +1,3 @@
-# godot_tanks
+# Exponential Tanks
 
-test update
-
-Worvi test git commit
+using Godot 3
